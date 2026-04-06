@@ -1,25 +1,19 @@
-# GemmaRounter-GemmaRAGPipline
+# GemmaRouter-GemmaRAGPipline
 
-This workspace is split into two app projects that share a single Gemma runtime.
+This workspace is split into three app projects.
 
 ## Projects
 
-- [`gemma-routing`](/home/rb/AI/gemma-routing): on-device routing, safety gate, structured JSON decisions
+- [`gemma-routing`](/home/rb/AI/gemma-routing): on-device routing that splits deterministic local, 20-char local LLM, RAG, and server LLM paths
 - [`gemma-rag`](/home/rb/AI/gemma-rag): RAG-side answer generation that consumes retrieved context
+- [`gemma-tranferRobotLLM`](/home/rb/AI/gemma-tranferRobotLLM): transfer-robot local LLM for STT correction, reply generation, and TTS-ready text
 
-## Shared Runtime
+## Runtime
 
-Use one model service for both projects:
+Each project can run its own local Gemma server script:
 
-- launcher: [`scripts/run_gemma4_llama_server.sh`](/home/rb/AI/scripts/run_gemma4_llama_server.sh)
-- setup guide: [`docs/jetson-orin-gemma4-setup.md`](/home/rb/AI/docs/jetson-orin-gemma4-setup.md)
+- [`gemma-routing/scripts/manage_local_gemma.sh`](/home/rb/AI/gemma-routing/scripts/manage_local_gemma.sh)
+- [`gemma-rag/scripts/manage_local_gemma.sh`](/home/rb/AI/gemma-rag/scripts/manage_local_gemma.sh)
+- [`gemma-tranferRobotLLM/scripts/manage_local_gemma.sh`](/home/rb/AI/gemma-tranferRobotLLM/scripts/manage_local_gemma.sh)
 
-Both projects should call the same local model alias:
-
-- `gemma4-shared`
-
-That means:
-
-- only one Gemma model is downloaded and served
-- routing and RAG clients use the same endpoint
-- you can swap `E2B` and `E4B` behind the same alias without changing app code
+Shared base scripts still exist under [`shared-scripts`](/home/rb/AI/shared-scripts), but day-to-day start and stop should be done from each project wrapper.

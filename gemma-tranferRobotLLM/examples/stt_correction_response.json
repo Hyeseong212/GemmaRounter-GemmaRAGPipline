@@ -1,0 +1,6 @@
+{
+  "corrected_transcript": "리프트 좀 올려줘. 지금 출발해도 되나?",
+  "intent": "lift_request_and_departure_question",
+  "reply_for_tts": "현재 상태를 확인한 뒤 출발 여부를 안내하겠습니다.",
+  "needs_hardware_check": true
+}

@@ -1,0 +1,206 @@
+Gemma 사용 가이드
+
+지금은 Gemma를 프로젝트별로 따로 실행한다.
+
+- `gemma-routing`
+  - 목적: 햅틱 의료장비 라우팅, 안전 게이트, 구조화된 판단
+  - 기본 alias: `gemma4-routing`
+  - 기본 port: `8080`
+  - 관리 스크립트: `/home/rb/AI/gemma-routing/scripts/manage_local_gemma.sh`
+
+- `gemma-tranferRobotLLM`
+  - 목적: 이승로봇 로컬 LLM, STT 교정과 TTS용 답변 생성
+  - 기본 alias: `gemma4-transfer-robot`
+  - 기본 port: `8081`
+  - 관리 스크립트: `/home/rb/AI/gemma-tranferRobotLLM/scripts/manage_local_gemma.sh`
+  - 기본 실행 프로필: `e2b`, `ctx 2048`, `batch 128`, `ubatch 32`, `gpu_layers 8`, GPU hybrid
+
+- `gemma-rag`
+  - 목적: RAG 응답 생성
+  - 기본 alias: `gemma4-rag`
+  - 기본 port: `8082`
+  - 관리 스크립트: `/home/rb/AI/gemma-rag/scripts/manage_local_gemma.sh`
+
+
+공용과 프로젝트 스크립트 차이
+
+- 공용 엔진 스크립트는 `/home/rb/AI/shared-scripts` 아래에 있다.
+- 실제 운영은 각 프로젝트의 `manage_local_gemma.sh`를 쓰는 걸 기준으로 한다.
+- `start`나 `restart`를 하면 기존에 떠 있던 Gemma 컨테이너를 먼저 정리하고 새로 시작한다.
+
+
+현재 모델 개념 정리
+
+- `e2b`, `e4b-q4` 같은 값은 실제로 띄우는 모델 variant다.
+- `gemma4-routing`, `gemma4-transfer-robot`, `gemma4-rag`는 각 프로젝트가 API에서 호출하는 model alias다.
+- 즉 백엔드 모델과 클라이언트에서 보는 이름을 분리해서 관리한다.
+
+
+가장 자주 쓰는 명령
+
+Routing 상태 보기
+/home/rb/AI/gemma-routing/scripts/manage_local_gemma.sh status
+
+Routing 시작
+/home/rb/AI/gemma-routing/scripts/manage_local_gemma.sh start
+
+Routing 중지
+/home/rb/AI/gemma-routing/scripts/manage_local_gemma.sh stop
+
+Transfer Robot 상태 보기
+/home/rb/AI/gemma-tranferRobotLLM/scripts/manage_local_gemma.sh status
+
+Transfer Robot 시작
+/home/rb/AI/gemma-tranferRobotLLM/scripts/manage_local_gemma.sh start
+
+Transfer Robot은 현재 Jetson 안정성을 위해 GPU hybrid safe profile로 시작한다.
+
+Transfer Robot 중지
+/home/rb/AI/gemma-tranferRobotLLM/scripts/manage_local_gemma.sh stop
+
+RAG 상태 보기
+/home/rb/AI/gemma-rag/scripts/manage_local_gemma.sh status
+
+RAG 시작
+/home/rb/AI/gemma-rag/scripts/manage_local_gemma.sh start
+
+RAG 중지
+/home/rb/AI/gemma-rag/scripts/manage_local_gemma.sh stop
+
+
+프로젝트별 추천 사용 순서
+
+1. 필요한 프로젝트 서버만 시작
+
+예시: Routing
+/home/rb/AI/gemma-routing/scripts/manage_local_gemma.sh start
+
+예시: Transfer Robot
+/home/rb/AI/gemma-tranferRobotLLM/scripts/manage_local_gemma.sh start
+
+2. 준비 완료 확인
+
+예시: Routing
+/home/rb/AI/gemma-routing/scripts/manage_local_gemma.sh ready
+
+예시: Transfer Robot
+/home/rb/AI/gemma-tranferRobotLLM/scripts/manage_local_gemma.sh ready
+
+3. 짧은 테스트 또는 샘플 요청
+
+예시: Routing
+/home/rb/AI/gemma-routing/scripts/manage_local_gemma.sh test
+/home/rb/AI/gemma-routing/scripts/manage_local_gemma.sh sample
+
+예시: Transfer Robot
+/home/rb/AI/gemma-tranferRobotLLM/scripts/manage_local_gemma.sh test
+/home/rb/AI/gemma-tranferRobotLLM/scripts/manage_local_gemma.sh sample
+
+
+모델 variant 바꿔서 실행
+
+기본은 프로젝트마다 `e4b-q4`로 잡아뒀고, Transfer Robot은 `e2b`로 낮춰뒀다.
+
+Routing을 `e4b-q4`로 시작하고 싶을 때
+/home/rb/AI/gemma-routing/scripts/manage_local_gemma.sh start e4b-q4
+
+Transfer Robot을 기본값인 `e2b`로 시작
+/home/rb/AI/gemma-tranferRobotLLM/scripts/manage_local_gemma.sh start
+
+Transfer Robot을 `e4b-q4`로 시작하고 싶을 때
+/home/rb/AI/gemma-tranferRobotLLM/scripts/manage_local_gemma.sh start e4b-q4
+
+RAG를 `e4b-q4`로 시작하고 싶을 때
+/home/rb/AI/gemma-rag/scripts/manage_local_gemma.sh start e4b-q4
+
+
+직접 curl로 테스트
+
+Routing
+curl -s http://127.0.0.1:8080/v1/chat/completions \
+  -H 'Content-Type: application/json' \
+  -d @/home/rb/AI/gemma-routing/examples/medical_router_request.json
+
+Transfer Robot
+curl -s http://127.0.0.1:8081/v1/chat/completions \
+  -H 'Content-Type: application/json' \
+  -d @/home/rb/AI/gemma-tranferRobotLLM/examples/stt_correction_request.json
+
+RAG
+curl -s http://127.0.0.1:8082/v1/chat/completions \
+  -H 'Content-Type: application/json' \
+  -d @/home/rb/AI/gemma-rag/examples/rag_answer_request.json
+
+
+짧은 직접 테스트 예시
+
+Routing
+curl -s http://127.0.0.1:8080/v1/chat/completions \
+  -H 'Content-Type: application/json' \
+  -d '{"model":"gemma4-routing","messages":[{"role":"user","content":"Reply with just OK"}],"max_tokens":16}'
+
+Transfer Robot
+curl -s http://127.0.0.1:8081/v1/chat/completions \
+  -H 'Content-Type: application/json' \
+  -d '{"model":"gemma4-transfer-robot","messages":[{"role":"user","content":"Reply with just OK"}],"max_tokens":16}'
+
+RAG
+curl -s http://127.0.0.1:8082/v1/chat/completions \
+  -H 'Content-Type: application/json' \
+  -d '{"model":"gemma4-rag","messages":[{"role":"user","content":"Reply with just OK"}],"max_tokens":16}'
+
+
+로그와 스트리밍
+
+Routing 로그 보기
+/home/rb/AI/gemma-routing/scripts/manage_local_gemma.sh logs
+
+Transfer Robot 로그 보기
+/home/rb/AI/gemma-tranferRobotLLM/scripts/manage_local_gemma.sh logs
+
+RAG 로그 보기
+/home/rb/AI/gemma-rag/scripts/manage_local_gemma.sh logs
+
+Routing 스트리밍 보기
+/home/rb/AI/gemma-routing/scripts/manage_local_gemma.sh stream
+
+Transfer Robot 스트리밍 보기
+/home/rb/AI/gemma-tranferRobotLLM/scripts/manage_local_gemma.sh stream
+
+RAG 스트리밍 보기
+/home/rb/AI/gemma-rag/scripts/manage_local_gemma.sh stream
+
+
+자주 보는 상태 메시지
+
+- `waiting_for_server=1`
+  - 서버가 아직 뜨는 중
+
+- `waiting_s=...`
+  - 준비되거나 첫 토큰이 나올 때까지 기다리는 중
+
+- `ready=1`
+  - 서버 준비 완료
+
+- `Connection refused`
+  - 너무 빨리 요청 보낸 경우가 많음
+  - `ready` 먼저 확인하는 게 안전함
+
+- `[thinking]`
+  - reasoning 토큰이 보이는 중
+
+- `[answer]`
+  - 최종 응답 토큰이 보이는 중
+
+
+주의할 점
+
+- 각 프로젝트는 필요한 것만 켜는 게 좋다.
+- Jetson이 느려질 수 있으니 Routing, Transfer Robot, RAG를 동시에 다 켜는 건 꼭 필요할 때만 한다.
+- `restart` 직후에는 바로 요청하지 말고 `ready=1`을 확인하는 게 안전하다.
+- 처음 실행 시에는 모델 다운로드 때문에 오래 걸릴 수 있다.
+- `stop`은 해당 프로젝트 컨테이너만 내린다.
+- `start`와 `restart`는 메모리 확보를 위해 기존 Gemma 컨테이너를 먼저 전부 내린다.
+- Transfer Robot 기본값은 `e2b`를 GPU hybrid로 돌린다.
+- Transfer Robot 기본값은 GPU 8개 레이어만 올려서 Orin에서 더 안정적으로 뜨게 맞췄다.
+- Transfer Robot은 GPU를 쓰되, KV와 일부 연산은 CPU 쪽으로 남겨 OOM을 피한다.

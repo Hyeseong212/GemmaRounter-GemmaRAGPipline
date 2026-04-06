@@ -1,0 +1,11 @@
+{
+  "request_id": "demo-router-local-001",
+  "user_message": "20자 이내로 출발 안내 멘트 만들어줘.",
+  "has_image": false,
+  "network_status": "online",
+  "local_tools_available": ["device_status_api", "cached_error_help"],
+  "metadata": {
+    "device_id": "demo-orin-01",
+    "locale": "ko-KR"
+  }
+}

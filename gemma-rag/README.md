@@ -11,13 +11,14 @@ This project is for the Gemma-facing part of a separate RAG pipeline.
 
 ## Shared Model Policy
 
-This project also uses the same shared Gemma runtime:
+This project uses its own project wrapper scripts:
 
-- [`../scripts/run_gemma4_llama_server.sh`](/home/rb/AI/scripts/run_gemma4_llama_server.sh)
+- run: [`scripts/run_local_gemma.sh`](/home/rb/AI/gemma-rag/scripts/run_local_gemma.sh)
+- manage: [`scripts/manage_local_gemma.sh`](/home/rb/AI/gemma-rag/scripts/manage_local_gemma.sh)
 
 Expected model alias:
 
-- `gemma4-shared`
+- `gemma4-rag`
 
 ## Files
 

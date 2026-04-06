@@ -1,0 +1,11 @@
+{
+  "request_id": "demo-router-server-001",
+  "user_message": "이 장비 방식과 기존 방식의 차이, 장단점, 운영상 trade-off를 비교해서 설명해줘.",
+  "has_image": false,
+  "network_status": "online",
+  "local_tools_available": ["device_status_api", "cached_error_help"],
+  "metadata": {
+    "device_id": "demo-orin-01",
+    "locale": "ko-KR"
+  }
+}

@@ -1,48 +1,34 @@
 # Router Schema
 
-This is the recommended v1 schema for the Jetson-side Gemma router.
+This is the recommended v2 schema for the Jetson-side Gemma router.
 
-The base design follows your intended behavior:
+The main routing question is now:
 
-- Jetson does not generate the full answer
-- Jetson decides where the request should go
-- unsafe requests are blocked or escalated before the main server path
+1. Is this a general question or a reference-grounded question?
+2. If it is general, can the local LLM answer it within 20 Korean characters?
+3. If not, should it go to the server large model?
 
-## Why This Schema Is Good
+Safety gating still stays above all of that.
 
-Your current route design is already the right backbone:
+## Route Set
+
+Use these routes:
 
 - `local_rule_only`
+- `local_llm`
 - `server_rag`
+- `server_llm`
 - `server_vision`
 - `human_review`
 - `block`
 
-That is enough to start.
-
-## What I Recommend Adding
-
-Add only these two fields beyond the core routing fields:
-
-1. `reason_codes`
-   - machine-readable explanation for why the route was chosen
-   - better than relying only on free-text `reason`
-   - useful for logs, analytics, dashboards, and deterministic downstream handling
-
-2. `priority`
-   - useful for alarm-driven device workflows
-   - helps the server or operator queue requests
-
-I do **not** recommend adding model `confidence` in v1.
-For medical-device routing, confidence is often noisy and easy to over-trust.
-
-## Final Recommended v1 Shape
+## Final Recommended Shape
 
 ```json
 {
   "intent": "string",
   "risk_level": "low | medium | high | forbidden",
-  "route": "local_rule_only | server_rag | server_vision | human_review | block",
+  "route": "local_rule_only | local_llm | server_rag | server_llm | server_vision | human_review | block",
   "needs_human_review": false,
   "patient_related": false,
   "priority": "normal | high | critical",
@@ -53,51 +39,38 @@ For medical-device routing, confidence is often noisy and easy to over-trust.
 }
 ```
 
-## Field Notes
-
-### `intent`
-
-Keep this to a small fixed set at first:
+## Intent Values
 
 - `device_status_question`
 - `device_error_question`
 - `device_usage_question`
 - `manual_procedure_question`
 - `ui_screen_question`
+- `general_question`
+- `general_reasoning_question`
 - `clinical_risk_question`
 - `treatment_change_request`
 - `medication_advice_request`
 - `contraindication_override_request`
 - `unknown`
 
-### `risk_level`
+## Route Meaning
 
-- `low`: informational or deterministic device questions
-- `medium`: non-clinical but requires grounding or careful handling
-- `high`: clinically risky or operator-sensitive
-- `forbidden`: should not be answered by the system
+- `local_rule_only`: deterministic local tool or cached local response
+- `local_llm`: short general answer with the on-device LLM, capped at 20 Korean characters
+- `server_rag`: grounded answer from the RAG/reference pipeline
+- `server_llm`: general answer from the large server model without RAG
+- `server_vision`: image or screen understanding path
+- `human_review`: operator or clinician review required
+- `block`: unsafe request refusal
 
-### `route`
-
-- `local_rule_only`: answer with local device API, cached SOP, or deterministic rule
-- `server_rag`: send to the 5090 RAG path
-- `server_vision`: send to the vision specialist path
-- `human_review`: stop automated answering and ask for clinician/operator review
-- `block`: refuse and do not continue
-
-### `priority`
-
-- `normal`: standard request
-- `high`: important but not immediately critical
-- `critical`: alarm-like, urgent, or operator-immediate handling needed
-
-### `reason_codes`
-
-Recommended starting codes:
+## Reason Codes
 
 - `local_status_available`
-- `needs_manual_grounding`
+- `needs_reference_grounding`
 - `needs_visual_inspection`
+- `local_general_answer_ok`
+- `needs_large_model_reasoning`
 - `patient_specific_clinical_judgment`
 - `medication_or_treatment_change`
 - `contraindication_override`
@@ -106,60 +79,39 @@ Recommended starting codes:
 - `network_limited_mode`
 - `unknown_request_type`
 
-### `local_action`
-
-Keep this deterministic and implementation-friendly:
+## Local Action Values
 
 - `none`
 - `respond_with_device_api`
+- `answer_with_local_llm`
 - `show_cached_error_help`
 - `show_limited_mode_notice`
 - `handoff_to_operator`
 - `block_and_warn`
 
+## Decision Rules
+
+### 1. Deterministic local path
+
+If the request is a device status question and a local API can answer it, use `local_rule_only`.
+
+### 2. Reference-grounded path
+
+If the request needs manuals, SOPs, error-code references, or retrieved document evidence, use `server_rag`.
+
+### 3. General local answer path
+
+If the request is general, non-clinical, non-grounded, and the expected answer can stay within 20 Korean characters, use `local_llm`.
+
+### 4. General server answer path
+
+If the request is general but likely needs stronger reasoning, longer synthesis, or an answer longer than 20 Korean characters, use `server_llm`.
+
+### 5. Safety-first path
+
+If the request touches medication, treatment, contraindication override, or patient-specific risk interpretation, escalate to `human_review` or `block`.
+
 ## Example A
-
-Input:
-
-`에러코드 E210이 떴어. 어떻게 해야 해?`
-
-```json
-{
-  "intent": "device_error_question",
-  "risk_level": "medium",
-  "route": "server_rag",
-  "needs_human_review": false,
-  "patient_related": false,
-  "priority": "high",
-  "required_tools": ["error_code_lookup", "manual_retrieval"],
-  "reason_codes": ["needs_manual_grounding"],
-  "summary_for_server": "사용자가 에러코드 E210의 의미와 조치 방법을 문의함",
-  "local_action": "none"
-}
-```
-
-## Example B
-
-Input:
-
-`환자 맥박이 이 정도면 계속 써도 돼?`
-
-```json
-{
-  "intent": "clinical_risk_question",
-  "risk_level": "high",
-  "route": "human_review",
-  "needs_human_review": true,
-  "patient_related": true,
-  "priority": "critical",
-  "required_tools": [],
-  "reason_codes": ["patient_specific_clinical_judgment", "requires_operator_confirmation"],
-  "summary_for_server": "환자 상태 기반 사용 지속 가능 여부를 묻는 임상 판단 질문",
-  "local_action": "handoff_to_operator"
-}
-```
-
-## Example C
 
 Input:
 
@@ -180,29 +132,85 @@ Input:
 }
 ```
 
-## Implementation Notes
+## Example B
 
-Recommended execution order:
+Input:
 
-1. Hard rules first
-2. Gemma router second
-3. Route dispatcher third
+`20자 이내로 출발 안내 멘트 만들어줘`
 
-Hard rules should handle things like:
+```json
+{
+  "intent": "general_question",
+  "risk_level": "low",
+  "route": "local_llm",
+  "needs_human_review": false,
+  "patient_related": false,
+  "priority": "normal",
+  "required_tools": [],
+  "reason_codes": ["local_general_answer_ok"],
+  "summary_for_server": "",
+  "local_action": "answer_with_local_llm"
+}
+```
 
-- network offline or degraded mode
-- hard-blocked phrases or policy categories
-- deterministic device APIs
-- obvious PHI or sensitive-input handling
+## Example C
 
-## Recommendation
+Input:
 
-This schema is good enough to move forward now.
+`장비 화면에 E103 에러가 떴어. 무슨 뜻이고 다음에 뭘 확인해야 해?`
 
-If you want to stay disciplined for v1:
+```json
+{
+  "intent": "device_error_question",
+  "risk_level": "medium",
+  "route": "server_rag",
+  "needs_human_review": false,
+  "patient_related": false,
+  "priority": "high",
+  "required_tools": ["manual_retrieval"],
+  "reason_codes": ["needs_reference_grounding"],
+  "summary_for_server": "사용자가 에러코드 E103의 의미와 다음 점검 항목을 문의함",
+  "local_action": "none"
+}
+```
 
-- keep exactly 5 routes
-- keep the intent list small
-- add only `reason_codes` and `priority`
-- avoid confidence scores
-- avoid letting the router generate long natural-language answers
+## Example D
+
+Input:
+
+`이 장비 방식이 기존 방식이랑 어떤 차이가 있고 운영상 장단점이 뭐야?`
+
+```json
+{
+  "intent": "general_reasoning_question",
+  "risk_level": "low",
+  "route": "server_llm",
+  "needs_human_review": false,
+  "patient_related": false,
+  "priority": "normal",
+  "required_tools": ["server_large_llm"],
+  "reason_codes": ["needs_large_model_reasoning"],
+  "summary_for_server": "사용자가 장비 방식 비교와 운영상 장단점 설명을 요청함",
+  "local_action": "none"
+}
+```
+
+## RAG Contract
+
+The current reference RAG pipeline under [`../RAG-reference-scripts`](/home/rb/AI/RAG-reference-scripts) expects:
+
+- endpoint: `POST /ask`
+- request JSON: `{"question": "..."}`
+- response JSON: `{"answer": "..."}`
+
+The router should treat that path as grounded reference lookup, not general free-form QA.
+
+## Local Answer Budget
+
+`local_llm` is not the general default answerer.
+
+Treat it as:
+
+- short reply only
+- target budget: 20 Korean characters or less
+- if the local answer is likely to exceed that budget, reroute to `server_llm`

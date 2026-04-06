@@ -37,12 +37,14 @@ There are two practical ways to run Gemma 4 on Jetson:
 2. `Ollama`
    - Best for fast smoke tests and quick local experiments.
 
-This workspace includes a ready-to-run shared `llama-server` launcher:
+This workspace includes shared base launcher scripts plus project-specific wrappers:
 
-- [`scripts/run_gemma4_llama_server.sh`](/home/rb/AI/scripts/run_gemma4_llama_server.sh)
+- shared base: [`../shared-scripts/run_gemma4_llama_server.sh`](/home/rb/AI/shared-scripts/run_gemma4_llama_server.sh)
+- routing wrapper: [`../gemma-routing/scripts/manage_local_gemma.sh`](/home/rb/AI/gemma-routing/scripts/manage_local_gemma.sh)
+- transfer robot wrapper: [`../gemma-tranferRobotLLM/scripts/manage_local_gemma.sh`](/home/rb/AI/gemma-tranferRobotLLM/scripts/manage_local_gemma.sh)
+- RAG wrapper: [`../gemma-rag/scripts/manage_local_gemma.sh`](/home/rb/AI/gemma-rag/scripts/manage_local_gemma.sh)
 
-It exposes a local OpenAI-compatible endpoint on port `8080`.
-Both projects should call the same model alias: `gemma4-shared`.
+Each project uses its own local alias and port.
 
 ## Step 0: Preflight On Jetson
 
@@ -74,19 +76,23 @@ Notes:
 Copy this workspace to the Jetson or recreate the files there, then run:
 
 ```bash
-chmod +x /home/<user>/AI/scripts/run_gemma4_llama_server.sh
-/home/<user>/AI/scripts/run_gemma4_llama_server.sh e2b
+chmod +x /home/<user>/AI/shared-scripts/run_gemma4_llama_server.sh
+/home/<user>/AI/shared-scripts/run_gemma4_llama_server.sh e2b
 ```
 
-For the stronger edge model:
+For `Gemma 4 E4B` 4-bit quantization:
 
 ```bash
-/home/<user>/AI/scripts/run_gemma4_llama_server.sh e4b 4096 8080
+/home/<user>/AI/shared-scripts/run_gemma4_llama_server.sh e4b-q4 4096 8080 gemma4-routing
 ```
+
+This launcher maps `e4b`, `e4b-q4`, and `e4b-4bit` to:
+
+- `ggml-org/gemma-4-E4B-it-GGUF:Q4_K_M`
 
 Arguments:
 
-- arg1: `e2b` or `e4b`
+- arg1: `e2b`, `e4b`, `e4b-q4`, or `e4b-4bit`
 - arg2: context size, default `4096`
 - arg3: port, default `8080`
 - arg4: alias, default `gemma4-shared`
@@ -97,11 +103,19 @@ Why `4096` first:
 - Your router/safety-gate use case does not need 128K context.
 - Start lean and stable, then increase later if you actually need it.
 
+Docker note:
+
+- If your user is already in the `docker` group, the launcher runs `docker` directly.
+- If not, it will try passwordless `sudo -n docker`.
+- If both fail, run it from a root shell or add the user to the `docker` group.
+
 ## Step 2: Smoke Test The Local API
 
-The launcher exposes a single shared alias by default:
+Example project aliases:
 
-- `gemma4-shared`
+- `gemma4-routing`
+- `gemma4-transfer-robot`
+- `gemma4-rag`
 
 Example request:
 
@@ -152,7 +166,9 @@ device input
   -> Gemma 4 router on Jetson
   -> one of:
        local_rule_only
+       local_llm
        server_rag
+       server_llm
        server_vision
        human_review
        block
@@ -197,6 +213,7 @@ Start like this:
    - JSON-only structured outputs
 
 2. `Gemma 4 E4B`
+   - `Q4_K_M` 4-bit quantized on Jetson
    - after routing is stable
    - stronger local fallback QA
    - optional document/image triage
@@ -215,8 +232,8 @@ Use a fixed output shape like this:
   "needs_human_review": false,
   "patient_related": false,
   "priority": "high",
-  "required_tools": ["error_code_lookup", "manual_retrieval"],
-  "reason_codes": ["needs_manual_grounding"],
+  "required_tools": ["manual_retrieval"],
+  "reason_codes": ["needs_reference_grounding"],
   "summary_for_server": "User asks what error code E103 means and what the next safe action is.",
   "local_action": "none"
 }

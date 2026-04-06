@@ -1,5 +1,5 @@
 {
-  "model": "gemma4-shared",
+  "model": "gemma4-rag",
   "temperature": 0.1,
   "max_tokens": 400,
   "messages": [
