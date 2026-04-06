@@ -1,0 +1,1508 @@
+{
+  "dataset_name": "bulk_local_router_requests",
+  "target_route": "local_llm",
+  "note": "Random local-answer examples for quick routing experiments.",
+  "count": 100,
+  "requests": [
+    {
+      "request_id": "bulk-local-001",
+      "user_message": "출발 멘트 만들어줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-002",
+      "user_message": "정지 한 문장으로 말해줘 병실용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-003",
+      "user_message": "대기 짧게 안내해줘 현장용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-004",
+      "user_message": "도착 로봇처럼 말해줘 지금 상황에 맞게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-005",
+      "user_message": "이동 짧게 말해줘 차분하게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-006",
+      "user_message": "안내 TTS용으로 만들어줘 간호사에게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-007",
+      "user_message": "확인 간단히 말해줘 부드럽게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-008",
+      "user_message": "주의 안내 멘트 줘 바로 쓸 수 있게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-009",
+      "user_message": "복귀 20자 이내로 알려줘 보호자에게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-010",
+      "user_message": "준비 한마디로 말해줘 짧고 또렷하게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-011",
+      "user_message": "진행 멘트 만들어줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-012",
+      "user_message": "완료 한 문장으로 말해줘 병실용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-013",
+      "user_message": "재시도 짧게 안내해줘 현장용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-014",
+      "user_message": "천천히 로봇처럼 말해줘 지금 상황에 맞게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-015",
+      "user_message": "문확인 짧게 말해줘 차분하게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-016",
+      "user_message": "안전확인 TTS용으로 만들어줘 간호사에게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-017",
+      "user_message": "잠시 간단히 말해줘 부드럽게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-018",
+      "user_message": "정렬 안내 멘트 줘 바로 쓸 수 있게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-019",
+      "user_message": "승인 20자 이내로 알려줘 보호자에게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-020",
+      "user_message": "호출 한마디로 말해줘 짧고 또렷하게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-021",
+      "user_message": "출발 멘트 만들어줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-022",
+      "user_message": "정지 한 문장으로 말해줘 병실용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-023",
+      "user_message": "대기 짧게 안내해줘 현장용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-024",
+      "user_message": "도착 로봇처럼 말해줘 지금 상황에 맞게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-025",
+      "user_message": "이동 짧게 말해줘 차분하게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-026",
+      "user_message": "안내 TTS용으로 만들어줘 간호사에게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-027",
+      "user_message": "확인 간단히 말해줘 부드럽게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-028",
+      "user_message": "주의 안내 멘트 줘 바로 쓸 수 있게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-029",
+      "user_message": "복귀 20자 이내로 알려줘 보호자에게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-030",
+      "user_message": "준비 한마디로 말해줘 짧고 또렷하게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-031",
+      "user_message": "진행 멘트 만들어줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-032",
+      "user_message": "완료 한 문장으로 말해줘 병실용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-033",
+      "user_message": "재시도 짧게 안내해줘 현장용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-034",
+      "user_message": "천천히 로봇처럼 말해줘 지금 상황에 맞게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-035",
+      "user_message": "문확인 짧게 말해줘 차분하게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-036",
+      "user_message": "안전확인 TTS용으로 만들어줘 간호사에게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-037",
+      "user_message": "잠시 간단히 말해줘 부드럽게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-038",
+      "user_message": "정렬 안내 멘트 줘 바로 쓸 수 있게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-039",
+      "user_message": "승인 20자 이내로 알려줘 보호자에게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-040",
+      "user_message": "호출 한마디로 말해줘 짧고 또렷하게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-041",
+      "user_message": "출발 멘트 만들어줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-042",
+      "user_message": "정지 한 문장으로 말해줘 병실용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-043",
+      "user_message": "대기 짧게 안내해줘 현장용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-044",
+      "user_message": "도착 로봇처럼 말해줘 지금 상황에 맞게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-045",
+      "user_message": "이동 짧게 말해줘 차분하게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-046",
+      "user_message": "안내 TTS용으로 만들어줘 간호사에게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-047",
+      "user_message": "확인 간단히 말해줘 부드럽게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-048",
+      "user_message": "주의 안내 멘트 줘 바로 쓸 수 있게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-049",
+      "user_message": "복귀 20자 이내로 알려줘 보호자에게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-050",
+      "user_message": "준비 한마디로 말해줘 짧고 또렷하게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-051",
+      "user_message": "진행 멘트 만들어줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-052",
+      "user_message": "완료 한 문장으로 말해줘 병실용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-053",
+      "user_message": "재시도 짧게 안내해줘 현장용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-054",
+      "user_message": "천천히 로봇처럼 말해줘 지금 상황에 맞게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-055",
+      "user_message": "문확인 짧게 말해줘 차분하게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-056",
+      "user_message": "안전확인 TTS용으로 만들어줘 간호사에게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-057",
+      "user_message": "잠시 간단히 말해줘 부드럽게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-058",
+      "user_message": "정렬 안내 멘트 줘 바로 쓸 수 있게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-059",
+      "user_message": "승인 20자 이내로 알려줘 보호자에게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-060",
+      "user_message": "호출 한마디로 말해줘 짧고 또렷하게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-061",
+      "user_message": "출발 멘트 만들어줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-062",
+      "user_message": "정지 한 문장으로 말해줘 병실용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-063",
+      "user_message": "대기 짧게 안내해줘 현장용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-064",
+      "user_message": "도착 로봇처럼 말해줘 지금 상황에 맞게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-065",
+      "user_message": "이동 짧게 말해줘 차분하게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-066",
+      "user_message": "안내 TTS용으로 만들어줘 간호사에게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-067",
+      "user_message": "확인 간단히 말해줘 부드럽게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-068",
+      "user_message": "주의 안내 멘트 줘 바로 쓸 수 있게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-069",
+      "user_message": "복귀 20자 이내로 알려줘 보호자에게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-070",
+      "user_message": "준비 한마디로 말해줘 짧고 또렷하게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-071",
+      "user_message": "진행 멘트 만들어줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-072",
+      "user_message": "완료 한 문장으로 말해줘 병실용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-073",
+      "user_message": "재시도 짧게 안내해줘 현장용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-074",
+      "user_message": "천천히 로봇처럼 말해줘 지금 상황에 맞게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-075",
+      "user_message": "문확인 짧게 말해줘 차분하게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-076",
+      "user_message": "안전확인 TTS용으로 만들어줘 간호사에게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-077",
+      "user_message": "잠시 간단히 말해줘 부드럽게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-078",
+      "user_message": "정렬 안내 멘트 줘 바로 쓸 수 있게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-079",
+      "user_message": "승인 20자 이내로 알려줘 보호자에게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-080",
+      "user_message": "호출 한마디로 말해줘 짧고 또렷하게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-081",
+      "user_message": "출발 멘트 만들어줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-082",
+      "user_message": "정지 한 문장으로 말해줘 병실용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-083",
+      "user_message": "대기 짧게 안내해줘 현장용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-084",
+      "user_message": "도착 로봇처럼 말해줘 지금 상황에 맞게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-085",
+      "user_message": "이동 짧게 말해줘 차분하게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-086",
+      "user_message": "안내 TTS용으로 만들어줘 간호사에게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-087",
+      "user_message": "확인 간단히 말해줘 부드럽게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-088",
+      "user_message": "주의 안내 멘트 줘 바로 쓸 수 있게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-089",
+      "user_message": "복귀 20자 이내로 알려줘 보호자에게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-090",
+      "user_message": "준비 한마디로 말해줘 짧고 또렷하게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-091",
+      "user_message": "진행 멘트 만들어줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-092",
+      "user_message": "완료 한 문장으로 말해줘 병실용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-093",
+      "user_message": "재시도 짧게 안내해줘 현장용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-094",
+      "user_message": "천천히 로봇처럼 말해줘 지금 상황에 맞게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-095",
+      "user_message": "문확인 짧게 말해줘 차분하게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-096",
+      "user_message": "안전확인 TTS용으로 만들어줘 간호사에게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-097",
+      "user_message": "잠시 간단히 말해줘 부드럽게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-098",
+      "user_message": "정렬 안내 멘트 줘 바로 쓸 수 있게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-099",
+      "user_message": "승인 20자 이내로 알려줘 보호자에게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    },
+    {
+      "request_id": "bulk-local-100",
+      "user_message": "호출 한마디로 말해줘 짧고 또렷하게.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-local"
+      }
+    }
+  ]
+}

@@ -8,7 +8,14 @@ from .config import RouterSettings
 
 
 class ModelClient(Protocol):
-    async def complete(self, system_prompt: str, user_prompt: str) -> str:
+    async def complete(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+        *,
+        temperature: float | None = None,
+        max_tokens: int | None = None,
+    ) -> str:
         """Return the raw model response text."""
 
 
@@ -16,11 +23,18 @@ class GemmaChatClient:
     def __init__(self, settings: RouterSettings) -> None:
         self._settings = settings
 
-    async def complete(self, system_prompt: str, user_prompt: str) -> str:
+    async def complete(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+        *,
+        temperature: float | None = None,
+        max_tokens: int | None = None,
+    ) -> str:
         payload = {
             "model": self._settings.model_name,
-            "temperature": self._settings.temperature,
-            "max_tokens": self._settings.max_tokens,
+            "temperature": self._settings.temperature if temperature is None else temperature,
+            "max_tokens": self._settings.max_tokens if max_tokens is None else max_tokens,
             "reasoning": self._settings.reasoning_mode,
             "reasoning_budget": self._settings.reasoning_budget,
             "messages": [

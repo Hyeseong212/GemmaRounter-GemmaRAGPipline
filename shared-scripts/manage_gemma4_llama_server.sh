@@ -2,7 +2,7 @@
 set -euo pipefail
 
 ACTION="${1:-status}"
-MODEL_VARIANT="${MODEL_VARIANT:-${2:-e4b-q4}}"
+MODEL_VARIANT="${MODEL_VARIANT:-${2:-e2b}}"
 CTX_SIZE="${CTX_SIZE:-${3:-4096}}"
 PORT="${PORT:-${4:-8080}}"
 ALIAS="${ALIAS:-${5:-gemma4-shared}}"

@@ -24,7 +24,7 @@ def test_medication_question_routes_to_human_review() -> None:
     assert match.decision.intent == "medication_advice_request"
 
 
-def test_attached_image_routes_to_server_vision() -> None:
+def test_attached_image_routes_to_human_review() -> None:
     request = normalize_router_input(
         RouterInput(user_message="첨부한 스크린샷 좀 봐줘", has_image=True)
     )
@@ -32,39 +32,18 @@ def test_attached_image_routes_to_server_vision() -> None:
     match = apply_hard_rules(request)
 
     assert match is not None
-    assert match.decision.route == "server_vision"
-    assert match.decision.reason_codes == ["needs_visual_inspection"]
+    assert match.decision.route == "human_review"
+    assert "requires_operator_confirmation" in match.decision.reason_codes
 
 
-def test_offline_general_question_routes_to_local_llm() -> None:
-    request = normalize_router_input(
-        RouterInput(
-            user_message="20자 이내로 출발 안내 멘트 만들어줘",
-            network_status="offline",
-        )
-    )
+def test_online_error_code_routes_to_rag() -> None:
+    request = normalize_router_input(RouterInput(user_message="E210 에러가 떴어. 의미가 뭐야?"))
 
     match = apply_hard_rules(request)
 
     assert match is not None
-    assert match.decision.route == "local_llm"
-    assert match.decision.local_action == "answer_with_local_llm"
-    assert "network_limited_mode" in match.decision.reason_codes
-
-
-def test_offline_long_general_question_routes_to_limited_notice() -> None:
-    request = normalize_router_input(
-        RouterInput(
-            user_message="이 장비 방식과 기존 방식의 차이와 장단점을 자세히 설명해줘",
-            network_status="offline",
-        )
-    )
-
-    match = apply_hard_rules(request)
-
-    assert match is not None
-    assert match.decision.route == "local_rule_only"
-    assert match.decision.local_action == "show_limited_mode_notice"
+    assert match.decision.route == "server_rag"
+    assert match.decision.intent == "device_error_question"
 
 
 def test_offline_error_code_prefers_cached_help() -> None:
@@ -82,3 +61,30 @@ def test_offline_error_code_prefers_cached_help() -> None:
     assert match.decision.route == "local_rule_only"
     assert match.decision.local_action == "show_cached_error_help"
     assert "needs_reference_grounding" in match.decision.reason_codes
+
+
+def test_short_general_question_routes_to_local_llm() -> None:
+    request = normalize_router_input(
+        RouterInput(user_message="20자 이내로 출발 안내 멘트 만들어줘")
+    )
+
+    match = apply_hard_rules(request)
+
+    assert match is not None
+    assert match.decision.route == "local_llm"
+    assert match.decision.local_action == "answer_with_local_llm"
+
+
+def test_offline_long_general_question_routes_to_limited_notice() -> None:
+    request = normalize_router_input(
+        RouterInput(
+            user_message="이 장비 방식과 기존 방식의 차이와 장단점을 자세히 설명해줘",
+            network_status="offline",
+        )
+    )
+
+    match = apply_hard_rules(request)
+
+    assert match is not None
+    assert match.decision.route == "local_rule_only"
+    assert match.decision.local_action == "show_limited_mode_notice"

@@ -1,98 +1,82 @@
 # Harness Engineering
 
-This document describes the full router harness that wraps Gemma instead of letting the model directly control the whole pipeline.
+This router now uses a minimal harness designed for `Gemma 4 E2B`.
 
 ## Design Goal
 
-Gemma should make a narrow structured routing decision.
+Do not ask the local model to produce a big medical routing schema.
 
-The harness around Gemma is responsible for:
+Instead:
+
+1. hard rules catch obvious and risky cases
+2. the model returns only a tiny route choice
+3. local code expands that into the final router decision
+4. post-policies enforce the 20-character rule and offline behavior
+
+## What Stayed
 
 - input normalization
 - signal extraction
-- hard policy gates
-- output validation
-- repair on malformed output
-- post-policy safety overrides
-- downstream handoff contract generation
+- hard safety gates
+- tiny model route choice
+- post-policy override
+- downstream handoff generation
 
-## Stages
+## What Was Removed
+
+- repair flow
+- vision route from the small E2B router
+- large model-emitted JSON contract
+- extra routing branches that the local model did not need
+
+## Current Flow
 
 ### 1. Normalize
 
-The router converts the raw request into a normalized request envelope and extracts signals such as:
+Extract only the signals that matter for this router:
 
 - error codes
 - reference-grounding need
-- general-question candidacy
-- complex reasoning request
-- short-answer expectation under 20 characters
-- patient-related language
-- medication or treatment language
-- override attempts
-- image or screenshot presence
-- local-only status queries
+- short-answer expectation
+- patient or medication risk
+- image request
 - network-limited mode
 
 ### 2. Hard Rules
 
-Before Gemma runs, deterministic and high-risk categories are intercepted:
+Handle these without the model:
 
-- medication advice
-- treatment-change questions
-- patient-specific risk interpretation
-- local status API requests
-- offline cached error help
-- attached-image vision triage
+- medication, treatment, patient-risk requests
+- override or bypass requests
+- realtime status API requests
+- obvious manual or error-code questions
+- offline cached-help and limited-mode behavior
+- image requests
 
-### 3. Model Routing
+### 3. Minimal Model Routing
 
-Gemma is only asked to output the strict router JSON contract. It does not answer the user.
+For unresolved cases, Gemma returns only:
 
-The core routing split is now:
+- `local_llm`
+- `server_rag`
+- `server_llm`
+- `human_review`
+- `block`
 
-- deterministic local rule
-- local LLM general answer
-- server RAG grounded answer
-- server large-model general answer
-- server vision
-- human review
-- block
+### 4. Post-Policy Checks
 
-### 4. Repair
+Even if the model picks a route, local policy can still fix it:
 
-If Gemma returns malformed JSON or invalid enum values, the harness sends the invalid output into a constrained repair prompt once. If repair still fails, the harness falls back to `human_review`.
+- `local_llm` is upgraded to `server_llm` if 20 characters is unrealistic
+- `server_llm` or `server_rag` is downgraded in offline mode
+- image or patient-risk requests are kept out of normal auto-answer paths
 
-### 5. Post-Policy Override
+### 5. Handoff
 
-Even valid model output can be overridden if it violates execution policy, for example:
+The final output still carries a downstream execution contract for:
 
-- patient-specific content routed to a normal answer path
-- `server_llm` chosen while the network is degraded or offline
-- `server_rag` chosen while the network is degraded or offline
-- `server_vision` chosen without an actual image attachment
-- `local_rule_only` chosen while the required local tool is unavailable
-
-### 6. Downstream Handoff
-
-The final result includes a structured handoff contract.
-
-For `server_rag`, the contract is designed around the current reference RAG API:
-
-- `POST /ask`
-- request key `question`
-- response key `answer`
-
-For `local_llm`, the contract is intentionally short-answer and low-latency.
-The local path should only be used when the expected reply fits within 20 Korean characters.
-
-For `server_vision`, the contract is designed for `InterVL 78B` and explicitly includes:
-
-- target system
-- task type
-- required inputs
-- required extraction fields
-- banned behaviors
-- escalation triggers
-
-This keeps `InterVL 78B` acting as a visual extractor and triage specialist instead of a free-form final answer model.
+- local answer generation
+- RAG reference lookup
+- server large-model answering
+- operator review
+- block handling

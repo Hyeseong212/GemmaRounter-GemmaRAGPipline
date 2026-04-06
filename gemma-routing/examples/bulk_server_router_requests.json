@@ -1,0 +1,1508 @@
+{
+  "dataset_name": "bulk_server_router_requests",
+  "target_route": "server_llm",
+  "note": "Random long general-question examples for server-side routing experiments.",
+  "count": 100,
+  "requests": [
+    {
+      "request_id": "bulk-server-001",
+      "user_message": "이 장비 방식과 기존 방식의 차이 우리 프로젝트 기준으로 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-002",
+      "user_message": "자율주행과 수동주행의 운영 차이 지금 구조를 전제로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-003",
+      "user_message": "이승 절차 자동화의 장단점 개발자에게 설명하듯 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-004",
+      "user_message": "현장 운영에서 로컬 LLM을 쓰는 이유 병원 현장 기준으로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-005",
+      "user_message": "GPU와 CPU 혼합 추론의 trade-off 추후 확장성까지 고려해서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-006",
+      "user_message": "음성 인터페이스 도입 효과 의사결정 보고용으로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-007",
+      "user_message": "Jetson Orin에서 2B 모델을 쓰는 이유 의료장비 보조 시스템 관점에서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-008",
+      "user_message": "로컬 모델과 서버 모델의 역할 분리 사례를 섞어서 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-009",
+      "user_message": "작은 모델 하네스 설계의 장점 실제 배포를 가정해서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-010",
+      "user_message": "라이다 기반 안내와 LLM 안내의 차이 운영자 교육 자료처럼 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-011",
+      "user_message": "이 장비 방식과 기존 방식의 차이 우리 프로젝트 기준으로 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-012",
+      "user_message": "자율주행과 수동주행의 운영 차이 지금 구조를 전제로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-013",
+      "user_message": "이승 절차 자동화의 장단점 개발자에게 설명하듯 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-014",
+      "user_message": "현장 운영에서 로컬 LLM을 쓰는 이유 병원 현장 기준으로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-015",
+      "user_message": "GPU와 CPU 혼합 추론의 trade-off 추후 확장성까지 고려해서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-016",
+      "user_message": "음성 인터페이스 도입 효과 의사결정 보고용으로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-017",
+      "user_message": "Jetson Orin에서 2B 모델을 쓰는 이유 의료장비 보조 시스템 관점에서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-018",
+      "user_message": "로컬 모델과 서버 모델의 역할 분리 사례를 섞어서 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-019",
+      "user_message": "작은 모델 하네스 설계의 장점 실제 배포를 가정해서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-020",
+      "user_message": "라이다 기반 안내와 LLM 안내의 차이 운영자 교육 자료처럼 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-021",
+      "user_message": "이 장비 방식과 기존 방식의 차이 우리 프로젝트 기준으로 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-022",
+      "user_message": "자율주행과 수동주행의 운영 차이 지금 구조를 전제로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-023",
+      "user_message": "이승 절차 자동화의 장단점 개발자에게 설명하듯 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-024",
+      "user_message": "현장 운영에서 로컬 LLM을 쓰는 이유 병원 현장 기준으로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-025",
+      "user_message": "GPU와 CPU 혼합 추론의 trade-off 추후 확장성까지 고려해서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-026",
+      "user_message": "음성 인터페이스 도입 효과 의사결정 보고용으로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-027",
+      "user_message": "Jetson Orin에서 2B 모델을 쓰는 이유 의료장비 보조 시스템 관점에서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-028",
+      "user_message": "로컬 모델과 서버 모델의 역할 분리 사례를 섞어서 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-029",
+      "user_message": "작은 모델 하네스 설계의 장점 실제 배포를 가정해서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-030",
+      "user_message": "라이다 기반 안내와 LLM 안내의 차이 운영자 교육 자료처럼 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-031",
+      "user_message": "이 장비 방식과 기존 방식의 차이 우리 프로젝트 기준으로 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-032",
+      "user_message": "자율주행과 수동주행의 운영 차이 지금 구조를 전제로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-033",
+      "user_message": "이승 절차 자동화의 장단점 개발자에게 설명하듯 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-034",
+      "user_message": "현장 운영에서 로컬 LLM을 쓰는 이유 병원 현장 기준으로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-035",
+      "user_message": "GPU와 CPU 혼합 추론의 trade-off 추후 확장성까지 고려해서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-036",
+      "user_message": "음성 인터페이스 도입 효과 의사결정 보고용으로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-037",
+      "user_message": "Jetson Orin에서 2B 모델을 쓰는 이유 의료장비 보조 시스템 관점에서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-038",
+      "user_message": "로컬 모델과 서버 모델의 역할 분리 사례를 섞어서 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-039",
+      "user_message": "작은 모델 하네스 설계의 장점 실제 배포를 가정해서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-040",
+      "user_message": "라이다 기반 안내와 LLM 안내의 차이 운영자 교육 자료처럼 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-041",
+      "user_message": "이 장비 방식과 기존 방식의 차이 우리 프로젝트 기준으로 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-042",
+      "user_message": "자율주행과 수동주행의 운영 차이 지금 구조를 전제로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-043",
+      "user_message": "이승 절차 자동화의 장단점 개발자에게 설명하듯 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-044",
+      "user_message": "현장 운영에서 로컬 LLM을 쓰는 이유 병원 현장 기준으로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-045",
+      "user_message": "GPU와 CPU 혼합 추론의 trade-off 추후 확장성까지 고려해서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-046",
+      "user_message": "음성 인터페이스 도입 효과 의사결정 보고용으로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-047",
+      "user_message": "Jetson Orin에서 2B 모델을 쓰는 이유 의료장비 보조 시스템 관점에서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-048",
+      "user_message": "로컬 모델과 서버 모델의 역할 분리 사례를 섞어서 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-049",
+      "user_message": "작은 모델 하네스 설계의 장점 실제 배포를 가정해서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-050",
+      "user_message": "라이다 기반 안내와 LLM 안내의 차이 운영자 교육 자료처럼 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-051",
+      "user_message": "이 장비 방식과 기존 방식의 차이 우리 프로젝트 기준으로 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-052",
+      "user_message": "자율주행과 수동주행의 운영 차이 지금 구조를 전제로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-053",
+      "user_message": "이승 절차 자동화의 장단점 개발자에게 설명하듯 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-054",
+      "user_message": "현장 운영에서 로컬 LLM을 쓰는 이유 병원 현장 기준으로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-055",
+      "user_message": "GPU와 CPU 혼합 추론의 trade-off 추후 확장성까지 고려해서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-056",
+      "user_message": "음성 인터페이스 도입 효과 의사결정 보고용으로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-057",
+      "user_message": "Jetson Orin에서 2B 모델을 쓰는 이유 의료장비 보조 시스템 관점에서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-058",
+      "user_message": "로컬 모델과 서버 모델의 역할 분리 사례를 섞어서 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-059",
+      "user_message": "작은 모델 하네스 설계의 장점 실제 배포를 가정해서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-060",
+      "user_message": "라이다 기반 안내와 LLM 안내의 차이 운영자 교육 자료처럼 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-061",
+      "user_message": "이 장비 방식과 기존 방식의 차이 우리 프로젝트 기준으로 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-062",
+      "user_message": "자율주행과 수동주행의 운영 차이 지금 구조를 전제로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-063",
+      "user_message": "이승 절차 자동화의 장단점 개발자에게 설명하듯 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-064",
+      "user_message": "현장 운영에서 로컬 LLM을 쓰는 이유 병원 현장 기준으로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-065",
+      "user_message": "GPU와 CPU 혼합 추론의 trade-off 추후 확장성까지 고려해서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-066",
+      "user_message": "음성 인터페이스 도입 효과 의사결정 보고용으로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-067",
+      "user_message": "Jetson Orin에서 2B 모델을 쓰는 이유 의료장비 보조 시스템 관점에서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-068",
+      "user_message": "로컬 모델과 서버 모델의 역할 분리 사례를 섞어서 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-069",
+      "user_message": "작은 모델 하네스 설계의 장점 실제 배포를 가정해서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-070",
+      "user_message": "라이다 기반 안내와 LLM 안내의 차이 운영자 교육 자료처럼 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-071",
+      "user_message": "이 장비 방식과 기존 방식의 차이 우리 프로젝트 기준으로 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-072",
+      "user_message": "자율주행과 수동주행의 운영 차이 지금 구조를 전제로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-073",
+      "user_message": "이승 절차 자동화의 장단점 개발자에게 설명하듯 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-074",
+      "user_message": "현장 운영에서 로컬 LLM을 쓰는 이유 병원 현장 기준으로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-075",
+      "user_message": "GPU와 CPU 혼합 추론의 trade-off 추후 확장성까지 고려해서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-076",
+      "user_message": "음성 인터페이스 도입 효과 의사결정 보고용으로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-077",
+      "user_message": "Jetson Orin에서 2B 모델을 쓰는 이유 의료장비 보조 시스템 관점에서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-078",
+      "user_message": "로컬 모델과 서버 모델의 역할 분리 사례를 섞어서 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-079",
+      "user_message": "작은 모델 하네스 설계의 장점 실제 배포를 가정해서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-080",
+      "user_message": "라이다 기반 안내와 LLM 안내의 차이 운영자 교육 자료처럼 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-081",
+      "user_message": "이 장비 방식과 기존 방식의 차이 우리 프로젝트 기준으로 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-082",
+      "user_message": "자율주행과 수동주행의 운영 차이 지금 구조를 전제로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-083",
+      "user_message": "이승 절차 자동화의 장단점 개발자에게 설명하듯 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-084",
+      "user_message": "현장 운영에서 로컬 LLM을 쓰는 이유 병원 현장 기준으로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-085",
+      "user_message": "GPU와 CPU 혼합 추론의 trade-off 추후 확장성까지 고려해서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-086",
+      "user_message": "음성 인터페이스 도입 효과 의사결정 보고용으로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-087",
+      "user_message": "Jetson Orin에서 2B 모델을 쓰는 이유 의료장비 보조 시스템 관점에서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-088",
+      "user_message": "로컬 모델과 서버 모델의 역할 분리 사례를 섞어서 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-089",
+      "user_message": "작은 모델 하네스 설계의 장점 실제 배포를 가정해서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-090",
+      "user_message": "라이다 기반 안내와 LLM 안내의 차이 운영자 교육 자료처럼 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-091",
+      "user_message": "이 장비 방식과 기존 방식의 차이 우리 프로젝트 기준으로 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-092",
+      "user_message": "자율주행과 수동주행의 운영 차이 지금 구조를 전제로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-093",
+      "user_message": "이승 절차 자동화의 장단점 개발자에게 설명하듯 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-094",
+      "user_message": "현장 운영에서 로컬 LLM을 쓰는 이유 병원 현장 기준으로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-095",
+      "user_message": "GPU와 CPU 혼합 추론의 trade-off 추후 확장성까지 고려해서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-096",
+      "user_message": "음성 인터페이스 도입 효과 의사결정 보고용으로 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-097",
+      "user_message": "Jetson Orin에서 2B 모델을 쓰는 이유 의료장비 보조 시스템 관점에서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-098",
+      "user_message": "로컬 모델과 서버 모델의 역할 분리 사례를 섞어서 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-099",
+      "user_message": "작은 모델 하네스 설계의 장점 실제 배포를 가정해서 장단점까지 비교해서 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    },
+    {
+      "request_id": "bulk-server-100",
+      "user_message": "라이다 기반 안내와 LLM 안내의 차이 운영자 교육 자료처럼 비용과 유지보수 측면도 같이 비교해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-server"
+      }
+    }
+  ]
+}

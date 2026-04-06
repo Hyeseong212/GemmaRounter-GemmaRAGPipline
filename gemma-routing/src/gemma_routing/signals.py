@@ -183,8 +183,7 @@ def extract_signals(request: RouterInput) -> DetectedSignals:
     override_related = _contains_any(text, OVERRIDE_KEYWORDS)
     visual_related = request.has_image or _contains_any(text, VISUAL_KEYWORDS)
     status_related = not error_codes and _contains_any(text, STATUS_KEYWORDS)
-    manual_grounding_required = bool(error_codes) or _contains_any(text, MANUAL_KEYWORDS)
-    reference_grounding_required = manual_grounding_required
+    reference_grounding_required = bool(error_codes) or _contains_any(text, MANUAL_KEYWORDS)
     complex_reasoning_requested = _contains_any(text, COMPLEX_REASONING_KEYWORDS) or len(request.user_message) >= 120
     short_answer_expected = _contains_any(text, SHORT_REPLY_KEYWORDS) or text.endswith(SHORT_REPLY_SUFFIXES)
     general_question_candidate = not any(
@@ -211,7 +210,6 @@ def extract_signals(request: RouterInput) -> DetectedSignals:
         complex_reasoning_requested=complex_reasoning_requested,
         short_answer_expected=short_answer_expected,
         reference_grounding_required=reference_grounding_required,
-        manual_grounding_required=manual_grounding_required,
         network_limited=request.network_status != "online",
     )
 

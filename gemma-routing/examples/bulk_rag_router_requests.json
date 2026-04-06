@@ -1,0 +1,1508 @@
+{
+  "dataset_name": "bulk_rag_router_requests",
+  "target_route": "server_rag",
+  "note": "Random manual and error-reference examples for RAG routing experiments.",
+  "count": 100,
+  "requests": [
+    {
+      "request_id": "bulk-rag-001",
+      "user_message": "E101 에러가 떴어. 무슨 뜻인지 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-002",
+      "user_message": "E103 에러가 떴어. 매뉴얼 기준으로 설명해줘 복구 전 확인사항까지.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-003",
+      "user_message": "E117 에러가 떴어. 사용설명서 기준 점검 항목을 알려줘 간단 요약 포함해서.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-004",
+      "user_message": "E203 에러가 떴어. 현장 가이드 기준으로 정리해줘 지금 상황 기준으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-005",
+      "user_message": "E210 에러가 떴어. 문서 기준 조치 순서를 알려줘 화면 메시지 기준으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-006",
+      "user_message": "E305 에러가 떴어. 참고 문서 기준 대응 방법을 알려줘 현장 엔지니어용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-007",
+      "user_message": "E402 에러가 떴어. 에러 의미와 조치 방법을 알려줘 초기 대응 중심으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-008",
+      "user_message": "E511 에러가 떴어. 다음에 뭘 확인해야 하는지 알려줘 단계 순서대로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-009",
+      "user_message": "E603 에러가 떴어. SOP 기준으로 요약해줘 간호사 안내용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-010",
+      "user_message": "E704 에러가 떴어. 절차 문서 기준 다음 단계를 말해줘 점검 순서 위주로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-011",
+      "user_message": "슬링 체결 절차 무슨 뜻인지 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-012",
+      "user_message": "리프팅 전 점검 절차 매뉴얼 기준으로 설명해줘 복구 전 확인사항까지.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-013",
+      "user_message": "하강 준비 절차 사용설명서 기준 점검 항목을 알려줘 간단 요약 포함해서.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-014",
+      "user_message": "매트 삽입 절차 현장 가이드 기준으로 정리해줘 지금 상황 기준으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-015",
+      "user_message": "환자 스캔 절차 문서 기준 조치 순서를 알려줘 화면 메시지 기준으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-016",
+      "user_message": "호이스트 위치 조정 절차 참고 문서 기준 대응 방법을 알려줘 현장 엔지니어용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-017",
+      "user_message": "비상 정지 후 재개 절차 에러 의미와 조치 방법을 알려줘 초기 대응 중심으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-018",
+      "user_message": "배터리 경고 조치 절차 다음에 뭘 확인해야 하는지 알려줘 단계 순서대로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-019",
+      "user_message": "장애물 감지 대응 절차 SOP 기준으로 요약해줘 간호사 안내용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-020",
+      "user_message": "정렬 실패 재시도 절차 절차 문서 기준 다음 단계를 말해줘 점검 순서 위주로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-021",
+      "user_message": "E101 에러가 떴어. 무슨 뜻인지 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-022",
+      "user_message": "E103 에러가 떴어. 매뉴얼 기준으로 설명해줘 복구 전 확인사항까지.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-023",
+      "user_message": "E117 에러가 떴어. 사용설명서 기준 점검 항목을 알려줘 간단 요약 포함해서.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-024",
+      "user_message": "E203 에러가 떴어. 현장 가이드 기준으로 정리해줘 지금 상황 기준으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-025",
+      "user_message": "E210 에러가 떴어. 문서 기준 조치 순서를 알려줘 화면 메시지 기준으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-026",
+      "user_message": "E305 에러가 떴어. 참고 문서 기준 대응 방법을 알려줘 현장 엔지니어용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-027",
+      "user_message": "E402 에러가 떴어. 에러 의미와 조치 방법을 알려줘 초기 대응 중심으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-028",
+      "user_message": "E511 에러가 떴어. 다음에 뭘 확인해야 하는지 알려줘 단계 순서대로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-029",
+      "user_message": "E603 에러가 떴어. SOP 기준으로 요약해줘 간호사 안내용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-030",
+      "user_message": "E704 에러가 떴어. 절차 문서 기준 다음 단계를 말해줘 점검 순서 위주로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-031",
+      "user_message": "슬링 체결 절차 무슨 뜻인지 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-032",
+      "user_message": "리프팅 전 점검 절차 매뉴얼 기준으로 설명해줘 복구 전 확인사항까지.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-033",
+      "user_message": "하강 준비 절차 사용설명서 기준 점검 항목을 알려줘 간단 요약 포함해서.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-034",
+      "user_message": "매트 삽입 절차 현장 가이드 기준으로 정리해줘 지금 상황 기준으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-035",
+      "user_message": "환자 스캔 절차 문서 기준 조치 순서를 알려줘 화면 메시지 기준으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-036",
+      "user_message": "호이스트 위치 조정 절차 참고 문서 기준 대응 방법을 알려줘 현장 엔지니어용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-037",
+      "user_message": "비상 정지 후 재개 절차 에러 의미와 조치 방법을 알려줘 초기 대응 중심으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-038",
+      "user_message": "배터리 경고 조치 절차 다음에 뭘 확인해야 하는지 알려줘 단계 순서대로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-039",
+      "user_message": "장애물 감지 대응 절차 SOP 기준으로 요약해줘 간호사 안내용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-040",
+      "user_message": "정렬 실패 재시도 절차 절차 문서 기준 다음 단계를 말해줘 점검 순서 위주로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-041",
+      "user_message": "E101 에러가 떴어. 무슨 뜻인지 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-042",
+      "user_message": "E103 에러가 떴어. 매뉴얼 기준으로 설명해줘 복구 전 확인사항까지.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-043",
+      "user_message": "E117 에러가 떴어. 사용설명서 기준 점검 항목을 알려줘 간단 요약 포함해서.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-044",
+      "user_message": "E203 에러가 떴어. 현장 가이드 기준으로 정리해줘 지금 상황 기준으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-045",
+      "user_message": "E210 에러가 떴어. 문서 기준 조치 순서를 알려줘 화면 메시지 기준으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-046",
+      "user_message": "E305 에러가 떴어. 참고 문서 기준 대응 방법을 알려줘 현장 엔지니어용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-047",
+      "user_message": "E402 에러가 떴어. 에러 의미와 조치 방법을 알려줘 초기 대응 중심으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-048",
+      "user_message": "E511 에러가 떴어. 다음에 뭘 확인해야 하는지 알려줘 단계 순서대로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-049",
+      "user_message": "E603 에러가 떴어. SOP 기준으로 요약해줘 간호사 안내용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-050",
+      "user_message": "E704 에러가 떴어. 절차 문서 기준 다음 단계를 말해줘 점검 순서 위주로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-051",
+      "user_message": "슬링 체결 절차 무슨 뜻인지 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-052",
+      "user_message": "리프팅 전 점검 절차 매뉴얼 기준으로 설명해줘 복구 전 확인사항까지.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-053",
+      "user_message": "하강 준비 절차 사용설명서 기준 점검 항목을 알려줘 간단 요약 포함해서.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-054",
+      "user_message": "매트 삽입 절차 현장 가이드 기준으로 정리해줘 지금 상황 기준으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-055",
+      "user_message": "환자 스캔 절차 문서 기준 조치 순서를 알려줘 화면 메시지 기준으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-056",
+      "user_message": "호이스트 위치 조정 절차 참고 문서 기준 대응 방법을 알려줘 현장 엔지니어용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-057",
+      "user_message": "비상 정지 후 재개 절차 에러 의미와 조치 방법을 알려줘 초기 대응 중심으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-058",
+      "user_message": "배터리 경고 조치 절차 다음에 뭘 확인해야 하는지 알려줘 단계 순서대로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-059",
+      "user_message": "장애물 감지 대응 절차 SOP 기준으로 요약해줘 간호사 안내용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-060",
+      "user_message": "정렬 실패 재시도 절차 절차 문서 기준 다음 단계를 말해줘 점검 순서 위주로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-061",
+      "user_message": "E101 에러가 떴어. 무슨 뜻인지 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-062",
+      "user_message": "E103 에러가 떴어. 매뉴얼 기준으로 설명해줘 복구 전 확인사항까지.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-063",
+      "user_message": "E117 에러가 떴어. 사용설명서 기준 점검 항목을 알려줘 간단 요약 포함해서.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-064",
+      "user_message": "E203 에러가 떴어. 현장 가이드 기준으로 정리해줘 지금 상황 기준으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-065",
+      "user_message": "E210 에러가 떴어. 문서 기준 조치 순서를 알려줘 화면 메시지 기준으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-066",
+      "user_message": "E305 에러가 떴어. 참고 문서 기준 대응 방법을 알려줘 현장 엔지니어용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-067",
+      "user_message": "E402 에러가 떴어. 에러 의미와 조치 방법을 알려줘 초기 대응 중심으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-068",
+      "user_message": "E511 에러가 떴어. 다음에 뭘 확인해야 하는지 알려줘 단계 순서대로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-069",
+      "user_message": "E603 에러가 떴어. SOP 기준으로 요약해줘 간호사 안내용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-070",
+      "user_message": "E704 에러가 떴어. 절차 문서 기준 다음 단계를 말해줘 점검 순서 위주로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-071",
+      "user_message": "슬링 체결 절차 무슨 뜻인지 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-072",
+      "user_message": "리프팅 전 점검 절차 매뉴얼 기준으로 설명해줘 복구 전 확인사항까지.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-073",
+      "user_message": "하강 준비 절차 사용설명서 기준 점검 항목을 알려줘 간단 요약 포함해서.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-074",
+      "user_message": "매트 삽입 절차 현장 가이드 기준으로 정리해줘 지금 상황 기준으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-075",
+      "user_message": "환자 스캔 절차 문서 기준 조치 순서를 알려줘 화면 메시지 기준으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-076",
+      "user_message": "호이스트 위치 조정 절차 참고 문서 기준 대응 방법을 알려줘 현장 엔지니어용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-077",
+      "user_message": "비상 정지 후 재개 절차 에러 의미와 조치 방법을 알려줘 초기 대응 중심으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-078",
+      "user_message": "배터리 경고 조치 절차 다음에 뭘 확인해야 하는지 알려줘 단계 순서대로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-079",
+      "user_message": "장애물 감지 대응 절차 SOP 기준으로 요약해줘 간호사 안내용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-080",
+      "user_message": "정렬 실패 재시도 절차 절차 문서 기준 다음 단계를 말해줘 점검 순서 위주로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-081",
+      "user_message": "E101 에러가 떴어. 무슨 뜻인지 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-082",
+      "user_message": "E103 에러가 떴어. 매뉴얼 기준으로 설명해줘 복구 전 확인사항까지.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-083",
+      "user_message": "E117 에러가 떴어. 사용설명서 기준 점검 항목을 알려줘 간단 요약 포함해서.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-084",
+      "user_message": "E203 에러가 떴어. 현장 가이드 기준으로 정리해줘 지금 상황 기준으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-085",
+      "user_message": "E210 에러가 떴어. 문서 기준 조치 순서를 알려줘 화면 메시지 기준으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-086",
+      "user_message": "E305 에러가 떴어. 참고 문서 기준 대응 방법을 알려줘 현장 엔지니어용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-087",
+      "user_message": "E402 에러가 떴어. 에러 의미와 조치 방법을 알려줘 초기 대응 중심으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-088",
+      "user_message": "E511 에러가 떴어. 다음에 뭘 확인해야 하는지 알려줘 단계 순서대로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-089",
+      "user_message": "E603 에러가 떴어. SOP 기준으로 요약해줘 간호사 안내용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-090",
+      "user_message": "E704 에러가 떴어. 절차 문서 기준 다음 단계를 말해줘 점검 순서 위주로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-091",
+      "user_message": "슬링 체결 절차 무슨 뜻인지 설명해줘.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-092",
+      "user_message": "리프팅 전 점검 절차 매뉴얼 기준으로 설명해줘 복구 전 확인사항까지.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-093",
+      "user_message": "하강 준비 절차 사용설명서 기준 점검 항목을 알려줘 간단 요약 포함해서.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-094",
+      "user_message": "매트 삽입 절차 현장 가이드 기준으로 정리해줘 지금 상황 기준으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-04",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-095",
+      "user_message": "환자 스캔 절차 문서 기준 조치 순서를 알려줘 화면 메시지 기준으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-05",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-096",
+      "user_message": "호이스트 위치 조정 절차 참고 문서 기준 대응 방법을 알려줘 현장 엔지니어용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-06",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-097",
+      "user_message": "비상 정지 후 재개 절차 에러 의미와 조치 방법을 알려줘 초기 대응 중심으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-07",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-098",
+      "user_message": "배터리 경고 조치 절차 다음에 뭘 확인해야 하는지 알려줘 단계 순서대로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-01",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-099",
+      "user_message": "장애물 감지 대응 절차 SOP 기준으로 요약해줘 간호사 안내용으로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-02",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    },
+    {
+      "request_id": "bulk-rag-100",
+      "user_message": "정렬 실패 재시도 절차 절차 문서 기준 다음 단계를 말해줘 점검 순서 위주로.",
+      "has_image": false,
+      "network_status": "online",
+      "local_tools_available": [
+        "device_status_api",
+        "cached_error_help"
+      ],
+      "metadata": {
+        "device_id": "demo-orin-03",
+        "locale": "ko-KR",
+        "sample_group": "bulk-rag"
+      }
+    }
+  ]
+}

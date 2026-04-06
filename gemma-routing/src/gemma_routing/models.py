@@ -8,13 +8,9 @@ from pydantic import BaseModel, Field, field_validator
 Intent = Literal[
     "device_status_question",
     "device_error_question",
-    "device_usage_question",
     "manual_procedure_question",
-    "ui_screen_question",
     "general_question",
-    "general_reasoning_question",
     "clinical_risk_question",
-    "treatment_change_request",
     "medication_advice_request",
     "contraindication_override_request",
     "unknown",
@@ -26,15 +22,14 @@ Route = Literal[
     "local_llm",
     "server_rag",
     "server_llm",
-    "server_vision",
     "human_review",
     "block",
 ]
 Priority = Literal["normal", "high", "critical"]
 NetworkStatus = Literal["online", "degraded", "offline"]
-DecisionSource = Literal["hard_rule", "model", "model_repair", "fallback"]
-TraceStage = Literal["normalize", "hard_rule", "model", "repair", "post_policy", "handoff", "fallback"]
-TraceStatus = Literal["passed", "applied", "generated", "repaired", "overridden", "failed"]
+DecisionSource = Literal["hard_rule", "model", "fallback", "local_execution"]
+TraceStage = Literal["normalize", "hard_rule", "model", "post_policy", "handoff", "fallback"]
+TraceStatus = Literal["passed", "applied", "generated", "overridden", "failed"]
 LocalAction = Literal[
     "none",
     "respond_with_device_api",
@@ -47,9 +42,10 @@ LocalAction = Literal[
 ReasonCode = Literal[
     "local_status_available",
     "needs_reference_grounding",
-    "needs_visual_inspection",
     "local_general_answer_ok",
     "needs_large_model_reasoning",
+    "local_answer_overflow",
+    "local_generation_failed",
     "patient_specific_clinical_judgment",
     "medication_or_treatment_change",
     "contraindication_override",
@@ -100,7 +96,6 @@ class DetectedSignals(BaseModel):
     complex_reasoning_requested: bool = False
     short_answer_expected: bool = False
     reference_grounding_required: bool = False
-    manual_grounding_required: bool = False
     network_limited: bool = False
 
     @field_validator("error_codes")
@@ -171,9 +166,60 @@ class DownstreamHandoff(BaseModel):
     metadata: dict[str, Any] = Field(default_factory=dict)
 
 
+class RouterDisplay(BaseModel):
+    route: Route
+    decision_source: DecisionSource
+    brief: str
+    target_system: str
+    reason_codes: list[ReasonCode] = Field(default_factory=list)
+
+
+class CompactHandoff(BaseModel):
+    route: Route
+    target_system: str
+    task_type: str
+    summary: str
+    required_inputs: list[str] = Field(default_factory=list)
+    metadata: dict[str, Any] = Field(default_factory=dict)
+
+
+class RouterCompactResult(BaseModel):
+    display: RouterDisplay
+    handoff: CompactHandoff
+
+
+class LocalExecutionResult(BaseModel):
+    mode: Literal["local_llm"]
+    status: Literal["completed", "rerouted"]
+    answer: str | None = None
+    answer_char_count: int | None = None
+    reason: str
+    rerouted_to: Route | None = None
+
+
+class RouterHandledResult(BaseModel):
+    display: RouterDisplay
+    handoff: CompactHandoff
+    execution: LocalExecutionResult | None = None
+
+
 class RouterResult(BaseModel):
-    normalized_input: NormalizedRouterInput
+    display: RouterDisplay
     decision_source: DecisionSource
     decision: RouterDecision
     handoff: DownstreamHandoff | None = None
+    normalized_input: NormalizedRouterInput
     trace: list[HarnessTraceEntry] = Field(default_factory=list)
+
+
+ModelRoute = Literal["local_llm", "server_rag", "server_llm", "human_review", "block"]
+
+
+class ModelRouteChoice(BaseModel):
+    route: ModelRoute
+    summary_for_server: str = ""
+
+    @field_validator("summary_for_server")
+    @classmethod
+    def trim_summary(cls, value: str) -> str:
+        return " ".join(value.split())[:240]

@@ -20,6 +20,17 @@ Expected model alias:
 
 - `gemma4-rag`
 
+Default runtime profile:
+
+- `e2b`
+- `ctx 4096`
+- `batch 128`
+- `ubatch 32`
+- GPU enabled
+- GPU layers `8`
+- KV offload disabled
+- op offload disabled
+
 ## Files
 
 - prompt: [`prompts/rag_answer_system_prompt.txt`](/home/rb/AI/gemma-rag/prompts/rag_answer_system_prompt.txt)

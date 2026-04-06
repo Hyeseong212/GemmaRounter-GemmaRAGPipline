@@ -7,6 +7,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_PROMPT_PATH = PROJECT_ROOT / "prompts" / "medical_router_system_prompt.txt"
+DEFAULT_LOCAL_ANSWER_PROMPT_PATH = PROJECT_ROOT / "prompts" / "local_short_answer_system_prompt.txt"
 DEFAULT_ENV_PATH = PROJECT_ROOT / ".env"
 
 
@@ -22,11 +23,25 @@ class RouterSettings:
     prompt_path: Path = field(
         default_factory=lambda: Path(os.getenv("ROUTER_PROMPT_PATH", str(DEFAULT_PROMPT_PATH)))
     )
+    local_answer_prompt_path: Path = field(
+        default_factory=lambda: Path(
+            os.getenv(
+                "LOCAL_ANSWER_PROMPT_PATH",
+                str(DEFAULT_LOCAL_ANSWER_PROMPT_PATH),
+            )
+        )
+    )
     request_timeout: float = field(
         default_factory=lambda: float(os.getenv("ROUTER_REQUEST_TIMEOUT", "20.0"))
     )
     temperature: float = field(default_factory=lambda: float(os.getenv("ROUTER_TEMPERATURE", "0.2")))
     max_tokens: int = field(default_factory=lambda: int(os.getenv("ROUTER_MAX_TOKENS", "96")))
+    local_answer_temperature: float = field(
+        default_factory=lambda: float(os.getenv("LOCAL_ANSWER_TEMPERATURE", "0.2"))
+    )
+    local_answer_max_tokens: int = field(
+        default_factory=lambda: int(os.getenv("LOCAL_ANSWER_MAX_TOKENS", "48"))
+    )
     reasoning_mode: str = field(default_factory=lambda: os.getenv("ROUTER_REASONING_MODE", "off"))
     reasoning_budget: int = field(default_factory=lambda: int(os.getenv("ROUTER_REASONING_BUDGET", "0")))
     api_host: str = field(default_factory=lambda: os.getenv("ROUTER_API_HOST", "0.0.0.0"))
