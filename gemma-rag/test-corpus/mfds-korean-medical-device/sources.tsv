@@ -1,0 +1,8 @@
+local_id	local_path	title	source_page_url	download_url	document_type	pages	extractable_text	note
+mfds_2023_implant_knee_safety	raw/mfds_2023_implant_knee_safety.pdf	인공무릎관절 안전사용 정보집	https://www.mfds.go.kr/brd/m_227/view.do?seq=33329	https://www.mfds.go.kr/brd/m_227/down.do?brd_id=data0018&data_tp=A&file_seq=1&seq=33329	public booklet	12	yes	best starter document
+mfds_2017_urine_analyzer_safety	raw/mfds_2017_urine_analyzer_safety.pdf	개인용소변분석기 안전사용 홍보 리플릿	https://www.mfds.go.kr/brd/m_464/view.do?seq=28301	https://www.mfds.go.kr/brd/m_464/down.do?brd_id=plc0173&data_tp=A&file_seq=1&seq=28301	safety leaflet	2	yes	best starter document
+mfds_2017_blood_pressure_monitor_ko	raw/mfds_2017_blood_pressure_monitor_ko.pdf	혈압계 안전사용 리플릿	https://www.mfds.go.kr/brd/m_227/view.do?seq=30867	https://www.mfds.go.kr/brd/m_227/down.do?brd_id=data0018&data_tp=A&file_seq=16&seq=30867	safety leaflet	2	no	needs OCR
+mfds_2017_manual_suction_ko	raw/mfds_2017_manual_suction_ko.pdf	수동식의료용흡인기 안전사용 리플릿	https://www.mfds.go.kr/brd/m_227/view.do?seq=30862	https://www.mfds.go.kr/brd/m_227/down.do?brd_id=data0018&data_tp=A&file_seq=8&seq=30862	safety leaflet	2	no	needs OCR
+mfds_2018_oxygen_device_leaflet_zip	raw/mfds_2018_oxygen_device_leaflet.zip	산소공급기 및 의료용산소발생기 안전사용 리플릿	https://www.mfds.go.kr/brd/m_464/view.do?seq=33001	https://www.mfds.go.kr/brd/m_464/down.do?brd_id=plc0173&data_tp=A&file_seq=1&seq=33001	zip package	2 pdf + 2 jpg	mixed	unpack before ingest
+oxygen_device_leaflet_part1	extracted/oxygen_device_leaflet_part1.pdf	산소공급기 및 의료용산소발생기 안전사용 리플릿 1	extracted from zip	same as zip	pdf leaflet	1	no	needs OCR
+oxygen_device_leaflet_part2	extracted/oxygen_device_leaflet_part2.pdf	산소공급기 및 의료용산소발생기 안전사용 리플릿 2	extracted from zip	same as zip	pdf leaflet	1	no	needs OCR

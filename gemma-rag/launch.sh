@@ -2,7 +2,7 @@
 set -euo pipefail
 
 PROJECT_DIR="/home/rb/AI/gemma-rag"
-KNOWN_ACTIONS="start restart stop status ready logs test sample trace stream"
+KNOWN_ACTIONS="start restart stop status ready logs test sample trace stream profile"
 ACTION="start"
 
 if [[ $# -gt 0 ]]; then

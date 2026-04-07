@@ -4,8 +4,16 @@ set -euo pipefail
 ROOT_DIR="/home/rb/AI"
 ACTION="${1:-status}"
 DEFAULT_SAMPLE_REQUEST="${ROOT_DIR}/gemma-rag/examples/rag_answer_request.json"
+PROFILE_FILE="${ROOT_DIR}/gemma-rag/config/korean_medical_device_rag.env"
+PROFILE_DOC="${ROOT_DIR}/gemma-rag/docs/korean-medical-device-rag-profile.md"
 
 case "${ACTION}" in
+  profile)
+    printf "gemma-rag retrieval profile\n"
+    printf "profile env: %s\n" "${PROFILE_FILE}"
+    printf "profile doc: %s\n\n" "${PROFILE_DOC}"
+    sed -n '1,220p' "${PROFILE_FILE}"
+    ;;
   sample|trace|stream)
     SAMPLE_REQUEST="${2:-${DEFAULT_SAMPLE_REQUEST}}"
     MODEL_VARIANT="${MODEL_VARIANT:-e2b}" \
