@@ -67,3 +67,26 @@ Why this profile:
 - retrieval profile: [`config/korean_medical_device_rag.env`](/home/rb/AI/gemma-rag/config/korean_medical_device_rag.env)
 - retrieval notes: [`docs/korean-medical-device-rag-profile.md`](/home/rb/AI/gemma-rag/docs/korean-medical-device-rag-profile.md)
 - public test corpus: [`test-corpus/mfds-korean-medical-device/README.md`](/home/rb/AI/gemma-rag/test-corpus/mfds-korean-medical-device/README.md)
+- indexing guide: [`docs/indexing-starter-corpus.md`](/home/rb/AI/gemma-rag/docs/indexing-starter-corpus.md)
+- Jetson flow doc: [`docs/jetson-rag-flow-explained.md`](/home/rb/AI/gemma-rag/docs/jetson-rag-flow-explained.md)
+- Jetson flow docx: [`docs/jetson-rag-flow-explained.docx`](/home/rb/AI/gemma-rag/docs/jetson-rag-flow-explained.docx)
+
+## Jetson Notes
+
+What we confirmed on this Jetson Orin setup:
+
+- `e2b` currently maps to `Q8_0`, and this profile failed to start on GPU due to CUDA OOM.
+- `e4b-q4` did start on GPU, but throttling was observed under sustained load.
+- Because of that, the current evaluation flow tries `e2b` on GPU first and then falls back to CPU if startup fails.
+
+Relevant files:
+
+- evaluator launcher: [`launch-eval.sh`](/home/rb/AI/gemma-rag/launch-eval.sh)
+- evaluator script: [`scripts/evaluate_rag_answers.py`](/home/rb/AI/gemma-rag/scripts/evaluate_rag_answers.py)
+- explained flow document: [`docs/jetson-rag-flow-explained.md`](/home/rb/AI/gemma-rag/docs/jetson-rag-flow-explained.md)
+
+Current compact 10-question evaluation summary:
+
+- average score: `6.0 / 10`
+- strongest area: direct fact lookup
+- weakest area: complete JSON output and citation stability
