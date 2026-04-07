@@ -1,0 +1,8 @@
+{
+  "request_id": "server-router-rag-001",
+  "user_message": "E103 에러가 떴어. 무슨 뜻인지랑 다음 조치 순서를 문서 기준으로 알려줘.",
+  "metadata": {
+    "locale": "ko-KR",
+    "source": "demo"
+  }
+}

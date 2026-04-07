@@ -5,6 +5,7 @@ Gemma 사용 가이드
 가장 간단한 진입점은 각 프로젝트 루트의 `launch.sh`다.
 
 - Routing: `/home/rb/AI/gemma-routing/launch.sh`
+- Server Router: `/home/rb/AI/gemma-ServerRouter/launch.sh`
 - Transfer Robot: `/home/rb/AI/gemma-tranferRobotLLM/launch.sh`
 - RAG: `/home/rb/AI/gemma-rag/launch.sh`
 
@@ -16,6 +17,13 @@ Gemma 사용 가이드
   - 기본 실행 프로필: `e2b`, `ctx 2048`, `batch 128`, `ubatch 32`, `gpu_layers 8`, GPU hybrid
   - `launch.sh`는 모델 서버 `8080`과 라우터 API `8090`을 같이 올린다.
   - 라우터 API는 `route`는 분기만, `handle`은 로컬 답변 실행까지 담당한다.
+
+- `gemma-ServerRouter`
+  - 목적: 서버 측에서 `RAG 필요 / 일반 서버 LLM 처리`를 분기
+  - 기본 API port: `8190`
+  - 통합 실행 파일: `/home/rb/AI/gemma-ServerRouter/launch.sh`
+  - 이 프로젝트는 기본적으로 외부 서버 Gemma endpoint를 보고 동작한다.
+  - 기본 endpoint 예시: `http://127.0.0.1:8180/v1/chat/completions`
 
 - `gemma-tranferRobotLLM`
   - 목적: 이승로봇 로컬 LLM, STT 교정과 TTS용 답변 생성
@@ -57,6 +65,15 @@ Routing 통합 상태 보기
 Routing 통합 중지
 /home/rb/AI/gemma-routing/launch.sh stop
 
+Server Router 시작
+/home/rb/AI/gemma-ServerRouter/launch.sh
+
+Server Router 상태 보기
+/home/rb/AI/gemma-ServerRouter/launch.sh status
+
+Server Router 중지
+/home/rb/AI/gemma-ServerRouter/launch.sh stop
+
 Transfer Robot 통합 시작
 /home/rb/AI/gemma-tranferRobotLLM/launch.sh
 
@@ -85,6 +102,9 @@ RAG 통합 중지
 예시: Routing
 /home/rb/AI/gemma-routing/launch.sh
 
+예시: Server Router
+/home/rb/AI/gemma-ServerRouter/launch.sh
+
 예시: Transfer Robot
 /home/rb/AI/gemma-tranferRobotLLM/launch.sh
 
@@ -92,6 +112,9 @@ RAG 통합 중지
 
 예시: Routing
 /home/rb/AI/gemma-routing/launch.sh ready
+
+예시: Server Router
+/home/rb/AI/gemma-ServerRouter/launch.sh ready
 
 예시: Transfer Robot
 /home/rb/AI/gemma-tranferRobotLLM/launch.sh ready
@@ -147,6 +170,11 @@ curl -s http://127.0.0.1:8082/v1/chat/completions \
   -H 'Content-Type: application/json' \
   -d @/home/rb/AI/gemma-rag/examples/rag_answer_request.json
 
+Server Router
+curl http://127.0.0.1:8190/route \
+  -H 'Content-Type: application/json' \
+  -d @/home/rb/AI/gemma-ServerRouter/examples/server_router_request.json
+
 
 Routing 샘플 질문
 
@@ -196,6 +224,25 @@ curl http://127.0.0.1:8090/route/debug \
   -d @/home/rb/AI/gemma-routing/examples/local_general_router_request.json
 
 
+Server Router 샘플 질문
+
+RAG로 보내야 할 질문
+- 질문: `E103 에러가 떴어. 무슨 뜻인지랑 다음 조치 순서를 문서 기준으로 알려줘.`
+- 파일: `/home/rb/AI/gemma-ServerRouter/examples/server_router_rag_request.json`
+- API 테스트:
+curl http://127.0.0.1:8190/route \
+  -H 'Content-Type: application/json' \
+  -d @/home/rb/AI/gemma-ServerRouter/examples/server_router_rag_request.json
+
+일반 서버 LLM으로 보내야 할 질문
+- 질문: `로컬 LLM과 서버 LLM의 역할 분리를 우리 프로젝트 관점에서 비교해서 설명해줘.`
+- 파일: `/home/rb/AI/gemma-ServerRouter/examples/server_router_llm_request.json`
+- API 테스트:
+curl http://127.0.0.1:8190/route \
+  -H 'Content-Type: application/json' \
+  -d @/home/rb/AI/gemma-ServerRouter/examples/server_router_llm_request.json
+
+
 Routing 통합 실행 동작
 
 - `/home/rb/AI/gemma-routing/launch.sh` 를 실행하면 기존 Gemma 컨테이너를 먼저 내리고 다시 시작한다.
@@ -238,6 +285,9 @@ curl -s http://127.0.0.1:8082/v1/chat/completions \
 
 Routing 로그 보기
 /home/rb/AI/gemma-routing/launch.sh logs
+
+Server Router 로그 보기
+/home/rb/AI/gemma-ServerRouter/launch.sh logs
 
 Routing 모델 로그 보기
 /home/rb/AI/gemma-routing/launch.sh model-logs
@@ -285,6 +335,7 @@ RAG 스트리밍 보기
 주의할 점
 
 - 각 프로젝트는 필요한 것만 켜는 게 좋다.
+- `gemma-ServerRouter`는 모델 컨테이너를 직접 띄우는 방식이 아니라 외부 서버 endpoint를 바라보는 API 런처다.
 - Jetson이 느려질 수 있으니 Routing, Transfer Robot, RAG를 동시에 다 켜는 건 꼭 필요할 때만 한다.
 - `restart` 직후에는 바로 요청하지 말고 `ready=1`을 확인하는 게 안전하다.
 - 처음 실행 시에는 모델 다운로드 때문에 오래 걸릴 수 있다.

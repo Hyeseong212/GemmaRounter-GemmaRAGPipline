@@ -1,0 +1,8 @@
+{
+  "request_id": "server-router-llm-001",
+  "user_message": "로컬 LLM과 서버 LLM의 역할 분리를 우리 프로젝트 관점에서 비교해서 설명해줘.",
+  "metadata": {
+    "locale": "ko-KR",
+    "source": "demo"
+  }
+}

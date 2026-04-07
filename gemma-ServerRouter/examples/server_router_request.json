@@ -1,0 +1,8 @@
+{
+  "request_id": "server-router-001",
+  "user_message": "슬링 체결 절차를 SOP 기준으로 요약해줘.",
+  "metadata": {
+    "locale": "ko-KR",
+    "source": "demo"
+  }
+}

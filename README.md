@@ -18,6 +18,7 @@
 5. 최종 결과는 `handoff` 형태로 내려가며, 어떤 시스템이 다음 작업을 해야 하는지 같이 전달합니다.
 6. `/handle` 경로를 쓰면 `local_llm`으로 분기된 경우 실제 로컬 Gemma가 답변까지 생성합니다.
 7. 로컬 답변이 20자를 넘기면 로컬 답변을 버리고 `server_llm`으로 다시 넘깁니다.
+8. 서버에 올라온 질문은 `gemma-ServerRouter`가 한 번 더 보고 `RAG 필요 / 일반 서버 LLM 처리`를 분기할 수 있습니다.
 
 즉 지금 구조는 `완전 규칙 기반`도 아니고 `완전 LLM 자율 판단`도 아닙니다.  
 `안전한 규칙 기반 분기 + 작은 로컬 LLM 보조 추론` 구조입니다.
@@ -32,6 +33,8 @@
   - 질문 분기, 안전 게이트, 로컬 답변 실행
 - [`gemma-rag`](/home/rb/AI/gemma-rag)
   - 문서 기반 RAG 응답 생성
+- [`gemma-ServerRouter`](/home/rb/AI/gemma-ServerRouter)
+  - 서버 측에서 `RAG 필요 여부`를 판단하는 전용 라우터
 - [`gemma-tranferRobotLLM`](/home/rb/AI/gemma-tranferRobotLLM)
   - 이승로봇용 로컬 LLM, STT 교정 및 TTS용 답변 생성
 
@@ -60,6 +63,11 @@ Transfer Robot 시작
 RAG 시작
 ```bash
 /home/rb/AI/gemma-rag/launch.sh
+```
+
+Server Router 시작
+```bash
+/home/rb/AI/gemma-ServerRouter/launch.sh
 ```
 
 `launch.sh`를 실행하면 기존에 떠 있던 Gemma 컨테이너를 먼저 정리한 뒤 새로 시작합니다.
@@ -109,8 +117,15 @@ curl http://127.0.0.1:8090/handle \
 - [`bulk_server_router_requests.json`](/home/rb/AI/gemma-routing/examples/bulk_server_router_requests.json)
 - [`bulk_rag_router_requests.json`](/home/rb/AI/gemma-routing/examples/bulk_rag_router_requests.json)
 
+Server Router 예제:
+
+- [`server_router_request.json`](/home/rb/AI/gemma-ServerRouter/examples/server_router_request.json)
+- [`server_router_rag_request.json`](/home/rb/AI/gemma-ServerRouter/examples/server_router_rag_request.json)
+- [`server_router_llm_request.json`](/home/rb/AI/gemma-ServerRouter/examples/server_router_llm_request.json)
+
 ### 추가 문서
 
 - 전체 사용 가이드: [`GemmaHowToUse`](/home/rb/AI/GemmaHowToUse)
 - Routing 설명: [`gemma-routing/README.md`](/home/rb/AI/gemma-routing/README.md)
 - Routing 스키마: [`gemma-routing/docs/router-schema.md`](/home/rb/AI/gemma-routing/docs/router-schema.md)
+- Server Router 설명: [`gemma-ServerRouter/README.md`](/home/rb/AI/gemma-ServerRouter/README.md)
