@@ -1,131 +1,95 @@
 # GemmaRouter-GemmaRAGPipline
 
-이 저장소는 Jetson Orin 환경에서 Gemma 기반 로컬 LLM, 라우팅, RAG를 프로젝트별로 분리해 운영하기 위한 워크스페이스입니다.
+현재 저장소의 기준 실행점은 `GGUF 양자화 Gemma 4 31B` 서버입니다.
 
-## 플로우
+- 현재 주 실행점: [`llama-rest-core`](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core)
+- 현재 운영 포트: `18088`
+- 현재 운영 모델: `Gemma 4 31B Q4_K_M GGUF`
+- 현재 실행 스크립트: `./launch.sh`
 
-현재 기본 흐름은 아래와 같습니다.
+즉 지금은 `18088 단일 GGUF 멀티모달 서버` 기준으로 먼저 안정화한 상태입니다.
 
-1. 사용자의 질문이 `gemma-routing`으로 들어옵니다.
-2. 라우터가 먼저 질문에서 신호를 추출합니다.
-   - 예: 에러코드, 상태조회, 문서참조 필요 여부, 짧은 답변 가능성
-3. 명확한 케이스는 하드룰로 바로 분기합니다.
-   - 상태조회 -> 로컬 규칙 처리
-   - 에러코드/매뉴얼/절차 -> `server_rag`
-   - 짧은 일반 질문 -> `local_llm`
-   - 위험 질문 -> `human_review` 또는 `block`
-4. 애매한 일반 질문만 로컬 Gemma가 한 번 더 추론해서 `local_llm / server_llm / server_rag` 중 하나로 분기합니다.
-5. 최종 결과는 `handoff` 형태로 내려가며, 어떤 시스템이 다음 작업을 해야 하는지 같이 전달합니다.
-6. `/handle` 경로를 쓰면 `local_llm`으로 분기된 경우 실제 로컬 Gemma가 답변까지 생성합니다.
-7. 로컬 답변이 20자를 넘기면 로컬 답변을 버리고 `server_llm`으로 다시 넘깁니다.
-8. 서버에 올라온 질문은 `gemma-ServerRouter`가 한 번 더 보고 `RAG 필요 / 일반 서버 LLM 처리`를 분기할 수 있습니다.
+## 폴더 구성
 
-즉 지금 구조는 `완전 규칙 기반`도 아니고 `완전 LLM 자율 판단`도 아닙니다.  
-`안전한 규칙 기반 분기 + 작은 로컬 LLM 보조 추론` 구조입니다.
+- [`first-router`](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/first-router)
+  - Jetson Orin 쪽 1차 라우팅 모듈
+- [`second-router`](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/second-router)
+  - 서버 측 2차 라우팅 모듈
+- [`rag-answerer`](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/rag-answerer)
+  - 문서 기반 RAG 응답 모듈
+- [`final-score`](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/final-score)
+  - 서버 최종 점수 게이트
+- [`transfer-robot-llm`](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/transfer-robot-llm)
+  - STT 교정 / TTS 응답 보조 모듈
+- [`llama-rest-core`](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core)
+  - 현재 실행 기준점
 
-## How To Use
+## 지금 바로 쓰는 방법
 
-가장 쉬운 실행 방법은 각 프로젝트 루트의 `launch.sh`를 쓰는 것입니다.
+시작:
 
-### 프로젝트 구성
-
-- [`gemma-routing`](/home/rb/AI/gemma-routing)
-  - 질문 분기, 안전 게이트, 로컬 답변 실행
-- [`gemma-rag`](/home/rb/AI/gemma-rag)
-  - 문서 기반 RAG 응답 생성
-- [`gemma-ServerRouter`](/home/rb/AI/gemma-ServerRouter)
-  - 서버 측에서 `RAG 필요 여부`를 판단하는 전용 라우터
-- [`gemma-tranferRobotLLM`](/home/rb/AI/gemma-tranferRobotLLM)
-  - 이승로봇용 로컬 LLM, STT 교정 및 TTS용 답변 생성
-
-### 가장 자주 쓰는 명령
-
-Routing 시작
 ```bash
-/home/rb/AI/gemma-routing/launch.sh
+cd /home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core
+RAG_EMBED_HELPER_ENABLE=0 ./launch.sh start
 ```
 
-Routing 상태 확인
+재시작:
+
 ```bash
-/home/rb/AI/gemma-routing/launch.sh status
+cd /home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core
+RAG_EMBED_HELPER_ENABLE=0 ./launch.sh restart
 ```
 
-Routing 중지
+상태:
+
 ```bash
-/home/rb/AI/gemma-routing/launch.sh stop
+cd /home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core
+./launch.sh status
 ```
 
-Transfer Robot 시작
+헬스체크:
+
 ```bash
-/home/rb/AI/gemma-tranferRobotLLM/launch.sh
+curl http://127.0.0.1:18088/healthz
 ```
 
-RAG 시작
-```bash
-/home/rb/AI/gemma-rag/launch.sh
-```
-
-Server Router 시작
-```bash
-/home/rb/AI/gemma-ServerRouter/launch.sh
-```
-
-`launch.sh`를 실행하면 기존에 떠 있던 Gemma 컨테이너를 먼저 정리한 뒤 새로 시작합니다.
-
-### Routing API 사용
-
-Routing 프로젝트를 띄우면 아래 두 가지가 같이 올라옵니다.
-
-- 모델 서버: `8080`
-- 라우터 API: `8090`
-
-라우팅만 보고 싶을 때:
+텍스트 추론:
 
 ```bash
-curl http://127.0.0.1:8090/route \
+curl http://127.0.0.1:18088/infer \
   -H 'Content-Type: application/json' \
-  -d @/home/rb/AI/gemma-routing/examples/local_general_router_request.json
+  -d '{
+    "prompt": "안녕하세요라고만 답해줘."
+  }'
 ```
 
-라우팅 디버그 전체를 보고 싶을 때:
+이미지 추론:
 
 ```bash
-curl http://127.0.0.1:8090/route/debug \
+curl http://127.0.0.1:18088/infer \
   -H 'Content-Type: application/json' \
-  -d @/home/rb/AI/gemma-routing/examples/local_general_router_request.json
+  -d '{
+    "prompt": "이 이미지에서 휠체어가 어딨는지 중심을 좌표로 나타내봐",
+    "image_path": "/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/test-assets/public-research/중앙.jpg"
+  }'
 ```
 
-로컬 답변 생성까지 같이 보고 싶을 때:
+## 현재 확인된 사항
 
-```bash
-curl http://127.0.0.1:8090/handle \
-  -H 'Content-Type: application/json' \
-  -d @/home/rb/AI/gemma-routing/examples/local_general_router_request.json
-```
+- 현재 기본 실행은 BF16이 아니라 `GGUF 양자화`입니다.
+- 기본 이미지 토큰 설정은 `LLAMA_REST_IMAGE_MAX_TOKENS=1120`입니다.
+- 좌표 응답은 모델 원출력을 그대로 쓰지 않고 서버가 후처리합니다.
+- 현재 최종 좌표계는 `좌하단 원점 [x, y]` 기준입니다.
 
-### 예제 데이터
+즉 `좌상`, `우상`, `좌하`, `우하` 테스트처럼 사분면 방향은 지금 기준으로 맞춰져 있습니다.
 
-기본 예제:
+## 다음 단계
 
-- [`local_general_router_request.json`](/home/rb/AI/gemma-routing/examples/local_general_router_request.json)
-- [`server_general_router_request.json`](/home/rb/AI/gemma-routing/examples/server_general_router_request.json)
-- [`router_api_request.json`](/home/rb/AI/gemma-routing/examples/router_api_request.json)
+기준선을 이렇게 정리한 뒤 다음 순서로 가면 됩니다.
 
-대량 테스트용 예제:
+1. `18088 GGUF` 단일 서버 유지
+2. Jetson `2B first-router`와 HTTP 계약 재점검
+3. 서버 `second-router -> RAG -> final-score`를 다시 연결
+4. 정밀 좌표/박스가 필요하면 `YOLO`나 `Grounding DINO` 같은 detection 모델 추가
 
-- [`bulk_local_router_requests.json`](/home/rb/AI/gemma-routing/examples/bulk_local_router_requests.json)
-- [`bulk_server_router_requests.json`](/home/rb/AI/gemma-routing/examples/bulk_server_router_requests.json)
-- [`bulk_rag_router_requests.json`](/home/rb/AI/gemma-routing/examples/bulk_rag_router_requests.json)
-
-Server Router 예제:
-
-- [`server_router_request.json`](/home/rb/AI/gemma-ServerRouter/examples/server_router_request.json)
-- [`server_router_rag_request.json`](/home/rb/AI/gemma-ServerRouter/examples/server_router_rag_request.json)
-- [`server_router_llm_request.json`](/home/rb/AI/gemma-ServerRouter/examples/server_router_llm_request.json)
-
-### 추가 문서
-
-- 전체 사용 가이드: [`GemmaHowToUse`](/home/rb/AI/GemmaHowToUse)
-- Routing 설명: [`gemma-routing/README.md`](/home/rb/AI/gemma-routing/README.md)
-- Routing 스키마: [`gemma-routing/docs/router-schema.md`](/home/rb/AI/gemma-routing/docs/router-schema.md)
-- Server Router 설명: [`gemma-ServerRouter/README.md`](/home/rb/AI/gemma-ServerRouter/README.md)
+세부 실행법은 [`llama-rest-core/README.md`](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/README.md) 에 정리돼 있습니다.

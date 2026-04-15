@@ -1,0 +1,21 @@
+{
+  "request_id": "final-score-llm-001",
+  "original_question": "E103 에러 의미를 설명해줘",
+  "route_used": "server_llm",
+  "metadata": {
+    "locale": "ko-KR",
+    "source": "server-pipeline"
+  },
+  "second_router": {
+    "route": "server_llm",
+    "needs_rag": false,
+    "confidence": "medium",
+    "brief": "일반 서버 LLM 답변으로 처리",
+    "reason_codes": ["general_reasoning_ok"]
+  },
+  "server_llm_result": {
+    "answer": "E103은 장비에서 특정 연결 이상을 뜻할 수 있습니다. 자세한 의미는 장비 문서를 확인하세요.",
+    "needs_human_review": false,
+    "mentioned_references": true
+  }
+}

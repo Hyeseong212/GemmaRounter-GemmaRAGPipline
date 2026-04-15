@@ -1,0 +1,24 @@
+{
+  "request_id": "final-score-rag-001",
+  "original_question": "E103 에러가 떴는데 다음 조치 순서를 알려줘",
+  "route_used": "server_rag",
+  "metadata": {
+    "locale": "ko-KR",
+    "source": "server-pipeline"
+  },
+  "second_router": {
+    "route": "server_rag",
+    "needs_rag": true,
+    "confidence": "high",
+    "brief": "문서 근거가 필요해 RAG로 전달",
+    "reason_codes": ["error_code_reference"]
+  },
+  "rag_result": {
+    "answerable": true,
+    "answer": "E103이 표시되면 먼저 케이블 체결 상태를 확인하세요. 재부팅 후에도 반복되면 사용을 중지하고 유지보수 담당자에게 보고해야 합니다.",
+    "used_chunk_ids": ["chunk-01", "chunk-02"],
+    "needs_human_review": false,
+    "warning": "임의 분해 또는 비인가 케이블 사용은 금지한다.",
+    "retrieved_scores": [0.92, 0.84]
+  }
+}

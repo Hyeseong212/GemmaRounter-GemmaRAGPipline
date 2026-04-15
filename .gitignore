@@ -3,7 +3,7 @@
 .env
 .env.*
 .venv/
-.venv-gemma-rag-index/
+.venv-rag-answerer-index/
 venv/
 __pycache__/
 *.pyc
@@ -19,5 +19,5 @@ downloads/
 *.pt
 *.onnx
 get-pip.py
-gemma-rag/indexes/
-gemma-rag/test-results/
+rag-answerer/indexes/
+rag-answerer/test-results/

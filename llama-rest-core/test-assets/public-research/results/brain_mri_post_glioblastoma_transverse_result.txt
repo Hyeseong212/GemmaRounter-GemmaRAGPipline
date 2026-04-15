@@ -1,0 +1,8 @@
+파일: brain_mri_post_glioblastoma_transverse.mp4
+실제 진단명/출처 상태: 교모세포종 절제 후 횡단면 뇌 MRI
+모델 진단명 요약: 비성 비염 및 비중격 만곡증
+비교 메모: 불일치 가능성 높음: 교모세포종 수술 후 뇌 MRI를 비염/비중격 만곡으로 해석했습니다.
+출처 링크: https://commons.wikimedia.org/wiki/File:Animazione_RMN_trasversale_dopo_rimozione_glioblastoma.gif
+모델 원문 응답: 제시된 영상 시퀀스는 관상면(coronal view) T2-weighted MRI로, 비강 및 부비동 부위의 해부학적 구조를 보여주고 있습니다. 영상 전반에서 비중격의 만곡과 함께 비강 내 점막의 부종 및 염증성 변화가 관찰됩니다. 이를 종합한 확정 진단명은 비성 비염(Rhinitis) 및 비중격 만곡증(Nasal Septal Deviation)입니다.
+요청 상태: 200 / 4.0초
+주의: 모델 응답은 연구용 테스트 결과이며 임상적 확정 진단이 아닙니다.

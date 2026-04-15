@@ -1,0 +1,8 @@
+파일: brain_ct_normal_case2.mp4
+실제 진단명/출처 상태: 정상 뇌 CT(조영증강, 축상면)
+모델 진단명 요약: 미만성 뇌부종(Diffuse Cerebral Edema)
+비교 메모: 불일치: 정상 뇌 CT에 중증 뇌부종을 진단했습니다.
+출처 링크: https://commons.wikimedia.org/wiki/Scrollable_computed_tomography_images_of_a_normal_brain_(case_2)
+모델 원문 응답: 제시된 CT 영상 시퀀스 전반에서 뇌실의 소실과 뇌구(sulci)의 소실, 그리고 전반적인 뇌 부종으로 인한 뇌실질의 저밀도 양상이 관찰됩니다. 특히 뇌 조직이 압착되어 중심선 이동이나 뇌 탈출 징후가 동반된 심각한 뇌 부종 상태를 보이고 있습니다. 이를 종합한 확정 진단명은 미만성 뇌부종(Diffuse Cerebral Edema)입니다.
+요청 상태: 200 / 3.9초
+주의: 모델 응답은 연구용 테스트 결과이며 임상적 확정 진단이 아닙니다.

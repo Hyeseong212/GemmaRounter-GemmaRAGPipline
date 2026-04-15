@@ -10,7 +10,7 @@ CONTAINER_NAME="${CONTAINER_NAME:-${6:-gemma4-${MODEL_VARIANT}-${PORT}}}"
 
 IMAGE="ghcr.io/nvidia-ai-iot/llama_cpp:gemma4-jetson-orin"
 RUN_SCRIPT="${RUN_SCRIPT:-/home/rb/AI/shared-scripts/run_gemma4_llama_server.sh}"
-DEFAULT_SAMPLE_REQUEST="${DEFAULT_SAMPLE_REQUEST:-/home/rb/AI/gemma-routing/examples/medical_router_request.json}"
+DEFAULT_SAMPLE_REQUEST="${DEFAULT_SAMPLE_REQUEST:-/home/rb/AI/first-router/examples/medical_router_request.json}"
 OUTPUT_DIR="${OUTPUT_DIR:-/tmp/gemma4}"
 WAIT_TIMEOUT="${WAIT_TIMEOUT:-180}"
 

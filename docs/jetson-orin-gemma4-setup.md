@@ -22,8 +22,8 @@ For your medical-device pipeline, treat Gemma 4 on Jetson as a shared local mode
 
 Workspace split:
 
-- [`gemma-routing`](/home/rb/AI/gemma-routing)
-- [`gemma-rag`](/home/rb/AI/gemma-rag)
+- [`first-router`](/home/rb/AI/first-router)
+- [`rag-answerer`](/home/rb/AI/rag-answerer)
 
 Do **not** make Jetson Gemma the final clinical reasoning engine. Keep long-context RAG, heavy retrieval, and final complex answers on the 5090 server.
 
@@ -40,9 +40,9 @@ There are two practical ways to run Gemma 4 on Jetson:
 This workspace includes shared base launcher scripts plus project-specific wrappers:
 
 - shared base: [`../shared-scripts/run_gemma4_llama_server.sh`](/home/rb/AI/shared-scripts/run_gemma4_llama_server.sh)
-- routing wrapper: [`../gemma-routing/scripts/manage_local_gemma.sh`](/home/rb/AI/gemma-routing/scripts/manage_local_gemma.sh)
-- transfer robot wrapper: [`../gemma-tranferRobotLLM/scripts/manage_local_gemma.sh`](/home/rb/AI/gemma-tranferRobotLLM/scripts/manage_local_gemma.sh)
-- RAG wrapper: [`../gemma-rag/scripts/manage_local_gemma.sh`](/home/rb/AI/gemma-rag/scripts/manage_local_gemma.sh)
+- routing wrapper: [`../first-router/scripts/manage_local_gemma.sh`](/home/rb/AI/first-router/scripts/manage_local_gemma.sh)
+- transfer robot wrapper: [`../transfer-robot-llm/scripts/manage_local_gemma.sh`](/home/rb/AI/transfer-robot-llm/scripts/manage_local_gemma.sh)
+- RAG wrapper: [`../rag-answerer/scripts/manage_local_gemma.sh`](/home/rb/AI/rag-answerer/scripts/manage_local_gemma.sh)
 
 Each project uses its own local alias and port.
 
@@ -122,22 +122,22 @@ Example request:
 ```bash
 curl http://127.0.0.1:8080/v1/chat/completions \
   -H 'Content-Type: application/json' \
-  -d @/home/<user>/AI/gemma-routing/examples/medical_router_request.json
+  -d @/home/<user>/AI/first-router/examples/medical_router_request.json
 ```
 
 The routing example request file in this workspace is:
 
-- [`gemma-routing/examples/medical_router_request.json`](/home/rb/AI/gemma-routing/examples/medical_router_request.json)
+- [`first-router/examples/medical_router_request.json`](/home/rb/AI/first-router/examples/medical_router_request.json)
 
 The router system prompt is here:
 
-- [`gemma-routing/prompts/medical_router_system_prompt.txt`](/home/rb/AI/gemma-routing/prompts/medical_router_system_prompt.txt)
-- [`gemma-routing/docs/router-schema.md`](/home/rb/AI/gemma-routing/docs/router-schema.md)
+- [`first-router/prompts/medical_router_system_prompt.txt`](/home/rb/AI/first-router/prompts/medical_router_system_prompt.txt)
+- [`first-router/docs/router-schema.md`](/home/rb/AI/first-router/docs/router-schema.md)
 
 The RAG-side prompt and request example are here:
 
-- [`gemma-rag/prompts/rag_answer_system_prompt.txt`](/home/rb/AI/gemma-rag/prompts/rag_answer_system_prompt.txt)
-- [`gemma-rag/examples/rag_answer_request.json`](/home/rb/AI/gemma-rag/examples/rag_answer_request.json)
+- [`rag-answerer/prompts/rag_answer_system_prompt.txt`](/home/rb/AI/rag-answerer/prompts/rag_answer_system_prompt.txt)
+- [`rag-answerer/examples/rag_answer_request.json`](/home/rb/AI/rag-answerer/examples/rag_answer_request.json)
 
 ## Step 3: Optional Ollama Smoke Test
 

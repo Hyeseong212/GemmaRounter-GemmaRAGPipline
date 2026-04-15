@@ -1,0 +1,8 @@
+파일: abdomen_pelvis_ct_normal_axial.mp4
+실제 진단명/출처 상태: 정상 복부 및 골반 CT
+모델 진단명 요약: 흉강 낭종(Thoracic Cyst)
+비교 메모: 불일치: 정상 복부/골반 CT에 흉강 병변 진단을 붙였습니다.
+출처 링크: https://commons.wikimedia.org/wiki/Scrollable_computed_tomography_images_of_a_normal_abdomen_and_pelvis
+모델 원문 응답: 제시된 CT 영상 시퀀스에서 흉강 내에 거대한 낭성 종괴가 관찰되며, 이는 주변 구조물을 압박하고 있는 양상입니다. 영상 전반에 걸쳐 종괴의 형태와 위치가 일관되게 나타나는 특징이 있습니다. 이를 종합할 때 확정 진단명은 흉강 낭종(Thoracic Cyst)입니다.
+요청 상태: 200 / 3.2초
+주의: 모델 응답은 연구용 테스트 결과이며 임상적 확정 진단이 아닙니다.

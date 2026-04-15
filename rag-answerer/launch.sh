@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+PROJECT_DIR="/home/rb/AI/rag-answerer"
+KNOWN_ACTIONS="start restart stop status ready logs test sample trace stream profile"
+ACTION="start"
+
+if [[ $# -gt 0 ]]; then
+  case " ${KNOWN_ACTIONS} " in
+    *" $1 "*)
+      ACTION="$1"
+      shift || true
+      ;;
+  esac
+fi
+
+exec "${PROJECT_DIR}/scripts/manage_local_gemma.sh" "${ACTION}" "$@"

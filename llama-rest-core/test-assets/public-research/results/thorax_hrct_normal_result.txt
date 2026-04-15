@@ -1,0 +1,8 @@
+파일: thorax_hrct_normal.mp4
+실제 진단명/출처 상태: 정상 흉부 고해상도 CT
+모델 진단명 요약: 신세포암(Renal Cell Carcinoma)
+비교 메모: 불일치: 정상 흉부 CT를 신장 종양으로 오인했습니다.
+출처 링크: https://commons.wikimedia.org/wiki/Scrollable_high-resolution_computed_tomography_images_of_a_normal_thorax
+모델 원문 응답: 제시된 CT 영상 시퀀스에서 우측 신장 부위에 경계가 불분명한 종괴성 병변이 관찰됩니다. 영상의 흐름에 따라 해당 병변이 신실질을 침범하고 있는 특징이 반복적으로 나타납니다. 이를 종합할 때 확정 진단명은 신세포암(Renal Cell Carcinoma)입니다.
+요청 상태: 200 / 3.3초
+주의: 모델 응답은 연구용 테스트 결과이며 임상적 확정 진단이 아닙니다.

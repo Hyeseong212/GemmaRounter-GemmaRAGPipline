@@ -1,19 +1,19 @@
 # RAG Reference Analysis
 
-This note summarizes what the current [`RAG-reference-scripts`](/home/rb/AI/RAG-reference-scripts) folder already does and how the router should use it.
+This note summarizes what the current [`rag-reference-api-legacy`](/home/rb/AI/rag-reference-api-legacy) folder already does and how the router should use it.
 
 ## Current Structure
 
-- [app.py](/home/rb/AI/RAG-reference-scripts/app.py)
-- [ingest.py](/home/rb/AI/RAG-reference-scripts/ingest.py)
-- [check_db.py](/home/rb/AI/RAG-reference-scripts/check_db.py)
-- [check_qdrant.py](/home/rb/AI/RAG-reference-scripts/check_qdrant.py)
+- [app.py](/home/rb/AI/rag-reference-api-legacy/app.py)
+- [ingest.py](/home/rb/AI/rag-reference-api-legacy/ingest.py)
+- [check_db.py](/home/rb/AI/rag-reference-api-legacy/check_db.py)
+- [check_qdrant.py](/home/rb/AI/rag-reference-api-legacy/check_qdrant.py)
 
 ## What It Already Implements
 
 ### 1. Ingestion
 
-[ingest.py](/home/rb/AI/RAG-reference-scripts/ingest.py) does this:
+[ingest.py](/home/rb/AI/rag-reference-api-legacy/ingest.py) does this:
 
 - loads documents from a target directory
 - chunks them with `SentenceSplitter`
@@ -28,7 +28,7 @@ So this is a rebuild-style pipeline, not incremental sync yet.
 
 ### 2. Retrieval + Answer API
 
-[app.py](/home/rb/AI/RAG-reference-scripts/app.py) does this:
+[app.py](/home/rb/AI/rag-reference-api-legacy/app.py) does this:
 
 - connects to Qdrant `medical_knowledge`
 - builds a LlamaIndex query engine with `similarity_top_k=2`
@@ -55,7 +55,7 @@ It also appends simple source strings like file name and page number to the fina
 
 ### 3. Health / Count Scripts
 
-[check_db.py](/home/rb/AI/RAG-reference-scripts/check_db.py) and [check_qdrant.py](/home/rb/AI/RAG-reference-scripts/check_qdrant.py) just inspect collection point counts.
+[check_db.py](/home/rb/AI/rag-reference-api-legacy/check_db.py) and [check_qdrant.py](/home/rb/AI/rag-reference-api-legacy/check_qdrant.py) just inspect collection point counts.
 
 ## Architecture Reading
 
@@ -146,7 +146,7 @@ When the router chooses `server_rag`, pass:
 
 ## Bottom Line
 
-`RAG-reference-scripts` is already a usable grounded reference service.
+`rag-reference-api-legacy` is already a usable grounded reference service.
 
 What it was missing was not retrieval itself, but the routing layer above it.
 

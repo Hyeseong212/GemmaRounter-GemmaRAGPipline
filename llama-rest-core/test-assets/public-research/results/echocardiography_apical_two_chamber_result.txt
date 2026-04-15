@@ -1,0 +1,8 @@
+파일: echocardiography_apical_two_chamber.mp4
+실제 진단명/출처 상태: 정상 심초음파(A2C, apical two-chamber)
+모델 진단명 요약: 타코츠보 심근병증
+비교 메모: 불일치: 정상 심초음파에 병적 심근병증을 진단했습니다.
+출처 링크: https://commons.wikimedia.org/wiki/File:A2Cnormal1.gif
+모델 원문 응답: 심초음파 영상에서 좌심실의 전반적인 벽 운동이 소실된 채 심첨부(apex)만 유지되거나 역설적으로 움직이는 특징이 관찰됩니다. 이는 전형적인 심첨부 보존 패턴으로, 타코츠보 심근병증(Takotsubo Cardiomyopathy)의 특징적인 소견입니다. 따라서 확정 진단명은 타코츠보 심근병증입니다.
+요청 상태: 200 / 3.6초
+주의: 모델 응답은 연구용 테스트 결과이며 임상적 확정 진단이 아닙니다.

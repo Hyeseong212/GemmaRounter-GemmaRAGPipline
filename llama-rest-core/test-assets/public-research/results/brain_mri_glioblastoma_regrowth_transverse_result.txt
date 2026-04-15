@@ -1,0 +1,8 @@
+파일: brain_mri_glioblastoma_regrowth_transverse.mp4
+실제 진단명/출처 상태: 교모세포종 5년 후 재성장(재발) 뇌 MRI
+모델 진단명 요약: 뇌위축(Brain Atrophy)
+비교 메모: 불일치 가능성 높음: 출처는 교모세포종 재성장 영상인데 모델은 뇌위축으로 판단했습니다.
+출처 링크: https://commons.wikimedia.org/wiki/File:RM_glioblastoma_dopo_ricrescita_a_5_anni_-_trasversale.gif
+모델 원문 응답: 제시된 MRI 영상 시퀀스에서 뇌실의 전반적인 확장과 뇌 피질의 위축이 관찰됩니다. 특히 측뇌실의 확장이 뚜렷하며 이는 뇌 조직의 전반적인 소실을 시사합니다. 따라서 확정 진단명은 뇌위축(Brain Atrophy)입니다.
+요청 상태: 200 / 3.3초
+주의: 모델 응답은 연구용 테스트 결과이며 임상적 확정 진단이 아닙니다.

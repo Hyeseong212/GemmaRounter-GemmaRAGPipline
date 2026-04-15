@@ -1,0 +1,83 @@
+# 멀티모달 진단 비교 결과
+
+아래 `실제 진단명/출처 상태`는 공개 출처의 설명을 한국어로 정리한 것입니다. `모델 진단명`은 Gemma 4 31B가 이번 테스트 프롬프트에 대해 말한 판단 요약입니다.
+
+## abdomen_pelvis_ct_normal_axial.mp4
+실제 진단명/출처 상태: 정상 복부 및 골반 CT
+모델 진단명 요약: 흉강 낭종(Thoracic Cyst)
+비교 메모: 불일치: 정상 복부/골반 CT에 흉강 병변 진단을 붙였습니다.
+출처 링크: https://commons.wikimedia.org/wiki/Scrollable_computed_tomography_images_of_a_normal_abdomen_and_pelvis
+모델 원문 응답: 제시된 CT 영상 시퀀스에서 흉강 내에 거대한 낭성 종괴가 관찰되며, 이는 주변 구조물을 압박하고 있는 양상입니다. 영상 전반에 걸쳐 종괴의 형태와 위치가 일관되게 나타나는 특징이 있습니다. 이를 종합할 때 확정 진단명은 흉강 낭종(Thoracic Cyst)입니다.
+요청 상태: 200 / 3.2초
+
+## brain_ct_normal_case2.mp4
+실제 진단명/출처 상태: 정상 뇌 CT(조영증강, 축상면)
+모델 진단명 요약: 미만성 뇌부종(Diffuse Cerebral Edema)
+비교 메모: 불일치: 정상 뇌 CT에 중증 뇌부종을 진단했습니다.
+출처 링크: https://commons.wikimedia.org/wiki/Scrollable_computed_tomography_images_of_a_normal_brain_(case_2)
+모델 원문 응답: 제시된 CT 영상 시퀀스 전반에서 뇌실의 소실과 뇌구(sulci)의 소실, 그리고 전반적인 뇌 부종으로 인한 뇌실질의 저밀도 양상이 관찰됩니다. 특히 뇌 조직이 압착되어 중심선 이동이나 뇌 탈출 징후가 동반된 심각한 뇌 부종 상태를 보이고 있습니다. 이를 종합한 확정 진단명은 미만성 뇌부종(Diffuse Cerebral Edema)입니다.
+요청 상태: 200 / 3.9초
+
+## brain_mri_glioblastoma_regrowth_transverse.mp4
+실제 진단명/출처 상태: 교모세포종 5년 후 재성장(재발) 뇌 MRI
+모델 진단명 요약: 뇌위축(Brain Atrophy)
+비교 메모: 불일치 가능성 높음: 출처는 교모세포종 재성장 영상인데 모델은 뇌위축으로 판단했습니다.
+출처 링크: https://commons.wikimedia.org/wiki/File:RM_glioblastoma_dopo_ricrescita_a_5_anni_-_trasversale.gif
+모델 원문 응답: 제시된 MRI 영상 시퀀스에서 뇌실의 전반적인 확장과 뇌 피질의 위축이 관찰됩니다. 특히 측뇌실의 확장이 뚜렷하며 이는 뇌 조직의 전반적인 소실을 시사합니다. 따라서 확정 진단명은 뇌위축(Brain Atrophy)입니다.
+요청 상태: 200 / 3.3초
+
+## brain_mri_post_glioblastoma_transverse.mp4
+실제 진단명/출처 상태: 교모세포종 절제 후 횡단면 뇌 MRI
+모델 진단명 요약: 비성 비염 및 비중격 만곡증
+비교 메모: 불일치 가능성 높음: 교모세포종 수술 후 뇌 MRI를 비염/비중격 만곡으로 해석했습니다.
+출처 링크: https://commons.wikimedia.org/wiki/File:Animazione_RMN_trasversale_dopo_rimozione_glioblastoma.gif
+모델 원문 응답: 제시된 영상 시퀀스는 관상면(coronal view) T2-weighted MRI로, 비강 및 부비동 부위의 해부학적 구조를 보여주고 있습니다. 영상 전반에서 비중격의 만곡과 함께 비강 내 점막의 부종 및 염증성 변화가 관찰됩니다. 이를 종합한 확정 진단명은 비성 비염(Rhinitis) 및 비중격 만곡증(Nasal Septal Deviation)입니다.
+요청 상태: 200 / 4.0초
+
+## cervical_spine_mri_case0003.mp4
+실제 진단명/출처 상태: 진단명 명시 없음 / 경추 MRI 케이스
+모델 진단명 요약: 후두골-제1경추 아탈구
+비교 메모: 비교 제한: 출처에 확정 진단명이 명시되지 않았습니다.
+출처 링크: https://commons.wikimedia.org/wiki/Category:Cervical_spine_MRI_case_0003
+모델 원문 응답: 제시된 MRI 시퀀스 전반에서 경추의 전반적인 정렬 상태와 척수강의 형태를 관찰할 수 있으며, 특히 상부 경추 부위의 구조적 변화가 반복적으로 나타납니다. 척수 신경이 압박받는 양상과 함께 후두골과 제1경추 사이의 비정상적인 위치 관계가 확인됩니다. 이를 종합한 확정 진단명은 후두골-제1경추 아탈구(Atlanto-occipital dislocation/subluxation)입니다.
+요청 상태: 200 / 4.2초
+
+## echocardiography_apical_two_chamber.mp4
+실제 진단명/출처 상태: 정상 심초음파(A2C, apical two-chamber)
+모델 진단명 요약: 타코츠보 심근병증
+비교 메모: 불일치: 정상 심초음파에 병적 심근병증을 진단했습니다.
+출처 링크: https://commons.wikimedia.org/wiki/File:A2Cnormal1.gif
+모델 원문 응답: 심초음파 영상에서 좌심실의 전반적인 벽 운동이 소실된 채 심첨부(apex)만 유지되거나 역설적으로 움직이는 특징이 관찰됩니다. 이는 전형적인 심첨부 보존 패턴으로, 타코츠보 심근병증(Takotsubo Cardiomyopathy)의 특징적인 소견입니다. 따라서 확정 진단명은 타코츠보 심근병증입니다.
+요청 상태: 200 / 3.6초
+
+## embryonic_ultrasound_8w3d.mp4
+실제 진단명/출처 상태: 임신 8주 3일 배아 초음파 / 제대 보임
+모델 진단명 요약: 무뇌증(Anencephaly)
+비교 메모: 출처 설명상 정상/병적 여부가 명확히 적혀 있지 않아 직접 비교는 제한적이지만, 모델은 병적 진단을 붙였습니다.
+출처 링크: https://commons.wikimedia.org/wiki/File:8w3d_with_umbilical_cord.gif
+모델 원문 응답: 제시된 영상 시퀀스에서 태아의 머리 부분에 심한 변형과 함께 뇌 조직의 결손 및 두개골의 일부 소실이 반복적으로 관찰됩니다. 이는 전형적인 뇌척수액의 과다 노출과 뇌 조직의 발달 부전 특징을 보여줍니다. 따라서 확정 진단명은 무뇌증(Anencephaly)입니다.
+요청 상태: 200 / 3.5초
+
+## knee_mri_case0025.mp4
+실제 진단명/출처 상태: 전방/후방십자인대 퇴행, 내측 반월상연골 퇴행, 외측 반월상연골 파열, 점액낭 내 액체, 일부 슬라이스 정맥류
+모델 진단명 요약: 전방십자인대 파열(ACL Tear)
+비교 메모: 부분 일치: 무릎 인대 병변 계열은 맞췄지만 출처의 복합 소견 전체를 반영하진 못했습니다.
+출처 링크: https://commons.wikimedia.org/wiki/Category:Knee_MRI_case_0025
+모델 원문 응답: 제시된 MRI 시퀀스 영상에서 전방십자인대(ACL)의 연속성이 소실되고 파열된 양상이 관찰됩니다. 무릎 관절 내의 비정상적인 신호 강도 변화와 인대의 형태적 변형이 반복적으로 확인됩니다. 따라서 확정 진단명은 전방십자인대 파열(ACL Tear)입니다.
+요청 상태: 200 / 3.4초
+
+## lumbar_spine_mri_case01.mp4
+실제 진단명/출처 상태: 진단명 명시 없음 / 요추-천추 MRI 케이스
+모델 진단명 요약: 척수낭종 또는 척수내 낭종
+비교 메모: 비교 제한: 출처에 확정 진단명이 명시되지 않았습니다.
+출처 링크: https://commons.wikimedia.org/wiki/Category:Lumbosacral_MRI_case_01
+모델 원문 응답: 제시된 MRI 시퀀스 영상에서 척수 신경관 내에 고신호강도의 낭성 병변이 관찰되며, 이는 척수 신경을 압박하며 하방으로 확장되는 양상을 보입니다. 영상 전반에 걸쳐 척수강 내 낭성 종괴가 일관되게 확인되는 특징이 있습니다. 확정 진단명: 척수낭종(Spinal Cyst) 또는 척수내 낭종(Intramedullary Cyst).
+요청 상태: 200 / 4.0초
+
+## thorax_hrct_normal.mp4
+실제 진단명/출처 상태: 정상 흉부 고해상도 CT
+모델 진단명 요약: 신세포암(Renal Cell Carcinoma)
+비교 메모: 불일치: 정상 흉부 CT를 신장 종양으로 오인했습니다.
+출처 링크: https://commons.wikimedia.org/wiki/Scrollable_high-resolution_computed_tomography_images_of_a_normal_thorax
+모델 원문 응답: 제시된 CT 영상 시퀀스에서 우측 신장 부위에 경계가 불분명한 종괴성 병변이 관찰됩니다. 영상의 흐름에 따라 해당 병변이 신실질을 침범하고 있는 특징이 반복적으로 나타납니다. 이를 종합할 때 확정 진단명은 신세포암(Renal Cell Carcinoma)입니다.
+요청 상태: 200 / 3.3초

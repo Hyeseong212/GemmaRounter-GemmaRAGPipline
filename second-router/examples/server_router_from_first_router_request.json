@@ -1,0 +1,31 @@
+{
+  "request_id": "server-router-bridge-001",
+  "original_question": "장비 화면에 E103 에러가 떴어. 무슨 뜻이고 다음에 뭘 확인해야 해?",
+  "metadata": {
+    "locale": "ko-KR",
+    "source": "jetson-first-router",
+    "device_id": "demo-orin-01"
+  },
+  "first_router": {
+    "display": {
+      "route": "server_rag",
+      "decision_source": "hard_rule",
+      "brief": "문서 근거가 필요해 RAG로 전달",
+      "target_system": "rag_reference_api",
+      "reason_codes": ["needs_reference_grounding"]
+    },
+    "handoff": {
+      "route": "server_rag",
+      "target_system": "rag_reference_api",
+      "task_type": "grounded_reference_lookup",
+      "summary": "E103 에러 의미와 조치 질문",
+      "required_inputs": ["user_message", "retrieved_context"],
+      "metadata": {
+        "request_id": "demo-router-001",
+        "question": "장비 화면에 E103 에러가 떴어. 무슨 뜻이고 다음에 뭘 확인해야 해?",
+        "original_question": "장비 화면에 E103 에러가 떴어. 무슨 뜻이고 다음에 뭘 확인해야 해?",
+        "retrieval_query": "E103 장비 화면에 E103 에러가 떴어. 무슨 뜻이고 다음에 뭘 확인해야 해?"
+      }
+    }
+  }
+}
