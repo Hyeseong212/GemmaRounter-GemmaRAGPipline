@@ -1,0 +1,6 @@
+flowchart LR
+    A[OAK RGB Frame] --> B[Obstacle Coordinate from Gemma 4]
+    B --> C[Coordinate Transform]
+    C --> D[Depth ROI Selection]
+    D --> E[Median Depth]
+    E --> F[Obstacle Class + Position + Distance]

@@ -82,12 +82,19 @@ std::string base64_decode(const std::string& encoded_string) {
 // 2. 작업 큐 구조체 (이미지 데이터 추가)
 // --------------------------------------------------------------------------
 struct Job {
+    enum class Lane {
+        Text,
+        Multimodal,
+    };
+
     std::string prompt;
     std::string image_bytes; // [추가] 디코딩된 이미지 바이너리
+    Lane lane = Lane::Text;
     std::shared_ptr<std::promise<std::string>> prom; 
 };
 
-std::queue<Job> job_queue;
+std::queue<Job> text_job_queue;
+std::queue<Job> multimodal_job_queue;
 std::mutex job_mutex;
 std::atomic<bool> job_running{true};
 std::atomic<bool> infer_worker_enabled{true};
@@ -122,6 +129,14 @@ bool getenv_or_default_bool(const char* key, bool default_value) {
 
     const std::string normalized = value;
     return !(normalized == "0" || normalized == "false" || normalized == "FALSE");
+}
+
+std::size_t total_queue_size() {
+    return text_job_queue.size() + multimodal_job_queue.size();
+}
+
+const char* lane_name(Job::Lane lane) {
+    return lane == Job::Lane::Multimodal ? "multimodal" : "text";
 }
 
 void replace_all(std::string& text, const std::string& from, const std::string& to) {
@@ -526,14 +541,27 @@ void worker_thread_loop() {
 
     printf("[Worker] System Ready. Waiting for requests...\n");
 
+    int consecutive_text_jobs = 0;
+
     while (job_running) {
         bool busy = false;
 
         if (manager.has_free_slot()) {
             std::unique_lock<std::mutex> lock(job_mutex);
-            if (!job_queue.empty()) {
-                Job job = job_queue.front();
-                job_queue.pop();
+            if (!text_job_queue.empty() || !multimodal_job_queue.empty()) {
+                const bool prefer_text = !text_job_queue.empty() &&
+                    (multimodal_job_queue.empty() || consecutive_text_jobs < 3);
+
+                Job job;
+                if (prefer_text) {
+                    job = text_job_queue.front();
+                    text_job_queue.pop();
+                    ++consecutive_text_jobs;
+                } else {
+                    job = multimodal_job_queue.front();
+                    multimodal_job_queue.pop();
+                    consecutive_text_jobs = 0;
+                }
                 lock.unlock();
 
                 // [수정] add_request 인자 3개 (프롬프트, 이미지바이트, 콜백)
@@ -542,6 +570,9 @@ void worker_thread_loop() {
                 })) {
                     try { job.prom->set_value("[ERROR] Failed to queue inference request"); } catch (...) {}
                 }
+                std::cout << "[Scheduler] dispatched lane=" << lane_name(job.lane)
+                          << " text_q=" << text_job_queue.size()
+                          << " mm_q=" << multimodal_job_queue.size() << "\n";
                 busy = true;
             }
         }
@@ -590,6 +621,7 @@ int main() {
         std::string image_path;
         std::string video_b64;
         std::string video_path;
+        std::string requested_lane;
 
         try {
             const nlohmann::json payload = nlohmann::json::parse(body);
@@ -607,6 +639,9 @@ int main() {
             }
             if (payload.contains("video_path") && payload.at("video_path").is_string()) {
                 video_path = payload.at("video_path").get<std::string>();
+            }
+            if (payload.contains("lane") && payload.at("lane").is_string()) {
+                requested_lane = payload.at("lane").get<std::string>();
             }
         } catch (const nlohmann::json::parse_error& err) {
             res.status = 400;
@@ -665,6 +700,13 @@ int main() {
                 "한 장면만 보지 말고 프레임 간 차이와 반복되는 특징을 바탕으로 답하세요.\n\n" + prompt;
         }
 
+        Job::Lane lane = Job::Lane::Text;
+        if (!image_raw.empty() || !image_b64.empty() || !image_path.empty() || !video_b64.empty() || !video_path.empty()) {
+            lane = Job::Lane::Multimodal;
+        } else if (requested_lane == "multimodal") {
+            lane = Job::Lane::Multimodal;
+        }
+
         // ▼▼▼ [디버그 3] 디코딩 결과 확인 (이게 0이면 Base64 문제) ▼▼▼
         std::cout << "[Debug] Decoded Image Bytes: " << image_raw.size() << "\n";
         const ImageDimensions image_dims = probe_image_dimensions_from_bytes(image_raw);
@@ -677,14 +719,18 @@ int main() {
 
         {
             std::lock_guard<std::mutex> lock(job_mutex);
-            if (job_queue.size() >= 128) {
+            if (total_queue_size() >= 128) {
                 res.status = 429;
                 res.set_content("Server busy", "text/plain");
                 return;
             }
             
-            std::cout << "[Debug] Pushing Job to Queue...\n"; // 큐 진입 확인
-            job_queue.push({prompt, image_raw, prom});
+            std::cout << "[Debug] Pushing Job to Queue... lane=" << lane_name(lane) << "\n"; // 큐 진입 확인
+            if (lane == Job::Lane::Multimodal) {
+                multimodal_job_queue.push({prompt, image_raw, lane, prom});
+            } else {
+                text_job_queue.push({prompt, image_raw, lane, prom});
+            }
         }
 
         if (fut.wait_for(std::chrono::seconds(300)) != std::future_status::ready) {

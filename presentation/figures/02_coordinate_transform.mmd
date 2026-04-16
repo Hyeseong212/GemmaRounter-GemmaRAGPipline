@@ -1,0 +1,8 @@
+flowchart TD
+    A[Gemma Output: location_yx_1000 = [y, x]] --> B[Normalize to Pixel Top-Left]
+    B --> C[x = raw_x / 1000 * width]
+    B --> D[y_img = raw_y / 1000 * height]
+    C --> E[Bottom-Left Math Coordinate]
+    D --> E
+    E --> F[x_math = x]
+    E --> G[y_math = height - y_img]

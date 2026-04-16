@@ -1,0 +1,3 @@
+```json
+{"obstacles":[{"class_name":"person","location_yx_1000":[520,480],"reason":"복도 중앙에 보행자가 있어 로봇 주행 경로를 직접적으로 방해함"},{"class_name":"medical_cart","location_yx_1000":[610,320],"reason":"복도 측면에 배치된 의료 카트가 통행 가능 너비를 좁힘"},{"class_name":"iv_pole","location_yx_1000":[580,350],"reason":"의료 카트 옆에 세워진 수액 거치대가 돌출되어 충돌 위험이 있음"},{"class_name":"wheelchair","location_yx_1000":[650,610],"reason":"복도 벽면에 주차된 휠체어가 로봇의 회전 반경이나 주행 경로를 방해함"},{"class_name":"person","location_yx_1000":[550,650],"reason":"휠체어 근처에 서 있는 사람이 있어 동선에 장애가 됨"}]}
+```

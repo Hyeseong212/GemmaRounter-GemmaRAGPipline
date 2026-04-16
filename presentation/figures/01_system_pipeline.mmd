@@ -1,0 +1,9 @@
+flowchart LR
+    A[OAK Camera RGB/Depth] --> B[Captured RGB Image]
+    B --> C[Gemma 4 Server /infer]
+    C --> D[Obstacle Classes]
+    C --> E[location_yx_1000]
+    E --> F[Pixel Coordinate Conversion]
+    F --> G[Math Coordinate Bottom-Left]
+    G --> H[ROI Depth Lookup]
+    H --> I[Obstacle Position + Depth]

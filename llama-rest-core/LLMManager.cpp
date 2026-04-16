@@ -143,6 +143,7 @@ LLMManager::LLMManager(const std::string& modelPath, const std::string& mmprojPa
     ctx_params.n_ctx = 8192; // internv3l  
     ctx_params.n_batch = 6144; 
     ctx_params.n_ubatch = 512;
+    ctx_params.n_seq_max = std::max(1, n_parallel);
     struct llama_context* ctx = llama_init_from_model(model, ctx_params);
     contexts.push_back(ctx);
 
@@ -158,8 +159,8 @@ LLMManager::LLMManager(const std::string& modelPath, const std::string& mmprojPa
     }
 
     int n_embd = llama_model_n_embd(model); 
-    batch_text = llama_batch_init(batch_capacity, 0, 1);
-    batch_image = llama_batch_init(batch_capacity, n_embd, 1);
+    batch_text = llama_batch_init(batch_capacity, 0, std::max(1, n_parallel));
+    batch_image = llama_batch_init(batch_capacity, n_embd, std::max(1, n_parallel));
 }
 
 LLMManager::~LLMManager() {

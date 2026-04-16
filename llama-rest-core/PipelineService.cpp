@@ -14,7 +14,7 @@ PipelineService::PipelineService() {
     config_.first_router_model_enabled = getenv_or_default_bool("FIRST_ROUTER_MODEL_ENABLED", true);
     config_.first_router_model_endpoint = getenv_or_default(
         "ROUTER_MODEL_ENDPOINT",
-        "http://127.0.0.1:8080/v1/chat/completions"
+        "http://127.0.0.1:18088/infer"
     );
     config_.first_router_model_name = getenv_or_default("ROUTER_MODEL_NAME", "gemma-4-31b-it");
     config_.first_router_system_prompt = load_text_file(
@@ -61,7 +61,7 @@ PipelineService::PipelineService() {
     config_.router_model_enabled = getenv_or_default_bool("SERVER_ROUTER_MODEL_ENABLED", true);
     config_.router_model_endpoint = getenv_or_default(
         "SERVER_ROUTER_MODEL_ENDPOINT",
-        "http://127.0.0.1:8180/v1/chat/completions"
+        "http://127.0.0.1:18088/infer"
     );
     config_.router_model_name = getenv_or_default("SERVER_ROUTER_MODEL_NAME", "gemma-4-31b-it");
     config_.router_system_prompt = load_text_file(

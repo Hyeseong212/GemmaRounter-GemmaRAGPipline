@@ -212,6 +212,11 @@ ParsedUrl parse_url(const std::string& url) {
     return ParsedUrl{match[1].str(), match[2].matched ? match[2].str() : "/"};
 }
 
+bool is_infer_endpoint(const std::string& url) {
+    const auto parsed = parse_url(url);
+    return parsed.path == "/infer";
+}
+
 json parse_json_body(const std::string& body) {
     try {
         return json::parse(body);
@@ -265,6 +270,23 @@ std::string chat_completion(
     int reasoning_budget,
     double timeout_seconds
 ) {
+    if (is_infer_endpoint(endpoint)) {
+        std::string prompt;
+        if (!system_prompt.empty()) {
+            prompt += system_prompt;
+            if (!user_prompt.empty()) {
+                prompt += "\n\n";
+            }
+        }
+        prompt += user_prompt;
+
+        const json infer_payload = {
+            {"prompt", prompt},
+            {"lane", "text"},
+        };
+        return post_json(endpoint, infer_payload, timeout_seconds);
+    }
+
     const json payload = {
         {"model", model_name},
         {"temperature", temperature},

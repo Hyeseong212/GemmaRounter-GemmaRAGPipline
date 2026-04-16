@@ -6,6 +6,7 @@
 - 현재 운영 포트: `18088`
 - 현재 운영 모델: `Gemma 4 31B Q4_K_M GGUF`
 - 현재 실행 스크립트: `./launch.sh`
+- 현재 서버 파이프라인 기본 모델 호출 경로: `http://127.0.0.1:18088/infer`
 
 즉 지금은 `18088 단일 GGUF 멀티모달 서버` 기준으로 먼저 안정화한 상태입니다.
 
@@ -89,7 +90,7 @@ curl http://127.0.0.1:18088/infer \
 
 1. `18088 GGUF` 단일 서버 유지
 2. Jetson `2B first-router`와 HTTP 계약 재점검
-3. 서버 `second-router -> RAG -> final-score`를 다시 연결
+3. 서버 `POST /process/from-first-router`로 `second-router -> RAG -> final-score` 연결
 4. 정밀 좌표/박스가 필요하면 `YOLO`나 `Grounding DINO` 같은 detection 모델 추가
 
 세부 실행법은 [`llama-rest-core/README.md`](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/README.md) 에 정리돼 있습니다.

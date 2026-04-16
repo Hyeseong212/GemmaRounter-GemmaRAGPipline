@@ -1,0 +1,34 @@
+{
+  "request_id": "jetson-bridge-llm-001",
+  "original_question": "우리 팀 회의 내용을 한 문단으로 자연스럽게 정리해줘.",
+  "metadata": {
+    "locale": "ko-KR",
+    "source": "jetson-first-router",
+    "device_id": "orin-demo-01"
+  },
+  "first_router": {
+    "display": {
+      "route": "server_llm",
+      "decision_source": "model",
+      "brief": "일반 서버 LLM 답변으로 처리",
+      "target_system": "server_large_llm",
+      "reason_codes": [
+        "general_reasoning_ok"
+      ]
+    },
+    "handoff": {
+      "route": "server_llm",
+      "target_system": "server_large_llm",
+      "task_type": "general_answer_generation",
+      "summary": "회의 내용 요약 요청",
+      "required_inputs": [
+        "user_message"
+      ],
+      "metadata": {
+        "request_id": "first-router-llm-001",
+        "question": "우리 팀 회의 내용을 한 문단으로 자연스럽게 정리해줘.",
+        "original_question": "우리 팀 회의 내용을 한 문단으로 자연스럽게 정리해줘."
+      }
+    }
+  }
+}

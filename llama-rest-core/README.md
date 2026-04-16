@@ -7,6 +7,7 @@
 - 모델: `/home/rbiotech-server/llama_Rest/models/gemma4-31b/gemma-4-31B-it-Q4_K_M.gguf`
 - 비전 프로젝터: `/home/rbiotech-server/llama_Rest/models/gemma4-31b/mmproj-gemma-4-31B-it-Q8_0.gguf`
 - 현재 기본 이미지 토큰 설정: `LLAMA_REST_IMAGE_MIN_TOKENS=252`, `LLAMA_REST_IMAGE_MAX_TOKENS=1120`
+- 현재 기본 라우팅/답변/RAG 모델 호출 경로: `http://127.0.0.1:18088/infer`
 
 `launch_bf16.sh`와 BF16 서버 코드는 실험용으로 남아 있지만, 현재 운영 기준선은 아닙니다.
 
@@ -107,6 +108,35 @@ curl http://127.0.0.1:18088/infer \
 
 영상은 내부적으로 여러 프레임을 뽑아 요약 이미지로 만든 뒤 처리합니다.
 
+## Jetson 연동
+
+현재 서버는 `Jetson 2B first-router`가 보낸 compact 결과를 바로 받을 수 있습니다.
+
+- `POST /route/from-first-router`
+  - 2차 라우팅만 수행
+- `POST /process/from-first-router`
+  - 2차 라우팅 + RAG 또는 서버 답변 + final-score까지 한 번에 수행
+
+예시:
+
+```bash
+curl http://127.0.0.1:18088/process/from-first-router \
+  -H 'Content-Type: application/json' \
+  --data @/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/second-router/examples/server_router_from_first_router_request.json
+```
+
+저장소 안 예시 파일:
+
+- [jetson_from_first_router_rag.json](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/jetson_from_first_router_rag.json)
+- [jetson_from_first_router_llm.json](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/jetson_from_first_router_llm.json)
+
+현재 기본값은 외부 `8180` 모델 서버가 아니라 내부 `18088 /infer`를 사용합니다.
+즉 `llama-rest-core` 단일 포트만 띄워도 `second-router -> RAG -> final-score` 경로까지 자체 실행됩니다.
+
+실행 구조와 KV/queue 설계 메모:
+
+- [runtime-lane-and-kv-design.md](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/docs/runtime-lane-and-kv-design.md)
+
 ## 현재 기본 설정
 
 `launch.sh` 기본값:
@@ -116,6 +146,10 @@ curl http://127.0.0.1:18088/infer \
 - `LLAMA_REST_MMPROJ_PATH=/home/rbiotech-server/llama_Rest/models/gemma4-31b/mmproj-gemma-4-31B-it-Q8_0.gguf`
 - `LLAMA_REST_IMAGE_MIN_TOKENS=252`
 - `LLAMA_REST_IMAGE_MAX_TOKENS=1120`
+- `ROUTER_MODEL_ENDPOINT=http://127.0.0.1:18088/infer`
+- `SERVER_ROUTER_MODEL_ENDPOINT=http://127.0.0.1:18088/infer`
+- `SERVER_ANSWER_MODEL_ENDPOINT=http://127.0.0.1:18088/infer`
+- `RAG_MODEL_ENDPOINT=http://127.0.0.1:18088/infer`
 
 토큰 수를 바꾸고 싶으면 이렇게 실행합니다.
 
