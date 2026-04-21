@@ -1,0 +1,41 @@
+one image:
+/home/rb/AI/first-router/scripts/curl_image_coordinate.sh \
+  /home/rb/AI/llama-rest-core/test-assets/public-research/중앙.jpg
+
+five images:
+/home/rb/AI/first-router/scripts/curl_image_coordinate.sh \
+  /home/rb/AI/llama-rest-core/test-assets/public-research/중앙.jpg \
+  /home/rb/AI/llama-rest-core/test-assets/public-research/좌하.jpg \
+  /home/rb/AI/llama-rest-core/test-assets/public-research/좌상.jpg \
+  /home/rb/AI/llama-rest-core/test-assets/public-research/우하.jpg \
+  /home/rb/AI/llama-rest-core/test-assets/public-research/우상.jpg
+
+raw curl example:
+IMAGE=/home/rb/AI/llama-rest-core/test-assets/public-research/중앙.jpg
+DATA_URL="$(python3 - <<'PY'
+import base64
+import mimetypes
+import os
+from pathlib import Path
+p = Path(os.environ["IMAGE"])
+mime, _ = mimetypes.guess_type(p.name)
+mime = mime or "image/jpeg"
+print(f"data:{mime};base64,{base64.b64encode(p.read_bytes()).decode('ascii')}")
+PY
+)"
+printf '%s' "{
+    \"model\": \"gemma4-routing\",
+    \"temperature\": 0,
+    \"max_tokens\": 8,
+    \"messages\": [
+      {
+        \"role\": \"user\",
+        \"content\": [
+          {\"type\": \"text\", \"text\": \"휠체어 위치만 답해. 좌상, 우상, 좌하, 우하, 중앙 중 하나만 출력해.\"},
+          {\"type\": \"image_url\", \"image_url\": {\"url\": \"${DATA_URL}\"}}
+        ]
+      }
+    ]
+  }" | curl -sS http://127.0.0.1:8080/v1/chat/completions \
+  -H 'Content-Type: application/json' \
+  --data-binary @-

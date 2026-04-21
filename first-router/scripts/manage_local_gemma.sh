@@ -21,6 +21,9 @@ case "${ACTION}" in
     UBATCH_SIZE="${UBATCH_SIZE:-32}" \
     CACHE_TYPE_K="${CACHE_TYPE_K:-q4_0}" \
     CACHE_TYPE_V="${CACHE_TYPE_V:-q4_0}" \
+    ENABLE_MMPROJ="${ENABLE_MMPROJ:-0}" \
+    MMPROJ_OFFLOAD="${MMPROJ_OFFLOAD:-1}" \
+    ENABLE_WARMUP="${ENABLE_WARMUP:-0}" \
     RUN_SCRIPT="${ROOT_DIR}/first-router/scripts/run_local_gemma.sh" \
     DEFAULT_SAMPLE_REQUEST="${DEFAULT_SAMPLE_REQUEST}" \
     OUTPUT_DIR="${OUTPUT_DIR:-/tmp/first-router}" \
@@ -43,6 +46,9 @@ case "${ACTION}" in
     UBATCH_SIZE="${UBATCH_SIZE:-32}" \
     CACHE_TYPE_K="${CACHE_TYPE_K:-q4_0}" \
     CACHE_TYPE_V="${CACHE_TYPE_V:-q4_0}" \
+    ENABLE_MMPROJ="${ENABLE_MMPROJ:-0}" \
+    MMPROJ_OFFLOAD="${MMPROJ_OFFLOAD:-1}" \
+    ENABLE_WARMUP="${ENABLE_WARMUP:-0}" \
     RUN_SCRIPT="${ROOT_DIR}/first-router/scripts/run_local_gemma.sh" \
     DEFAULT_SAMPLE_REQUEST="${DEFAULT_SAMPLE_REQUEST}" \
     OUTPUT_DIR="${OUTPUT_DIR:-/tmp/first-router}" \

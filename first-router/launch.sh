@@ -10,9 +10,13 @@ API_URL="http://127.0.0.1:${API_PORT}/healthz"
 RUN_DIR="/tmp/first-router"
 API_PID_FILE="${RUN_DIR}/router-api.pid"
 API_LOG_FILE="${RUN_DIR}/router-api.log"
+PYTHON_BIN="${PYTHON_BIN:-python3}"
+DEFAULT_IMAGE="${DEFAULT_IMAGE:-/home/rb/AI/llama-rest-core/test-assets/public-research/중앙.jpg}"
+DEFAULT_SCENE_PROMPT="${PROJECT_DIR}/examples/image_scene_prompt.txt"
+DEFAULT_COORDINATE_PROMPT="${PROJECT_DIR}/examples/image_coordinate_prompt.txt"
 BOOTSTRAP_DIR="${RUN_DIR}/bootstrap"
 GET_PIP_PY="${BOOTSTRAP_DIR}/get-pip.py"
-KNOWN_ACTIONS="start restart stop status ready logs model-logs test sample trace stream"
+KNOWN_ACTIONS="start restart start-mm restart-mm stop status ready logs model-logs test sample trace stream image-sample image-coordinate"
 ACTION="start"
 
 if [[ $# -gt 0 ]]; then
@@ -130,12 +134,23 @@ start_router_api() {
   stop_port_listener "${API_PORT}"
   ensure_router_runtime
 
-  nohup env \
-    PYTHONPATH="${PROJECT_DIR}/src" \
-    ROUTER_MODEL_ENDPOINT="http://127.0.0.1:8080/v1/chat/completions" \
-    ROUTER_MODEL_NAME="gemma4-routing" \
-    ROUTER_API_PORT="${API_PORT}" \
-    "${VENV_PY}" -m uvicorn gemma_routing.api:app --host 0.0.0.0 --port "${API_PORT}" >"${API_LOG_FILE}" 2>&1 &
+  if command -v setsid >/dev/null 2>&1; then
+    setsid env \
+      PYTHONPATH="${PROJECT_DIR}/src" \
+      ROUTER_MODEL_ENDPOINT="http://127.0.0.1:8080/v1/chat/completions" \
+      ROUTER_MODEL_NAME="gemma4-routing" \
+      ROUTER_API_PORT="${API_PORT}" \
+      "${VENV_PY}" -m uvicorn gemma_routing.api:app --host 0.0.0.0 --port "${API_PORT}" \
+      >"${API_LOG_FILE}" 2>&1 </dev/null &
+  else
+    nohup env \
+      PYTHONPATH="${PROJECT_DIR}/src" \
+      ROUTER_MODEL_ENDPOINT="http://127.0.0.1:8080/v1/chat/completions" \
+      ROUTER_MODEL_NAME="gemma4-routing" \
+      ROUTER_API_PORT="${API_PORT}" \
+      "${VENV_PY}" -m uvicorn gemma_routing.api:app --host 0.0.0.0 --port "${API_PORT}" \
+      >"${API_LOG_FILE}" 2>&1 </dev/null &
+  fi
 
   local api_pid=$!
   echo "${api_pid}" > "${API_PID_FILE}"
@@ -173,6 +188,27 @@ case "${ACTION}" in
     "${MODEL_SCRIPT}" restart "$@"
     start_router_api
     ;;
+  start-mm)
+    "${MODEL_SCRIPT}" stop >/dev/null 2>&1 || true
+    ENABLE_MMPROJ=1 \
+    MMPROJ_OFFLOAD="${MMPROJ_OFFLOAD:-1}" \
+    GPU_LAYERS="${GPU_LAYERS:-30}" \
+    BATCH_SIZE="${BATCH_SIZE:-256}" \
+    UBATCH_SIZE="${UBATCH_SIZE:-256}" \
+    "${MODEL_SCRIPT}" start "$@"
+    start_router_api
+    ;;
+  restart-mm)
+    stop_pidfile_process "${API_PID_FILE}" "first-router api"
+    stop_port_listener "${API_PORT}"
+    ENABLE_MMPROJ=1 \
+    MMPROJ_OFFLOAD="${MMPROJ_OFFLOAD:-1}" \
+    GPU_LAYERS="${GPU_LAYERS:-30}" \
+    BATCH_SIZE="${BATCH_SIZE:-256}" \
+    UBATCH_SIZE="${UBATCH_SIZE:-256}" \
+    "${MODEL_SCRIPT}" restart "$@"
+    start_router_api
+    ;;
   stop)
     stop_pidfile_process "${API_PID_FILE}" "first-router api"
     stop_port_listener "${API_PORT}"
@@ -198,8 +234,20 @@ case "${ACTION}" in
   test|sample|trace|stream)
     "${MODEL_SCRIPT}" "${ACTION}" "$@"
     ;;
+  image-sample)
+    exec "${PYTHON_BIN}" "${PROJECT_DIR}/scripts/infer_image.py" \
+      --image "${1:-${DEFAULT_IMAGE}}" \
+      --prompt-file "${DEFAULT_SCENE_PROMPT}"
+    ;;
+  image-coordinate)
+    exec "${PYTHON_BIN}" "${PROJECT_DIR}/scripts/infer_image.py" \
+      --image "${1:-${DEFAULT_IMAGE}}" \
+      --prompt-file "${DEFAULT_COORDINATE_PROMPT}" \
+      --temperature 0 \
+      --max-tokens 8
+    ;;
   *)
-    echo "Usage: $0 [start|restart|stop|status|ready|logs|model-logs|test|sample|trace|stream] [args...]" >&2
+    echo "Usage: $0 [start|restart|start-mm|restart-mm|stop|status|ready|logs|model-logs|test|sample|trace|stream|image-sample|image-coordinate] [args...]" >&2
     exit 1
     ;;
 esac

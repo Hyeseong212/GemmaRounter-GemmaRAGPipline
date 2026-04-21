@@ -8,6 +8,7 @@ ALIAS="${4:-gemma4-shared}"
 RUN_MODE="${RUN_MODE:-foreground}"
 CONTAINER_NAME="${CONTAINER_NAME:-gemma4-${MODEL_VARIANT}-${PORT}}"
 ENABLE_MMPROJ="${ENABLE_MMPROJ:-0}"
+MMPROJ_OFFLOAD="${MMPROJ_OFFLOAD:-1}"
 ENABLE_WARMUP="${ENABLE_WARMUP:-0}"
 N_PARALLEL="${N_PARALLEL:-1}"
 BATCH_SIZE="${BATCH_SIZE:-1024}"
@@ -74,6 +75,7 @@ echo "Docker command: ${DOCKER_CMD[*]}"
 echo "Run mode: ${RUN_MODE}"
 echo "Container name: ${CONTAINER_NAME}"
 echo "Enable mmproj: ${ENABLE_MMPROJ}"
+echo "Mmproj offload: ${MMPROJ_OFFLOAD}"
 echo "Enable warmup: ${ENABLE_WARMUP}"
 echo "Parallel slots: ${N_PARALLEL}"
 echo "Batch size: ${BATCH_SIZE}"
@@ -135,6 +137,11 @@ fi
 
 if [[ "${ENABLE_MMPROJ}" == "1" ]]; then
   SERVER_ARGS+=(--mmproj-auto)
+  if [[ "${MMPROJ_OFFLOAD}" == "1" ]]; then
+    SERVER_ARGS+=(--mmproj-offload)
+  else
+    SERVER_ARGS+=(--no-mmproj-offload)
+  fi
 else
   SERVER_ARGS+=(--no-mmproj)
 fi
