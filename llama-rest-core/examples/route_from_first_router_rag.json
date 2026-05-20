@@ -1,0 +1,36 @@
+{
+  "request_id": "jetson-bridge-rag-001",
+  "original_question": "소변분석기 충전 중에는 측정해도 되나?",
+  "metadata": {
+    "locale": "ko-KR",
+    "source": "jetson-first-router",
+    "device_id": "orin-demo-01"
+  },
+  "first_router": {
+    "display": {
+      "route": "server_rag",
+      "decision_source": "hard_rule",
+      "brief": "문서 근거가 필요해 RAG로 전달",
+      "target_system": "rag_reference_api",
+      "reason_codes": [
+        "needs_reference_grounding"
+      ]
+    },
+    "handoff": {
+      "route": "server_rag",
+      "target_system": "rag_reference_api",
+      "task_type": "grounded_reference_lookup",
+      "summary": "소변분석기 충전 중 측정 가능 여부 질문",
+      "required_inputs": [
+        "user_message",
+        "retrieved_context"
+      ],
+      "metadata": {
+        "request_id": "first-router-rag-001",
+        "question": "소변분석기 충전 중에는 측정해도 되나?",
+        "original_question": "소변분석기 충전 중에는 측정해도 되나?",
+        "retrieval_query": "소변분석기 충전 중 측정 금지 사용설명서"
+      }
+    }
+  }
+}

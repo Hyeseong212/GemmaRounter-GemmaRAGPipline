@@ -6,6 +6,8 @@
 
 - 실측 휠체어 거리 측정 이미지:
   - [장애물거리측정.png](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/presentation/assets/장애물거리측정.png)
+- raw depth / 알고리즘 적용 depth 비교용 템플릿:
+  - [depth_comparison_data.csv](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/presentation/assets/depth_comparison_data.csv)
 - 병원 이미지 8장 서술형 결과:
   - [장애물_서술형_결과.txt](</home/rbiotech-server/Downloads/병원 이미지/장애물_서술형_결과.txt>)
 - 단일 병실 메타데이터:
@@ -25,6 +27,7 @@
 - 결과:
   - `transport_room_shared_01.jpg`
   - `장애물거리측정.png`
+  - `depth_comparison_data.csv`
   - 사용자 샘플 8장 결과 텍스트
 - 한계:
   - detector 미사용

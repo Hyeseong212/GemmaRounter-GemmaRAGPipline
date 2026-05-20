@@ -74,7 +74,9 @@ static void my_batch_add_embd(struct llama_batch & batch, float * embd_data, int
 // 생성자: 모델 로드 및 초기화
 // --------------------------------------------------------------------------
 LLMManager::LLMManager(const std::string& modelPath, const std::string& mmprojPath, int n_parallel)
-    : n_parallel(n_parallel), batch_capacity(6144) //batch_capacity(8192) gemma
+    : n_parallel(std::max(1, n_parallel)),
+      batch_capacity(std::max(1024, getenv_int_or("LLAMA_REST_BATCH_CAPACITY", getenv_int_or("LLAMA_REST_N_CTX", 3072)))),
+      n_ctx(std::max(1024, getenv_int_or("LLAMA_REST_N_CTX", 3072)))
     { 
     
     std::cout << "\n========================================\n";
@@ -138,37 +140,41 @@ LLMManager::LLMManager(const std::string& modelPath, const std::string& mmprojPa
 
     // 3. 컨텍스트 및 슬롯 초기화
     vocab = llama_model_get_vocab(model);
-    llama_context_params ctx_params = llama_context_default_params();
-    //ctx_params.n_ctx = 8192; gemma
-    ctx_params.n_ctx = 8192; // internv3l  
-    ctx_params.n_batch = 6144; 
-    ctx_params.n_ubatch = 512;
-    ctx_params.n_seq_max = std::max(1, n_parallel);
-    struct llama_context* ctx = llama_init_from_model(model, ctx_params);
-    contexts.push_back(ctx);
 
     slots.resize(n_parallel);
     for (int i = 0; i < n_parallel; ++i) {
+        llama_context_params ctx_params = llama_context_default_params();
+        ctx_params.n_ctx = n_ctx;
+        ctx_params.n_batch = std::min(batch_capacity, n_ctx);
+        ctx_params.n_ubatch = static_cast<uint32_t>(
+            std::min(getenv_int_or("LLAMA_REST_N_UBATCH", 512), static_cast<int>(ctx_params.n_batch))
+        );
+        ctx_params.n_seq_max = 1;
+
+        struct llama_context* ctx = llama_init_from_model(model, ctx_params);
+        contexts.push_back(ctx);
+
         slots[i].id = i;
+        slots[i].context_index = i;
         slots[i].is_active = false;
         slots[i].sampler = llama_sampler_chain_init(llama_sampler_chain_default_params());
         llama_sampler_chain_add(slots[i].sampler, llama_sampler_init_temp(0.15f));
         llama_sampler_chain_add(slots[i].sampler, llama_sampler_init_top_k(40));
         llama_sampler_chain_add(slots[i].sampler, llama_sampler_init_top_p(0.95f, 1));
         llama_sampler_chain_add(slots[i].sampler, llama_sampler_init_dist(LLAMA_DEFAULT_SEED));
+        slots[i].batch_text = llama_batch_init(batch_capacity, 0, 1);
+        slots[i].batch_image = llama_batch_init(batch_capacity, llama_model_n_embd(model), 1);
     }
-
-    int n_embd = llama_model_n_embd(model); 
-    batch_text = llama_batch_init(batch_capacity, 0, std::max(1, n_parallel));
-    batch_image = llama_batch_init(batch_capacity, n_embd, std::max(1, n_parallel));
 }
 
 LLMManager::~LLMManager() {
-    for (auto& s : slots) if (s.sampler) llama_sampler_free(s.sampler);
-    
-    // 두 배치 모두 해제
-    llama_batch_free(batch_text);
-    llama_batch_free(batch_image);
+    for (auto& s : slots) {
+        if (s.sampler) {
+            llama_sampler_free(s.sampler);
+        }
+        llama_batch_free(s.batch_text);
+        llama_batch_free(s.batch_image);
+    }
     
     for (auto* c : contexts) llama_free(c);
     if (ctx_clip) clip_free(ctx_clip);
@@ -205,11 +211,12 @@ bool LLMManager::add_request(const std::string& prompt, const std::string& image
     slot.n_pos = 0;
     slot.pending_input_tokens.clear();
 
-    struct llama_context* ctx = contexts[0];
+    struct llama_context* ctx = contexts[slot.context_index];
 
     // 3. 이전 기억(KV Cache) 삭제
     llama_memory_t mem = llama_get_memory(ctx);
-    llama_memory_seq_rm(mem, slot.id, -1, -1);
+    llama_memory_seq_rm(mem, 0, -1, -1);
+    llama_sampler_reset(slot.sampler);
 
     // ▼▼▼ [핵심 수정 구간: 프롬프트 분리 및 순차적 KV 캐시 할당] ▼▼▼
 
@@ -242,22 +249,24 @@ bool LLMManager::add_request(const std::string& prompt, const std::string& image
         }
         prefix_tokens.resize(n_tok);
 
-        batch_text.n_tokens = 0;
+        slot.batch_text.n_tokens = 0;
         for (size_t i = 0; i < prefix_tokens.size(); i++) {
-            my_batch_add(batch_text, prefix_tokens[i], slot.n_pos++, {slot.id}, false);
+            my_batch_add(slot.batch_text, prefix_tokens[i], slot.n_pos++, {0}, false);
         }
-        if (batch_text.n_tokens > 0) {
-            if (llama_decode(ctx, batch_text) != 0) {
+        if (slot.batch_text.n_tokens > 0) {
+            slot.batch_text.logits[slot.batch_text.n_tokens - 1] = true;
+            if (llama_decode(ctx, slot.batch_text) != 0) {
                 finish_slot_with_error(slot, "Prefix decode failed");
                 return false;
             }
-            std::cout << "✅ [Trace] Prefix text decoded. Tokens: " << batch_text.n_tokens << "\n";
+            std::cout << "✅ [Trace] Prefix text decoded. Tokens: " << slot.batch_text.n_tokens << "\n";
         }
     }
 
 // 6. [이미지 처리 로직] -> 즉시 디코드 (Prefix 바로 뒤에 이어짐)
     if (!image_bytes.empty() && ctx_clip) {
         std::cout << "[Slot " << slot_idx << "] Processing Image...\n";
+        std::lock_guard<std::mutex> vision_lock(vision_mutex);
         int nx, ny, nc;
         unsigned char * data = stbi_load_from_memory((const stbi_uc*)image_bytes.data(), image_bytes.size(), &nx, &ny, &nc, 3);
         
@@ -288,12 +297,13 @@ bool LLMManager::add_request(const std::string& prompt, const std::string& image
                 
                 if (clip_image_batch_encode(ctx_clip, 4, imgs, image_embd.data())) {
                     int model_n_embd = llama_model_n_embd(model);       
-                    batch_image.n_tokens = 0;
+                    slot.batch_image.n_tokens = 0;
                     for (int i = 0; i < total_tokens; i++) {
-                        my_batch_add_embd(batch_image, image_embd.data() + (i * n_embd_clip), n_embd_clip, model_n_embd, slot.n_pos++, {slot.id});
+                        my_batch_add_embd(slot.batch_image, image_embd.data() + (i * n_embd_clip), n_embd_clip, model_n_embd, slot.n_pos++, {0});
                     }
-                    std::cout << "✅ [Trace] Image Batch filling done. Total tokens: " << batch_image.n_tokens << " (Patches: " << patch_count << ")\n";
-                    int decode_res = llama_decode(ctx, batch_image);
+                    std::cout << "✅ [Trace] Image Batch filling done. Total tokens: " << slot.batch_image.n_tokens << " (Patches: " << patch_count << ")\n";
+                    slot.batch_image.logits[slot.batch_image.n_tokens - 1] = true;
+                    int decode_res = llama_decode(ctx, slot.batch_image);
                     if (decode_res != 0) {
                         std::cerr << "❌ [Error] Image decode failed: " << decode_res << "\n";
                         finish_slot_with_error(slot, "Image decode failed");
@@ -328,29 +338,194 @@ bool LLMManager::add_request(const std::string& prompt, const std::string& image
     return true;
 }
 
+std::string LLMManager::infer_on_slot(int slot_idx, const std::string& prompt, const std::string& image_bytes) {
+    if (slot_idx < 0 || slot_idx >= n_parallel) {
+        return "[ERROR] Invalid slot index";
+    }
+
+    InferenceSlot& slot = slots[slot_idx];
+    struct llama_context* ctx = contexts[slot.context_index];
+
+    slot.is_active = true;
+    slot.generated_text.clear();
+    slot.pending_input_tokens.clear();
+    slot.n_pos = 0;
+    llama_sampler_reset(slot.sampler);
+
+    llama_memory_t mem = llama_get_memory(ctx);
+    llama_memory_seq_rm(mem, 0, -1, -1);
+
+    std::string prefix = "";
+    std::string suffix = prompt;
+    const size_t img_pos = prompt.find("<image>");
+
+    if (img_pos != std::string::npos) {
+        prefix = prompt.substr(0, img_pos);
+        suffix = prompt.substr(img_pos + 7);
+    } else if (!image_bytes.empty()) {
+        prefix = "<|im_start|>system\nYou are a helpful medical AI assistant.<|im_end|>\n<|im_start|>user\n";
+        suffix = "\n" + prompt + "<|im_end|>\n<|im_start|>assistant\n";
+    } else {
+        prefix = "<|im_start|>system\n당신은 한국어로 소통하는 재활의학 전문 AI입니다. 사용자의 질문에 대해 제공된 문서를 바탕으로 친절한 한국어로 답변하십시오.<|im_end|>\n<|im_start|>user\n";
+        suffix = prompt + "<|im_end|>\n<|im_start|>assistant\n";
+    }
+
+    if (!prefix.empty()) {
+        std::vector<llama_token> prefix_tokens(prefix.size() + 32);
+        int n_tok = llama_tokenize(vocab, prefix.c_str(), prefix.size(), prefix_tokens.data(), prefix_tokens.size(), true, true);
+        if (n_tok < 0) {
+            prefix_tokens.resize(-n_tok);
+            n_tok = llama_tokenize(vocab, prefix.c_str(), prefix.size(), prefix_tokens.data(), prefix_tokens.size(), true, true);
+        }
+        prefix_tokens.resize(n_tok);
+
+        slot.batch_text.n_tokens = 0;
+        for (llama_token token : prefix_tokens) {
+            my_batch_add(slot.batch_text, token, slot.n_pos++, {0}, false);
+        }
+        if (slot.batch_text.n_tokens > 0) {
+            slot.batch_text.logits[slot.batch_text.n_tokens - 1] = true;
+            if (llama_decode(ctx, slot.batch_text) != 0) {
+                slot.is_active = false;
+                return "[ERROR] Prefix decode failed";
+            }
+        }
+    }
+
+    if (!image_bytes.empty() && ctx_clip) {
+        std::lock_guard<std::mutex> vision_lock(vision_mutex);
+        int nx = 0;
+        int ny = 0;
+        int nc = 0;
+        unsigned char* data = stbi_load_from_memory(
+            reinterpret_cast<const stbi_uc*>(image_bytes.data()),
+            static_cast<int>(image_bytes.size()),
+            &nx,
+            &ny,
+            &nc,
+            3);
+
+        if (data) {
+            struct clip_image_u8* img = clip_image_u8_init();
+            clip_build_img_from_pixels(data, nx, ny, img);
+            stbi_image_free(data);
+
+            struct clip_image_f32_batch* imgs = clip_image_f32_batch_init();
+            mtmd_image_preprocessor_dyn_size image_preprocessor(ctx_clip);
+            if (image_preprocessor.preprocess(*img, *imgs)) {
+                int total_tokens = 0;
+                int patch_count = 0;
+                while (true) {
+                    struct clip_image_f32* res_img = clip_image_f32_get_img(imgs, patch_count);
+                    if (!res_img) {
+                        break;
+                    }
+                    total_tokens += clip_n_output_tokens(ctx_clip, res_img);
+                    patch_count++;
+                }
+
+                const int n_embd_clip = clip_n_mmproj_embd(ctx_clip);
+                std::vector<float> image_embd(total_tokens * n_embd_clip);
+                if (clip_image_batch_encode(ctx_clip, 4, imgs, image_embd.data())) {
+                    const int model_n_embd = llama_model_n_embd(model);
+                    slot.batch_image.n_tokens = 0;
+                    for (int i = 0; i < total_tokens; ++i) {
+                        my_batch_add_embd(
+                            slot.batch_image,
+                            image_embd.data() + (i * n_embd_clip),
+                            n_embd_clip,
+                            model_n_embd,
+                            slot.n_pos++,
+                            {0});
+                    }
+                    slot.batch_image.logits[slot.batch_image.n_tokens - 1] = true;
+                    if (llama_decode(ctx, slot.batch_image) != 0) {
+                        clip_image_f32_batch_free(imgs);
+                        clip_image_u8_free(img);
+                        slot.is_active = false;
+                        return "[ERROR] Image decode failed";
+                    }
+                }
+            }
+            clip_image_f32_batch_free(imgs);
+            clip_image_u8_free(img);
+        }
+    }
+
+    if (!suffix.empty()) {
+        std::vector<llama_token> suffix_tokens(suffix.size() + 32);
+        int n_tok = llama_tokenize(vocab, suffix.c_str(), suffix.size(), suffix_tokens.data(), suffix_tokens.size(), false, true);
+        if (n_tok < 0) {
+            suffix_tokens.resize(-n_tok);
+            n_tok = llama_tokenize(vocab, suffix.c_str(), suffix.size(), suffix_tokens.data(), suffix_tokens.size(), false, true);
+        }
+        suffix_tokens.resize(n_tok);
+        slot.pending_input_tokens = std::move(suffix_tokens);
+    }
+
+    while (slot.is_active) {
+        if (!slot.pending_input_tokens.empty()) {
+            slot.batch_text.n_tokens = 0;
+            const int chunk = (std::min)(static_cast<int>(slot.pending_input_tokens.size()), batch_capacity);
+            for (int i = 0; i < chunk; ++i) {
+                my_batch_add(slot.batch_text, slot.pending_input_tokens[i], slot.n_pos++, {0}, false);
+            }
+            slot.batch_text.logits[slot.batch_text.n_tokens - 1] = true;
+            slot.pending_input_tokens.erase(slot.pending_input_tokens.begin(), slot.pending_input_tokens.begin() + chunk);
+            if (llama_decode(ctx, slot.batch_text) != 0) {
+                slot.is_active = false;
+                return "[ERROR] Prefill decode failed";
+            }
+            if (!slot.pending_input_tokens.empty()) {
+                continue;
+            }
+        }
+
+        const llama_token new_token = llama_sampler_sample(slot.sampler, ctx, -1);
+        if (llama_vocab_is_eog(vocab, new_token) || slot.n_pos >= n_ctx) {
+            slot.is_active = false;
+            break;
+        }
+
+        char buf[256];
+        const int n = llama_token_to_piece(vocab, new_token, buf, sizeof(buf), 0, true);
+        if (n >= 0) {
+            slot.generated_text.append(buf, n);
+        }
+
+        slot.batch_text.n_tokens = 0;
+        my_batch_add(slot.batch_text, new_token, slot.n_pos++, {0}, true);
+        if (llama_decode(ctx, slot.batch_text) != 0) {
+            slot.is_active = false;
+            return "[ERROR] Generate decode failed";
+        }
+    }
+
+    return slot.generated_text;
+}
+
 
 // --------------------------------------------------------------------------
 // 스텝 함수: 실제 추론 진행 및 터미널 출력
 // --------------------------------------------------------------------------
 void LLMManager::step() {
-    struct llama_context* ctx = contexts[0];
-
     for (auto& slot : slots) {
         if (!slot.is_active) continue;
+        struct llama_context* ctx = contexts[slot.context_index];
 
         // Prefill (입력 텍스트 처리)
         if (!slot.pending_input_tokens.empty()) {
-            batch_text.n_tokens = 0; 
+            slot.batch_text.n_tokens = 0;
             int chunk = (std::min)((int)slot.pending_input_tokens.size(), batch_capacity);
             
             for (int i = 0; i < chunk; ++i) {
-                my_batch_add(batch_text, slot.pending_input_tokens[i], slot.n_pos++, { slot.id }, false);
+                my_batch_add(slot.batch_text, slot.pending_input_tokens[i], slot.n_pos++, {0}, false);
             }
-            batch_text.logits[batch_text.n_tokens - 1] = true;
+            slot.batch_text.logits[slot.batch_text.n_tokens - 1] = true;
             
             slot.pending_input_tokens.erase(slot.pending_input_tokens.begin(), slot.pending_input_tokens.begin() + chunk);
             
-            if (llama_decode(ctx, batch_text) != 0) {
+            if (llama_decode(ctx, slot.batch_text) != 0) {
                 std::cerr << "[Error] Decode failed in step (prefill)\n";
                 finish_slot_with_error(slot, "Prefill decode failed");
                 continue;
@@ -359,10 +534,9 @@ void LLMManager::step() {
         }
 
         // Generate (다음 단어 생성)
-        llama_token new_token = llama_sampler_sample(slot.sampler, ctx, batch_text.n_tokens - 1);
+        llama_token new_token = llama_sampler_sample(slot.sampler, ctx, -1);
         std::cout << "[Debug Token ID: " << new_token << "]" << std::endl;
-        //if (llama_vocab_is_eog(vocab, new_token) || slot.n_pos >= 8192) { gemma
-        if (llama_vocab_is_eog(vocab, new_token) || slot.n_pos >= 16384) {
+        if (llama_vocab_is_eog(vocab, new_token) || slot.n_pos >= n_ctx) {
             std::cout << "[Slot " << slot.id << "] Done.\n";
             if (slot.callback) slot.callback(slot.generated_text);
             slot.is_active = false;
@@ -379,10 +553,10 @@ void LLMManager::step() {
             std::cout << piece << std::flush; 
         }
 
-        batch_text.n_tokens = 0;
-        my_batch_add(batch_text, new_token, slot.n_pos++, { slot.id }, true);
+        slot.batch_text.n_tokens = 0;
+        my_batch_add(slot.batch_text, new_token, slot.n_pos++, {0}, true);
         
-        if (llama_decode(ctx, batch_text) != 0) {
+        if (llama_decode(ctx, slot.batch_text) != 0) {
             std::cerr << "[Error] Decode failed in step (generate)\n";
             finish_slot_with_error(slot, "Generate decode failed");
         }

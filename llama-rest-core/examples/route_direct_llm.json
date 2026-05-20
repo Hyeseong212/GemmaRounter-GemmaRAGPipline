@@ -1,0 +1,9 @@
+{
+  "request_id": "route-direct-llm-001",
+  "user_message": "우리 팀 회의 내용을 한 문단으로 자연스럽게 정리해줘.",
+  "metadata": {
+    "locale": "ko-KR",
+    "source": "server-direct-test",
+    "device_id": "orin-demo-01"
+  }
+}

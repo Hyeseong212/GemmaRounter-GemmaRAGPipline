@@ -5,17 +5,21 @@
 #include <string>
 #include <functional>
 #include <iostream>
+#include <mutex>
 
 #include "llama.h"
 #include "clip.h"
 
 struct InferenceSlot {
     int id;
+    int context_index = -1;
     bool is_active;
     std::string generated_text;
     std::vector<llama_token> pending_input_tokens;
-    int n_pos;                  
+    int n_pos = 0;
     struct llama_sampler* sampler = nullptr;
+    struct llama_batch batch_text = {};
+    struct llama_batch batch_image = {};
     std::function<void(std::string)> callback;
 };
 
@@ -25,6 +29,7 @@ public:
     ~LLMManager();
 
     bool isValid() const;
+    std::string infer_on_slot(int slot_idx, const std::string& prompt, const std::string& image_bytes);
     bool add_request(const std::string& prompt, const std::string& image_bytes, std::function<void(std::string)> on_complete);
     
     bool has_free_slot();
@@ -38,13 +43,11 @@ private:
     
     std::vector<struct llama_context*> contexts; 
     std::vector<InferenceSlot> slots;
-    
-    // ★ [수정] 배치를 용도별로 분리하여 충돌 방지
-    struct llama_batch batch_text;  // 텍스트용 (임베딩 X)
-    struct llama_batch batch_image; // 이미지용 (임베딩 O)
-    
+    std::mutex vision_mutex;
+
     int n_parallel;         
-    int batch_capacity;     
+    int batch_capacity;
+    int n_ctx;
 };
 
 #endif

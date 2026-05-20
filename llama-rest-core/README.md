@@ -71,9 +71,7 @@ curl http://127.0.0.1:18088/healthz
 ```bash
 curl http://127.0.0.1:18088/infer \
   -H 'Content-Type: application/json' \
-  -d '{
-    "prompt": "안녕하세요라고만 답해줘."
-  }'
+  --data @/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/infer_text.json
 ```
 
 이미지:
@@ -81,10 +79,7 @@ curl http://127.0.0.1:18088/infer \
 ```bash
 curl http://127.0.0.1:18088/infer \
   -H 'Content-Type: application/json' \
-  -d '{
-    "prompt": "이 이미지에서 휠체어가 어딨는지 중심을 좌표로 나타내봐",
-    "image_path": "/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/test-assets/public-research/중앙.jpg"
-  }'
+  --data @/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/infer_image_coordinate.json
 ```
 
 영상:
@@ -92,10 +87,7 @@ curl http://127.0.0.1:18088/infer \
 ```bash
 curl http://127.0.0.1:18088/infer \
   -H 'Content-Type: application/json' \
-  -d '{
-    "prompt": "이 영상에서 보이는 장면을 설명해줘.",
-    "video_path": "/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/test-assets/public-research/brain_mri_post_glioblastoma_transverse.mp4"
-  }'
+  --data @/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/infer_video_summary.json
 ```
 
 현재 `/infer`는 아래 입력을 받습니다.
@@ -122,11 +114,25 @@ curl http://127.0.0.1:18088/infer \
 ```bash
 curl http://127.0.0.1:18088/process/from-first-router \
   -H 'Content-Type: application/json' \
-  --data @/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/second-router/examples/server_router_from_first_router_request.json
+  --data @/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/process_from_first_router_rag.json
 ```
 
 저장소 안 예시 파일:
 
+- [README.md](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/README.md)
+- [infer_text.json](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/infer_text.json)
+- [infer_image_coordinate.json](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/infer_image_coordinate.json)
+- [infer_video_summary.json](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/infer_video_summary.json)
+- [route_direct_rag.json](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/route_direct_rag.json)
+- [route_direct_llm.json](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/route_direct_llm.json)
+- [route_from_first_router_rag.json](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/route_from_first_router_rag.json)
+- [route_from_first_router_llm.json](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/route_from_first_router_llm.json)
+- [process_from_first_router_rag.json](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/process_from_first_router_rag.json)
+- [process_from_first_router_llm.json](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/process_from_first_router_llm.json)
+- [rag_ask_manual.json](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/rag_ask_manual.json)
+- [rag_ask_error_code.json](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/rag_ask_error_code.json)
+- [score_rag_release.json](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/score_rag_release.json)
+- [score_llm_reroute.json](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/score_llm_reroute.json)
 - [jetson_from_first_router_rag.json](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/jetson_from_first_router_rag.json)
 - [jetson_from_first_router_llm.json](/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/jetson_from_first_router_llm.json)
 

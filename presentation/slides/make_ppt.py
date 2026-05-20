@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import csv
 import importlib.util
 import re
 from collections import Counter
@@ -17,6 +18,7 @@ EXPORT_SHAPE_PATH = PRESENTATION_ROOT / "export" / "gemma4_oak_obstacle_presenta
 FIGURES_RENDERED = PRESENTATION_ROOT / "figures" / "rendered"
 ASSETS = PRESENTATION_ROOT / "assets"
 USER_REPORT = Path("/home/rbiotech-server/Downloads/병원 이미지/장애물_서술형_결과.txt")
+DEPTH_COMPARE_CSV = ASSETS / "depth_comparison_data.csv"
 
 SLIDE_W = 13.333
 SLIDE_H = 7.5
@@ -246,6 +248,43 @@ def parse_report_counts() -> list[tuple[str, int]]:
     text = USER_REPORT.read_text(encoding="utf-8")
     classes = re.findall(r"클래스: ([a-zA-Z_]+)", text)
     return Counter(classes).most_common(6)
+
+
+def parse_depth_comparison_rows() -> list[dict[str, float | str]]:
+    if not DEPTH_COMPARE_CSV.exists():
+        return []
+
+    rows: list[dict[str, float | str]] = []
+    with DEPTH_COMPARE_CSV.open("r", encoding="utf-8-sig", newline="") as fh:
+        reader = csv.DictReader(fh)
+        for row in reader:
+            distance = (row.get("distance_m") or "").strip()
+            raw = (row.get("raw_depth_mm") or "").strip()
+            corrected = (row.get("algorithm_depth_mm") or "").strip()
+            if not distance:
+                continue
+            try:
+                distance_f = float(distance)
+            except ValueError:
+                continue
+
+            def parse_optional(value: str):
+                if not value:
+                    return None
+                try:
+                    return float(value)
+                except ValueError:
+                    return None
+
+            rows.append(
+                {
+                    "distance_m": distance_f,
+                    "raw_depth_mm": parse_optional(raw),
+                    "algorithm_depth_mm": parse_optional(corrected),
+                    "notes": (row.get("notes") or "").strip(),
+                }
+            )
+    return rows
 
 
 def add_image_placeholder(
@@ -727,6 +766,125 @@ def slide_actual_depth(prs):
     add_metric_card(slide, 9.18, 5.74, 3.1, 0.72, "Measured depth", "2827 mm", ACCENT_3)
 
 
+def slide_depth_comparison(prs):
+    slide = prs.slides.add_slide(prs.slide_layouts[6])
+    set_bg(slide)
+    add_title(slide, "실측 거리 대비 raw / 알고리즘 적용 depth 비교", "거리별 오차 경향을 정량적으로 비교")
+    add_section_chip(slide, "Depth Eval", 0.72, 0.18, width=1.65, color=ACCENT_4)
+
+    rows = parse_depth_comparison_rows()
+    valid_rows = [r for r in rows if r["raw_depth_mm"] is not None and r["algorithm_depth_mm"] is not None]
+
+    add_panel(slide, 0.7, 1.45, 7.9, 4.95)
+    add_panel(slide, 8.8, 1.45, 3.85, 4.95)
+
+    if len(valid_rows) >= 2:
+        chart_data = CategoryChartData()
+        chart_data.categories = [f"{int(r['distance_m'])}m" if float(r["distance_m"]).is_integer() else f"{r['distance_m']}m" for r in valid_rows]
+        chart_data.add_series("Raw depth", [float(r["raw_depth_mm"]) for r in valid_rows])
+        chart_data.add_series("Algorithm depth", [float(r["algorithm_depth_mm"]) for r in valid_rows])
+        chart_data.add_series("Actual distance", [float(r["distance_m"]) * 1000.0 for r in valid_rows])
+
+        chart = slide.shapes.add_chart(
+            XL_CHART_TYPE.LINE_MARKERS,
+            Inches(0.95),
+            Inches(1.8),
+            Inches(7.35),
+            Inches(3.95),
+            chart_data,
+        ).chart
+        chart.has_legend = True
+        chart.legend.position = XL_LEGEND_POSITION.BOTTOM
+        chart.legend.include_in_layout = False
+        chart.value_axis.has_major_gridlines = True
+        chart.value_axis.minimum_scale = 0
+        chart.value_axis.maximum_scale = max(
+            max(float(r["raw_depth_mm"]) for r in valid_rows),
+            max(float(r["algorithm_depth_mm"]) for r in valid_rows),
+            max(float(r["distance_m"]) * 1000.0 for r in valid_rows),
+        ) * 1.1
+        chart.value_axis.tick_labels.font.size = Pt(11)
+        chart.category_axis.tick_labels.font.size = Pt(11)
+        chart.chart_title.has_text_frame = True
+        chart.chart_title.text_frame.text = "거리별 depth 비교 (mm)"
+
+        title_p = chart.chart_title.text_frame.paragraphs[0]
+        set_paragraph_font(title_p, name=FONT_BODY, size=13, color=TEXT, bold=True)
+        for series, color in zip(chart.series, [ACCENT_2, ACCENT_3, ACCENT], strict=False):
+            series.format.line.color.rgb = RGBColor.from_string(color)
+            series.format.line.width = Pt(2.5)
+            try:
+                series.marker.style = 8
+                series.marker.size = 7
+                series.marker.format.fill.solid()
+                series.marker.format.fill.fore_color.rgb = RGBColor.from_string(color)
+                series.marker.format.line.color.rgb = RGBColor.from_string(color)
+            except Exception:
+                pass
+
+        table_rows = min(len(valid_rows), 7) + 1
+        table = slide.shapes.add_table(table_rows, 4, Inches(8.98), Inches(1.78), Inches(3.45), Inches(3.55)).table
+        headers = ["거리(m)", "Raw(mm)", "보정(mm)", "실측(mm)"]
+        col_widths = [0.65, 0.9, 0.95, 0.95]
+        for idx, width in enumerate(col_widths):
+            table.columns[idx].width = Inches(width)
+        for col, text in enumerate(headers):
+            cell = table.cell(0, col)
+            cell.text = text
+            cell.fill.solid()
+            cell.fill.fore_color.rgb = RGBColor.from_string(SOFT_BLUE)
+            p = cell.text_frame.paragraphs[0]
+            p.alignment = PP_ALIGN.CENTER
+            set_paragraph_font(p, name=FONT_BODY, size=10, color=TEXT, bold=True)
+        for row_idx, row in enumerate(valid_rows[:7], start=1):
+            values = [
+                f"{row['distance_m']:g}",
+                f"{int(float(row['raw_depth_mm']))}",
+                f"{int(float(row['algorithm_depth_mm']))}",
+                f"{int(float(row['distance_m']) * 1000)}",
+            ]
+            for col, value in enumerate(values):
+                cell = table.cell(row_idx, col)
+                cell.text = value
+                p = cell.text_frame.paragraphs[0]
+                p.alignment = PP_ALIGN.CENTER
+                set_paragraph_font(p, name=FONT_CAPTION, size=10, color=TEXT)
+
+        add_caption(slide, f"데이터 파일: {DEPTH_COMPARE_CSV.name}", 8.98, 5.48, 3.2)
+        add_bullets(
+            slide,
+            [
+                "Raw depth와 알고리즘 적용 depth를 동일 축에서 비교한다.",
+                "실측 거리(ground truth)를 함께 넣어 보정 전후 차이를 바로 확인한다.",
+            ],
+            0.98,
+            5.98,
+            7.15,
+            0.56,
+            font_size=14,
+        )
+    else:
+        add_bullets(
+            slide,
+            [
+                "depth 비교 차트용 데이터가 아직 충분하지 않다.",
+                f"`{DEPTH_COMPARE_CSV}` 파일에 2개 이상의 거리 샘플을 채우면 자동으로 그래프가 생성된다.",
+                "필수 컬럼: distance_m, raw_depth_mm, algorithm_depth_mm",
+            ],
+            1.05,
+            2.2,
+            6.9,
+            1.6,
+            font_size=18,
+        )
+        add_caption(slide, f"템플릿 파일: {DEPTH_COMPARE_CSV}", 1.05, 4.55, 6.8)
+        placeholder = add_textbox(slide, 9.15, 2.25, 3.1, 2.2)
+        p = placeholder.text_frame.paragraphs[0]
+        p.text = "CSV를 채우면\n이 영역에 꺾은선그래프와\n비교 표가 생성됩니다."
+        p.alignment = PP_ALIGN.CENTER
+        set_paragraph_font(p, name=FONT_BODY, size=18, color=SUBTEXT, bold=True)
+
+
 def slide_use_cases(prs):
     slide = prs.slides.add_slide(prs.slide_layouts[6])
     set_bg(slide)
@@ -865,6 +1023,7 @@ def build_presentation(prs):
     slide_actual_inference(prs)
     slide_actual_coordinates(prs)
     slide_actual_depth(prs)
+    slide_depth_comparison(prs)
     slide_use_cases(prs)
     slide_limitations_next(prs)
     slide_closing(prs)
@@ -887,7 +1046,9 @@ def main() -> int:
 
     try:
         from pptx import Presentation
+        from pptx.chart.data import CategoryChartData
         from pptx.dml.color import RGBColor
+        from pptx.enum.chart import XL_CHART_TYPE, XL_LEGEND_POSITION
         from pptx.enum.shapes import MSO_AUTO_SHAPE_TYPE
         from pptx.enum.text import PP_ALIGN
         from pptx.util import Inches, Pt
@@ -896,6 +1057,9 @@ def main() -> int:
 
     globals().update(
         RGBColor=RGBColor,
+        CategoryChartData=CategoryChartData,
+        XL_CHART_TYPE=XL_CHART_TYPE,
+        XL_LEGEND_POSITION=XL_LEGEND_POSITION,
         MSO_AUTO_SHAPE_TYPE=MSO_AUTO_SHAPE_TYPE,
         PP_ALIGN=PP_ALIGN,
         Inches=Inches,

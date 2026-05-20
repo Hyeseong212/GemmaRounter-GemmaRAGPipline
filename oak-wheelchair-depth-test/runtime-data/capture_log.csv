@@ -1,0 +1,51 @@
+timestamp,capture_path,image_width,image_height,bottom_left_x,bottom_left_y,top_left_x,top_left_y,raw_depth_mm,corrected_depth_mm,depth_mm,depth_status,actual_distance_mm,calibration_applied,calibration_slope,calibration_intercept,notes,prompt,raw_response
+"20260420-141950","/tmp/oak-wheelchair-depth-test/capture-20260420-141949.png",1280,720,809,270,809,450,5221,,5221,"ok",,0,,,,"이 이미지에서 휠체어가 어딨는지 중심을 좌표로 나타내봐","이 이미지에서 휠체어의 중심 좌표는 [809, 270]입니다.
+"
+"20260420-141952","/tmp/oak-wheelchair-depth-test/capture-20260420-141952.png",1280,720,657,333,657,387,5256,,5256,"ok",,0,,,,"이 이미지에서 휠체어가 어딨는지 중심을 좌표로 나타내봐","이 이미지에서 휠체어의 중심 좌표는 [657, 333]입니다.
+"
+"20260420-142725","/tmp/oak-wheelchair-depth-test/capture-20260420-142724.png",1280,720,489,261,489,459,5502,,5502,"ok",,0,,,,"이 이미지에서 휠체어가 어딨는지 중심을 좌표로 나타내봐","이 이미지에서 휠체어의 중심 좌표는 [489, 261]입니다.
+"
+"20260420-142745","/tmp/oak-wheelchair-depth-test/capture-20260420-142744.png",1280,720,403,400,403,320,5451,,5451,"ok",,0,,,,"이 이미지에서 휠체어가 어딨는지 중심을 좌표로 나타내봐","이 이미지에서 휠체어의 중심 좌표는 [403, 400]입니다.
+"
+"20260420-142746","/tmp/oak-wheelchair-depth-test/capture-20260420-142745.png",1280,720,479,391,479,329,5352,,5352,"ok",,0,,,,"이 이미지에서 휠체어가 어딨는지 중심을 좌표로 나타내봐","이 이미지에서 휠체어의 중심 좌표는 [479, 391]입니다.
+"
+"20260420-143207","/tmp/oak-wheelchair-depth-test/capture-20260420-143206.png",1280,720,580,385,580,335,8410,,8410,"ok",,0,,,,"이 이미지에서 휠체어가 어딨는지 중심을 좌표로 나타내봐","이 이미지에서 휠체어의 중심 좌표는 [580, 385]입니다.
+"
+"20260420-143320","/tmp/oak-wheelchair-depth-test/capture-20260420-143319.png",1280,720,485,330,485,390,8120,,8120,"ok",,0,,,,"이 이미지에서 휠체어가 어딨는지 중심을 좌표로 나타내봐","이 이미지에서 휠체어의 중심 좌표는 [485, 330]입니다.
+"
+"20260420-143500","/tmp/oak-wheelchair-depth-test/capture-20260420-143459.png",1280,720,596,390,596,330,14358,,14358,"ok",,0,,,,"이 이미지에서 휠체어가 어딨는지 중심을 좌표로 나타내봐","```json
+[
+  {""point"": [596, 390], ""label"": ""휠체어""}
+]
+```
+"
+"20260420-153657","/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/oak-wheelchair-depth-test/runtime-data/capture-20260420-153656.png",1280,720,449,330,449,390,5593,4545,4545,"ok",,1,0.621803,1067.318301,,"이 이미지에서 휠체어가 어딨는지 중심을 좌표로 나타내봐","```json
+[
+  {""point"": [449, 330], ""label"": ""휠체어""}
+]
+```
+"
+"20260420-153744","/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/oak-wheelchair-depth-test/runtime-data/capture-20260420-153743.png",1280,720,630,407,630,313,7050,5451,5451,"ok",,1,0.621803,1067.318301,,"이 이미지에서 휠체어가 어딨는지 중심을 좌표로 나타내봐","이 이미지에서 휠체어의 중심 좌표는 [630, 407]입니다.
+"
+"20260420-153831","/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/oak-wheelchair-depth-test/runtime-data/capture-20260420-153830.png",1280,720,612,402,612,318,8852,6572,6572,"ok",,1,0.621803,1067.318301,,"이 이미지에서 휠체어가 어딨는지 중심을 좌표로 나타내봐","```json
+[
+  {""point"": [612, 402], ""label"": ""휠체어""}
+]
+```
+"
+"20260420-153901","/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/oak-wheelchair-depth-test/runtime-data/capture-20260420-153900.png",1280,720,608,414,608,306,10063,7325,7325,"ok",,1,0.621803,1067.318301,,"이 이미지에서 휠체어가 어딨는지 중심을 좌표로 나타내봐","이 이미지에서 휠체어의 중심 좌표는 [608, 414]입니다.
+"
+"20260420-162331","/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/oak-wheelchair-depth-test/runtime-data/capture-20260420-162330.png",1280,720,489,401,489,319,9650,9150,9150,"ok",,1,1.000000,-500.000000,,"이 이미지에서 휠체어가 어딨는지 중심을 좌표로 나타내봐","```json
+[
+  {""point"": [489, 401], ""label"": ""휠체어""}
+]
+```
+"
+"20260420-162545","/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/oak-wheelchair-depth-test/runtime-data/capture-20260420-162544.png",1280,720,471,384,471,336,9978,6772,6772,"ok",,1,0.621803,567.318301,,"이 이미지에서 휠체어가 어딨는지 중심을 좌표로 나타내봐","```json
+[
+  {""point"": [471, 384], ""label"": ""휠체어""}
+]
+```
+"
+"20260421-123308","/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/oak-wheelchair-depth-test/runtime-data/capture-20260421-123307.png",1280,720,564,258,564,462,6038,4322,4322,"ok",,1,0.621803,567.318301,,"이 이미지에서 휠체어가 어딨는지 중심을 좌표로 나타내봐","이 이미지에서 휠체어의 중심 좌표는 [564, 258]입니다.
+"

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <thread>
 #include <mutex>
+#include <condition_variable>
 #include <atomic>
 #include <queue>
 #include <future> 
@@ -96,8 +97,10 @@ struct Job {
 std::queue<Job> text_job_queue;
 std::queue<Job> multimodal_job_queue;
 std::mutex job_mutex;
+std::condition_variable job_cv;
 std::atomic<bool> job_running{true};
 std::atomic<bool> infer_worker_enabled{true};
+int text_dispatch_streak = 0;
 
 namespace {
 
@@ -517,73 +520,44 @@ std::string extract_video_frame_bytes(const std::string& video_path) {
 // --------------------------------------------------------------------------
 // 3. 워커 스레드 (생성자 및 함수 호출 수정)
 // --------------------------------------------------------------------------
-void worker_thread_loop() {
-// 1. 모델 경로 (Q5_K_M 버전이 메모리도 적게 먹고 빠릅니다. F16은 너무 클 수 있어요)
-    // 메모리가 충분하다면 f16을 쓰셔도 되지만, 안전하게 Q5부터 추천드립니다.
-    // (기존 f16 파일 쓰시려면 아래 주석 풀고 쓰세요)
-    
-    std::string model_path = getenv_or_default(
-        "LLAMA_REST_MODEL_PATH",
-        "/home/rbiotech-server/llama_Rest/models/gemma4-31b/gemma-4-31B-it-Q4_K_M.gguf"
-    );
-    std::string mmproj_path = getenv_or_default(
-        "LLAMA_REST_MMPROJ_PATH",
-        "/home/rbiotech-server/llama_Rest/models/gemma4-31b/mmproj-gemma-4-31B-it-Q8_0.gguf"
-    );
-    // [수정] 생성자 인자 3개 (모델경로, 비전경로, 병렬수)
-    //LLMManager manager(model_path, mmproj_path, 4); gemma
-    LLMManager manager(model_path, mmproj_path, getenv_or_default_int("LLAMA_REST_PARALLEL", 1));
-
-    if (!manager.isValid()) {
-        fprintf(stderr, "[Worker] Manager initialization failed. Exiting thread.\n");
-        return;
-    }
-
-    printf("[Worker] System Ready. Waiting for requests...\n");
-
-    int consecutive_text_jobs = 0;
-
+void worker_thread_loop(LLMManager* manager, int slot_idx) {
     while (job_running) {
-        bool busy = false;
-
-        if (manager.has_free_slot()) {
+        Job job;
+        {
             std::unique_lock<std::mutex> lock(job_mutex);
-            if (!text_job_queue.empty() || !multimodal_job_queue.empty()) {
-                const bool prefer_text = !text_job_queue.empty() &&
-                    (multimodal_job_queue.empty() || consecutive_text_jobs < 3);
-
-                Job job;
-                if (prefer_text) {
-                    job = text_job_queue.front();
-                    text_job_queue.pop();
-                    ++consecutive_text_jobs;
-                } else {
-                    job = multimodal_job_queue.front();
-                    multimodal_job_queue.pop();
-                    consecutive_text_jobs = 0;
-                }
-                lock.unlock();
-
-                // [수정] add_request 인자 3개 (프롬프트, 이미지바이트, 콜백)
-                if (!manager.add_request(job.prompt, job.image_bytes, [prom = job.prom](std::string result) {
-                    try { prom->set_value(sanitize_infer_output(std::move(result))); } catch (...) {}
-                })) {
-                    try { job.prom->set_value("[ERROR] Failed to queue inference request"); } catch (...) {}
-                }
-                std::cout << "[Scheduler] dispatched lane=" << lane_name(job.lane)
-                          << " text_q=" << text_job_queue.size()
-                          << " mm_q=" << multimodal_job_queue.size() << "\n";
-                busy = true;
+            job_cv.wait(lock, [] {
+                return !job_running || !text_job_queue.empty() || !multimodal_job_queue.empty();
+            });
+            if (!job_running && text_job_queue.empty() && multimodal_job_queue.empty()) {
+                break;
             }
-        }
 
-        if (!manager.is_all_idle()) {
-            manager.step();
-            busy = true;
-        }
+            const bool prefer_text = !text_job_queue.empty() &&
+                (multimodal_job_queue.empty() || text_dispatch_streak < 3);
 
-        if (!busy) {
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+            if (prefer_text) {
+                job = text_job_queue.front();
+                text_job_queue.pop();
+                ++text_dispatch_streak;
+            } else {
+                job = multimodal_job_queue.front();
+                multimodal_job_queue.pop();
+                text_dispatch_streak = 0;
+            }
+
+            std::cout << "[Scheduler] slot=" << slot_idx
+                      << " dispatched lane=" << lane_name(job.lane)
+                      << " text_q=" << text_job_queue.size()
+                      << " mm_q=" << multimodal_job_queue.size() << "\n";
+        }
+        try {
+            const std::string result = manager->infer_on_slot(slot_idx, job.prompt, job.image_bytes);
+            job.prom->set_value(sanitize_infer_output(result));
+        } catch (...) {
+            try {
+                job.prom->set_value("[ERROR] Worker exception");
+            } catch (...) {
+            }
         }
     }
 }
@@ -593,13 +567,33 @@ void worker_thread_loop() {
 // --------------------------------------------------------------------------
 int main() {
     httplib::Server svr;
-    std::unique_ptr<std::thread> worker;
+    std::unique_ptr<LLMManager> manager;
+    std::vector<std::thread> workers;
     PipelineGateway gateway;
     gateway.register_routes(svr);
 
     infer_worker_enabled = getenv_or_default_bool("LLAMA_REST_ENABLE_INFER", true);
     if (infer_worker_enabled) {
-        worker = std::make_unique<std::thread>(worker_thread_loop);
+        const std::string model_path = getenv_or_default(
+            "LLAMA_REST_MODEL_PATH",
+            "/home/rbiotech-server/llama_Rest/models/gemma4-31b/gemma-4-31B-it-Q4_K_M.gguf"
+        );
+        const std::string mmproj_path = getenv_or_default(
+            "LLAMA_REST_MMPROJ_PATH",
+            "/home/rbiotech-server/llama_Rest/models/gemma4-31b/mmproj-gemma-4-31B-it-Q8_0.gguf"
+        );
+        const int worker_count = std::max(1, getenv_or_default_int("LLAMA_REST_PARALLEL", 1));
+
+        manager = std::make_unique<LLMManager>(model_path, mmproj_path, worker_count);
+        if (!manager->isValid()) {
+            std::cerr << "[LLama_REST] Infer manager initialization failed.\n";
+            return 1;
+        }
+
+        for (int i = 0; i < worker_count; ++i) {
+            workers.emplace_back(worker_thread_loop, manager.get(), i);
+        }
+        std::cout << "[LLama_REST] Started " << worker_count << " infer worker slots.\n";
     } else {
         std::cout << "[LLama_REST] Infer worker disabled. Gateway-only mode enabled.\n";
     }
@@ -732,6 +726,7 @@ int main() {
                 text_job_queue.push({prompt, image_raw, lane, prom});
             }
         }
+        job_cv.notify_one();
 
         if (fut.wait_for(std::chrono::seconds(300)) != std::future_status::ready) {
             res.status = 504;
@@ -754,8 +749,11 @@ int main() {
     svr.listen(host, port);
 
     job_running = false;
-    if (worker && worker->joinable()) {
-        worker->join();
+    job_cv.notify_all();
+    for (auto& worker : workers) {
+        if (worker.joinable()) {
+            worker.join();
+        }
     }
 
     return 0;

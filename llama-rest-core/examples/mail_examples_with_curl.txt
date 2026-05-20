@@ -1,0 +1,153 @@
+LLama REST Core 샘플 요청 예시
+
+서버 주소
+- 내부 IP 기준: http://192.168.0.22:18088
+- 로컬 기준: http://127.0.0.1:18088
+
+1) 헬스체크
+
+curl http://192.168.0.22:18088/healthz
+curl http://192.168.0.22:18088/healthz/pipeline
+
+2) /infer 텍스트
+
+샘플 파일:
+/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/infer_text.json
+
+curl http://192.168.0.22:18088/infer \
+  -H 'Content-Type: application/json' \
+  --data @/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/infer_text.json
+
+3) /infer 이미지 좌표
+
+샘플 파일:
+/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/infer_image_coordinate.json
+
+curl http://192.168.0.22:18088/infer \
+  -H 'Content-Type: application/json' \
+  --data @/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/infer_image_coordinate.json
+
+4) /infer 영상 요약
+
+샘플 파일:
+/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/infer_video_summary.json
+
+curl http://192.168.0.22:18088/infer \
+  -H 'Content-Type: application/json' \
+  --data @/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/infer_video_summary.json
+
+5) /route 직접 2차 라우팅 - RAG 케이스
+
+샘플 파일:
+/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/route_direct_rag.json
+
+curl http://192.168.0.22:18088/route \
+  -H 'Content-Type: application/json' \
+  --data @/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/route_direct_rag.json
+
+6) /route 직접 2차 라우팅 - LLM 케이스
+
+샘플 파일:
+/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/route_direct_llm.json
+
+curl http://192.168.0.22:18088/route \
+  -H 'Content-Type: application/json' \
+  --data @/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/route_direct_llm.json
+
+7) /route/from-first-router - Jetson 1차 결과 입력 - RAG 케이스
+
+샘플 파일:
+/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/route_from_first_router_rag.json
+
+curl http://192.168.0.22:18088/route/from-first-router \
+  -H 'Content-Type: application/json' \
+  --data @/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/route_from_first_router_rag.json
+
+8) /route/from-first-router - Jetson 1차 결과 입력 - LLM 케이스
+
+샘플 파일:
+/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/route_from_first_router_llm.json
+
+curl http://192.168.0.22:18088/route/from-first-router \
+  -H 'Content-Type: application/json' \
+  --data @/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/route_from_first_router_llm.json
+
+9) /process/from-first-router - 실제 처리 끝까지 - RAG 케이스
+
+샘플 파일:
+/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/process_from_first_router_rag.json
+
+curl http://192.168.0.22:18088/process/from-first-router \
+  -H 'Content-Type: application/json' \
+  --data @/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/process_from_first_router_rag.json
+
+10) /process/from-first-router - 실제 처리 끝까지 - LLM 케이스
+
+샘플 파일:
+/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/process_from_first_router_llm.json
+
+curl http://192.168.0.22:18088/process/from-first-router \
+  -H 'Content-Type: application/json' \
+  --data @/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/process_from_first_router_llm.json
+
+11) /ask 또는 /rag/ask - RAG 직접 호출 - 매뉴얼 질문
+
+샘플 파일:
+/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/rag_ask_manual.json
+
+curl http://192.168.0.22:18088/ask \
+  -H 'Content-Type: application/json' \
+  --data @/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/rag_ask_manual.json
+
+또는
+
+curl http://192.168.0.22:18088/rag/ask \
+  -H 'Content-Type: application/json' \
+  --data @/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/rag_ask_manual.json
+
+12) /ask 또는 /rag/ask - RAG 직접 호출 - 에러코드 질문
+
+샘플 파일:
+/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/rag_ask_error_code.json
+
+curl http://192.168.0.22:18088/ask \
+  -H 'Content-Type: application/json' \
+  --data @/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/rag_ask_error_code.json
+
+또는
+
+curl http://192.168.0.22:18088/rag/ask \
+  -H 'Content-Type: application/json' \
+  --data @/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/rag_ask_error_code.json
+
+13) /score - RAG 경로 최종점수 예시
+
+샘플 파일:
+/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/score_rag_release.json
+
+curl http://192.168.0.22:18088/score \
+  -H 'Content-Type: application/json' \
+  --data @/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/score_rag_release.json
+
+14) /score - LLM 경로 최종점수 예시
+
+샘플 파일:
+/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/score_llm_reroute.json
+
+curl http://192.168.0.22:18088/score \
+  -H 'Content-Type: application/json' \
+  --data @/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/score_llm_reroute.json
+
+15) 지연 측정 예시 - 실제 처리 끝까지
+
+curl -s -o /tmp/process_result.json -w 'time_total=%{time_total}\n' \
+  http://192.168.0.22:18088/process/from-first-router \
+  -H 'Content-Type: application/json' \
+  --data @/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/process_from_first_router_rag.json
+
+16) 지연 측정 예시 - 2차 라우팅만
+
+curl -s -o /tmp/route_result.json -w 'time_total=%{time_total}\n' \
+  http://192.168.0.22:18088/route/from-first-router \
+  -H 'Content-Type: application/json' \
+  --data @/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/examples/route_from_first_router_rag.json

@@ -1,0 +1,10 @@
+{
+  "request_id": "rag-manual-001",
+  "question": "소변분석기 충전 중에는 측정해도 되나?",
+  "top_k": 6,
+  "min_score": 0.18,
+  "metadata": {
+    "locale": "ko-KR",
+    "source": "manual-rag-test"
+  }
+}

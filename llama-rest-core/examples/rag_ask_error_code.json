@@ -1,0 +1,10 @@
+{
+  "request_id": "rag-error-001",
+  "question": "E103 에러가 떴어. 무슨 뜻이고 다음에 뭘 확인해야 해?",
+  "top_k": 6,
+  "min_score": 0.18,
+  "metadata": {
+    "locale": "ko-KR",
+    "source": "error-code-rag-test"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "request_id": "score-llm-001",
+  "original_question": "E103 에러가 떴어. 무슨 뜻이야?",
+  "route_used": "server_llm",
+  "metadata": {
+    "locale": "ko-KR",
+    "source": "score-test"
+  },
+  "second_router": {
+    "route": "server_rag",
+    "confidence": "medium",
+    "brief": "문서 근거가 필요해 RAG로 전달"
+  },
+  "server_llm_result": {
+    "answer": "일반적으로 E103은 장비 문제를 의미할 수 있습니다. 매뉴얼이나 점검 절차를 확인해 보세요.",
+    "needs_human_review": false,
+    "mentioned_references": true
+  }
+}

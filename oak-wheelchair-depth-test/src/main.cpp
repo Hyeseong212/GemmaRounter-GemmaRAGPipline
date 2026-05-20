@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <chrono>
+#include <cmath>
 #include <cstdint>
 #include <ctime>
 #include <filesystem>
@@ -31,7 +32,11 @@ constexpr char kDefaultPrompt[] = "이 이미지에서 휠체어가 어딨는지
 struct AppConfig {
     std::string server_url = "http://127.0.0.1:18088/infer";
     std::string prompt = kDefaultPrompt;
-    fs::path output_dir = "/tmp/oak-wheelchair-depth-test";
+    fs::path output_dir =
+        "/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/oak-wheelchair-depth-test/runtime-data";
+    fs::path calibration_file;
+    fs::path capture_log_file;
+    fs::path capture_log_json_file;
     int roi_size = 21;
     int rgb_width = 1280;
     int rgb_height = 720;
@@ -44,13 +49,24 @@ struct ParsedUrl {
     std::string path;
 };
 
+struct CalibrationModel {
+    bool enabled = false;
+    double slope = 1.0;
+    double intercept = 0.0;
+    fs::path source_path;
+};
+
 struct InferenceResult {
+    std::string timestamp;
+    cv::Size image_size;
     cv::Point bottom_left;
     cv::Point top_left;
-    std::optional<int> depth_mm;
+    std::optional<int> raw_depth_mm;
+    std::optional<int> corrected_depth_mm;
     std::string depth_status;
     std::string capture_path;
     std::string raw_response;
+    CalibrationModel calibration;
 };
 
 std::string timestamp_string() {
@@ -170,6 +186,151 @@ void draw_crosshair(cv::Mat& image, const cv::Point& point, const cv::Scalar& co
     cv::drawMarker(image, point, color, cv::MARKER_CROSS, 24, 2);
 }
 
+std::string csv_escape(const std::string& value) {
+    std::string escaped = value;
+    std::string::size_type pos = 0;
+    while ((pos = escaped.find('"', pos)) != std::string::npos) {
+        escaped.insert(pos, 1, '"');
+        pos += 2;
+    }
+    return "\"" + escaped + "\"";
+}
+
+std::string optional_int_csv(const std::optional<int>& value) {
+    return value.has_value() ? std::to_string(*value) : "";
+}
+
+CalibrationModel load_calibration_model(const fs::path& calibration_path) {
+    CalibrationModel model;
+    model.source_path = calibration_path;
+
+    if (!fs::exists(calibration_path)) {
+        return model;
+    }
+
+    std::ifstream input(calibration_path);
+    if (!input) {
+        fail("Failed to open calibration file: " + calibration_path.string());
+    }
+
+    const json parsed = json::parse(input);
+    if (!parsed.is_object()) {
+        fail("Calibration file must contain a JSON object: " + calibration_path.string());
+    }
+
+    model.enabled = parsed.value("enabled", true);
+    model.slope = parsed.value("slope", 1.0);
+    model.intercept = parsed.value("intercept", 0.0);
+    return model;
+}
+
+std::optional<int> apply_linear_correction(const std::optional<int>& raw_depth_mm, const CalibrationModel& calibration) {
+    if (!raw_depth_mm.has_value()) {
+        return std::nullopt;
+    }
+    if (!calibration.enabled) {
+        return std::nullopt;
+    }
+
+    const double corrected = calibration.slope * static_cast<double>(*raw_depth_mm) + calibration.intercept;
+    return static_cast<int>(std::lround(corrected));
+}
+
+void append_capture_log(const AppConfig& config, const InferenceResult& result) {
+    fs::create_directories(config.output_dir);
+    const bool write_header = !fs::exists(config.capture_log_file) || fs::file_size(config.capture_log_file) == 0;
+
+    std::ofstream out(config.capture_log_file, std::ios::app);
+    if (!out) {
+        fail("Failed to open capture log: " + config.capture_log_file.string());
+    }
+
+    if (write_header) {
+        out
+            << "timestamp,capture_path,image_width,image_height,"
+            << "bottom_left_x,bottom_left_y,top_left_x,top_left_y,"
+            << "raw_depth_mm,corrected_depth_mm,depth_mm,depth_status,"
+            << "actual_distance_mm,calibration_applied,calibration_slope,calibration_intercept,"
+            << "notes,prompt,raw_response\n";
+    }
+
+    const std::optional<int> displayed_depth = result.corrected_depth_mm.has_value()
+        ? result.corrected_depth_mm
+        : result.raw_depth_mm;
+
+    out
+        << csv_escape(result.timestamp) << ","
+        << csv_escape(result.capture_path) << ","
+        << result.image_size.width << ","
+        << result.image_size.height << ","
+        << result.bottom_left.x << ","
+        << result.bottom_left.y << ","
+        << result.top_left.x << ","
+        << result.top_left.y << ","
+        << optional_int_csv(result.raw_depth_mm) << ","
+        << optional_int_csv(result.corrected_depth_mm) << ","
+        << optional_int_csv(displayed_depth) << ","
+        << csv_escape(result.depth_status) << ","
+        << "" << ","
+        << (result.calibration.enabled ? "1" : "0") << ","
+        << (result.calibration.enabled ? std::to_string(result.calibration.slope) : "") << ","
+        << (result.calibration.enabled ? std::to_string(result.calibration.intercept) : "") << ","
+        << "" << ","
+        << csv_escape(config.prompt) << ","
+        << csv_escape(result.raw_response)
+        << "\n";
+}
+
+json build_capture_log_entry(const AppConfig& config, const InferenceResult& result) {
+    const std::optional<int> displayed_depth = result.corrected_depth_mm.has_value()
+        ? result.corrected_depth_mm
+        : result.raw_depth_mm;
+
+    return json{
+        {"timestamp", result.timestamp},
+        {"capture_path", result.capture_path},
+        {"image_width", result.image_size.width},
+        {"image_height", result.image_size.height},
+        {"pixel_coord_bottom_left", {result.bottom_left.x, result.bottom_left.y}},
+        {"pixel_coord_top_left", {result.top_left.x, result.top_left.y}},
+        {"raw_depth_mm", result.raw_depth_mm.has_value() ? json(*result.raw_depth_mm) : json(nullptr)},
+        {"corrected_depth_mm", result.corrected_depth_mm.has_value() ? json(*result.corrected_depth_mm) : json(nullptr)},
+        {"depth_mm", displayed_depth.has_value() ? json(*displayed_depth) : json(nullptr)},
+        {"depth_status", result.depth_status},
+        {"actual_distance_mm", nullptr},
+        {"calibration_applied", result.calibration.enabled},
+        {"calibration_slope", result.calibration.enabled ? json(result.calibration.slope) : json(nullptr)},
+        {"calibration_intercept", result.calibration.enabled ? json(result.calibration.intercept) : json(nullptr)},
+        {"notes", ""},
+        {"prompt", config.prompt},
+        {"raw_response", result.raw_response},
+    };
+}
+
+void append_capture_log_json(const AppConfig& config, const InferenceResult& result) {
+    fs::create_directories(config.output_dir);
+
+    json log_array = json::array();
+    if (fs::exists(config.capture_log_json_file) && fs::file_size(config.capture_log_json_file) > 0) {
+        std::ifstream input(config.capture_log_json_file);
+        if (!input) {
+            fail("Failed to open capture JSON log: " + config.capture_log_json_file.string());
+        }
+        log_array = json::parse(input, nullptr, true, true);
+        if (!log_array.is_array()) {
+            fail("Capture JSON log must contain a JSON array: " + config.capture_log_json_file.string());
+        }
+    }
+
+    log_array.push_back(build_capture_log_entry(config, result));
+
+    std::ofstream output(config.capture_log_json_file);
+    if (!output) {
+        fail("Failed to write capture JSON log: " + config.capture_log_json_file.string());
+    }
+    output << log_array.dump(2, ' ', false, json::error_handler_t::replace) << "\n";
+}
+
 void draw_last_result(cv::Mat& rgb_frame, cv::Mat& depth_preview, const InferenceResult& result, int roi_size) {
     const int radius = std::max(1, roi_size) / 2;
     const cv::Rect roi(
@@ -189,15 +350,24 @@ void draw_last_result(cv::Mat& rgb_frame, cv::Mat& depth_preview, const Inferenc
           << "TL [" << result.top_left.x << ", " << result.top_left.y << "]";
 
     std::ostringstream line2;
-    line2 << "depth: ";
-    if (result.depth_mm.has_value()) {
-        line2 << *result.depth_mm << " mm";
+    if (result.raw_depth_mm.has_value()) {
+        line2 << "raw: " << *result.raw_depth_mm << " mm";
     } else {
-        line2 << "unavailable";
+        line2 << "raw: unavailable";
+    }
+    if (result.corrected_depth_mm.has_value()) {
+        line2 << "  corrected: " << *result.corrected_depth_mm << " mm";
     }
 
     cv::putText(rgb_frame, line1.str(), {20, 36}, cv::FONT_HERSHEY_SIMPLEX, 0.8, cv::Scalar(0, 255, 0), 2);
-    cv::putText(rgb_frame, line2.str(), {20, 72}, cv::FONT_HERSHEY_SIMPLEX, 0.8, cv::Scalar(0, 255, 0), 2);
+    cv::putText(rgb_frame, line2.str(), {20, 72}, cv::FONT_HERSHEY_SIMPLEX, 0.75, cv::Scalar(0, 255, 0), 2);
+
+    if (result.calibration.enabled) {
+        std::ostringstream line3;
+        line3 << "calib: y = " << std::fixed << std::setprecision(4)
+              << result.calibration.slope << " * x + " << result.calibration.intercept;
+        cv::putText(rgb_frame, line3.str(), {20, 108}, cv::FONT_HERSHEY_SIMPLEX, 0.65, cv::Scalar(0, 255, 0), 2);
+    }
 }
 
 AppConfig parse_args(int argc, char** argv) {
@@ -210,6 +380,12 @@ AppConfig parse_args(int argc, char** argv) {
             config.prompt = argv[++i];
         } else if (arg == "--output-dir" && i + 1 < argc) {
             config.output_dir = argv[++i];
+        } else if (arg == "--calibration-file" && i + 1 < argc) {
+            config.calibration_file = argv[++i];
+        } else if (arg == "--log-file" && i + 1 < argc) {
+            config.capture_log_file = argv[++i];
+        } else if (arg == "--json-log-file" && i + 1 < argc) {
+            config.capture_log_json_file = argv[++i];
         } else if (arg == "--roi-size" && i + 1 < argc) {
             config.roi_size = std::stoi(argv[++i]);
         } else if (arg == "--width" && i + 1 < argc) {
@@ -219,12 +395,15 @@ AppConfig parse_args(int argc, char** argv) {
         } else if (arg == "--help") {
             std::cout
                 << "Usage: oak_wheelchair_depth_test [options]\n"
-                << "  --server URL       default: http://127.0.0.1:18088/infer\n"
-                << "  --prompt TEXT      default wheelchair coordinate prompt\n"
-                << "  --output-dir PATH  default: /tmp/oak-wheelchair-depth-test\n"
-                << "  --roi-size N       default: 21\n"
-                << "  --width N          default: 1280\n"
-                << "  --height N         default: 720\n";
+                << "  --server URL             default: http://127.0.0.1:18088/infer\n"
+                << "  --prompt TEXT            default wheelchair coordinate prompt\n"
+                << "  --output-dir PATH        default: <repo>/oak-wheelchair-depth-test/runtime-data\n"
+                << "  --calibration-file PATH  default: <output-dir>/depth_linear_calibration.json\n"
+                << "  --log-file PATH          default: <output-dir>/capture_log.csv\n"
+                << "  --json-log-file PATH     default: <output-dir>/capture_log.json\n"
+                << "  --roi-size N             default: 21\n"
+                << "  --width N                default: 1280\n"
+                << "  --height N               default: 720\n";
             std::exit(0);
         } else {
             fail("Unknown argument: " + arg);
@@ -233,6 +412,16 @@ AppConfig parse_args(int argc, char** argv) {
 
     if (config.roi_size < 3 || config.roi_size % 2 == 0) {
         fail("roi-size must be an odd integer >= 3");
+    }
+
+    if (config.calibration_file.empty()) {
+        config.calibration_file = config.output_dir / "depth_linear_calibration.json";
+    }
+    if (config.capture_log_file.empty()) {
+        config.capture_log_file = config.output_dir / "capture_log.csv";
+    }
+    if (config.capture_log_json_file.empty()) {
+        config.capture_log_json_file = config.output_dir / "capture_log.json";
     }
 
     return config;
@@ -301,7 +490,12 @@ dai::Pipeline create_pipeline(int rgb_width, int rgb_height) {
     return pipeline;
 }
 
-InferenceResult perform_capture_and_inference(const AppConfig& config, const cv::Mat& rgb_frame, const cv::Mat& depth_frame) {
+InferenceResult perform_capture_and_inference(
+    const AppConfig& config,
+    const cv::Mat& rgb_frame,
+    const cv::Mat& depth_frame,
+    const CalibrationModel& calibration
+) {
     if (rgb_frame.empty() || depth_frame.empty()) {
         fail("RGB or depth frame is empty");
     }
@@ -319,25 +513,56 @@ InferenceResult perform_capture_and_inference(const AppConfig& config, const cv:
     }
 
     InferenceResult result;
+    result.timestamp = timestamp_string();
+    result.image_size = rgb_frame.size();
     result.bottom_left = clamp_point(*coordinate, rgb_frame.size());
     result.top_left = clamp_point(bottom_left_to_top_left(result.bottom_left, rgb_frame.rows), rgb_frame.size());
-    result.depth_mm = compute_depth_median_mm(depth_frame, result.top_left, config.roi_size);
-    result.depth_status = result.depth_mm.has_value() ? "ok" : "depth_unavailable";
+    result.raw_depth_mm = compute_depth_median_mm(depth_frame, result.top_left, config.roi_size);
+    result.corrected_depth_mm = apply_linear_correction(result.raw_depth_mm, calibration);
+    result.depth_status = result.raw_depth_mm.has_value() ? "ok" : "depth_unavailable";
     result.capture_path = capture_path;
     result.raw_response = response_body;
+    result.calibration = calibration;
     return result;
 }
 
-void print_result(const InferenceResult& result) {
+void print_calibration_status(const CalibrationModel& calibration) {
+    if (!calibration.enabled) {
+        std::cout << "calibration=disabled file=" << calibration.source_path << "\n";
+        return;
+    }
+
+    std::cout << "calibration=enabled file=" << calibration.source_path
+              << " slope=" << calibration.slope
+              << " intercept=" << calibration.intercept << "\n";
+}
+
+void print_result(const AppConfig& config, const InferenceResult& result) {
+    const std::optional<int> displayed_depth = result.corrected_depth_mm.has_value()
+        ? result.corrected_depth_mm
+        : result.raw_depth_mm;
+
+    std::cout << "timestamp=" << result.timestamp << "\n";
     std::cout << "wheelchair_coord_bottom_left=[" << result.bottom_left.x << "," << result.bottom_left.y << "]\n";
     std::cout << "wheelchair_coord_top_left=[" << result.top_left.x << "," << result.top_left.y << "]\n";
-    if (result.depth_mm.has_value()) {
-        std::cout << "depth_mm=" << *result.depth_mm << "\n";
+    if (result.raw_depth_mm.has_value()) {
+        std::cout << "raw_depth_mm=" << *result.raw_depth_mm << "\n";
+    } else {
+        std::cout << "raw_depth_mm=unavailable\n";
+    }
+    if (result.corrected_depth_mm.has_value()) {
+        std::cout << "corrected_depth_mm=" << *result.corrected_depth_mm << "\n";
+    }
+    if (displayed_depth.has_value()) {
+        std::cout << "depth_mm=" << *displayed_depth << "\n";
     } else {
         std::cout << "depth_mm=unavailable\n";
     }
     std::cout << "depth_status=" << result.depth_status << "\n";
     std::cout << "capture_path=" << result.capture_path << "\n";
+    std::cout << "capture_log_csv=" << config.capture_log_file << "\n";
+    std::cout << "capture_log_json=" << config.capture_log_json_file << "\n";
+    std::cout << "calibration_file=" << config.calibration_file << "\n";
 }
 
 }  // namespace
@@ -349,6 +574,9 @@ int main(int argc, char** argv) {
 
         std::cout << "server_url=" << config.server_url << "\n";
         std::cout << "output_dir=" << config.output_dir << "\n";
+        std::cout << "capture_log_csv=" << config.capture_log_file << "\n";
+        std::cout << "capture_log_json=" << config.capture_log_json_file << "\n";
+        std::cout << "calibration_file=" << config.calibration_file << "\n";
         std::cout << "roi_size=" << config.roi_size << "\n";
         std::cout << "controls: c=capture, q=quit\n";
 
@@ -382,6 +610,9 @@ int main(int argc, char** argv) {
 
         cv::namedWindow(kRgbWindowName, cv::WINDOW_NORMAL);
         cv::namedWindow(kDepthWindowName, cv::WINDOW_NORMAL);
+
+        CalibrationModel startup_calibration = load_calibration_model(config.calibration_file);
+        print_calibration_status(startup_calibration);
 
         while (true) {
             if (auto message_group = output_queue->tryGet<dai::MessageGroup>()) {
@@ -418,8 +649,13 @@ int main(int argc, char** argv) {
                 }
 
                 try {
-                    last_result = perform_capture_and_inference(config, latest_rgb, latest_depth);
-                    print_result(*last_result);
+                    const CalibrationModel capture_calibration = load_calibration_model(config.calibration_file);
+                    print_calibration_status(capture_calibration);
+
+                    last_result = perform_capture_and_inference(config, latest_rgb, latest_depth, capture_calibration);
+                    append_capture_log(config, *last_result);
+                    append_capture_log_json(config, *last_result);
+                    print_result(config, *last_result);
                 } catch (const std::exception& exc) {
                     std::cerr << "capture failed: " << exc.what() << "\n";
                 }

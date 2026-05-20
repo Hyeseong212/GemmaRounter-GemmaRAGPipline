@@ -1,0 +1,9 @@
+{
+  "request_id": "route-direct-rag-001",
+  "user_message": "E103 에러가 떴어. 무슨 뜻이고 다음에 뭘 확인해야 해?",
+  "metadata": {
+    "locale": "ko-KR",
+    "source": "server-direct-test",
+    "device_id": "orin-demo-01"
+  }
+}

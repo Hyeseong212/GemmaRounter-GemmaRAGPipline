@@ -1,0 +1,28 @@
+{
+  "request_id": "score-rag-001",
+  "original_question": "소변분석기 충전 중에는 측정해도 되나?",
+  "route_used": "server_rag",
+  "metadata": {
+    "locale": "ko-KR",
+    "source": "score-test"
+  },
+  "second_router": {
+    "route": "server_rag",
+    "confidence": "high",
+    "brief": "문서 근거가 필요해 RAG로 전달"
+  },
+  "rag_result": {
+    "answerable": true,
+    "answer": "문서 근거상 충전 중 측정은 권장되지 않으며, 측정 전 충전 상태와 사용설명서 주의사항을 먼저 확인해야 한다.",
+    "used_chunk_ids": [
+      "mfds_2017_urine_analyzer_safety-p1-c1",
+      "mfds_2017_urine_analyzer_operation-p2-c1"
+    ],
+    "needs_human_review": false,
+    "warning": null,
+    "retrieved_scores": [
+      0.72,
+      0.66
+    ]
+  }
+}

@@ -1,0 +1,4 @@
+{
+  "prompt": "이 영상에서 보이는 장면을 설명해줘.",
+  "video_path": "/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/llama-rest-core/test-assets/public-research/brain_mri_post_glioblastoma_transverse.mp4"
+}

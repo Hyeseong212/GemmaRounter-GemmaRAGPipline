@@ -1,0 +1,13 @@
+{
+  "model_type": "linear_depth_correction_with_offset",
+  "enabled": true,
+  "slope": 0.621802898441313,
+  "intercept": 567.3183005373548,
+  "sample_count": 3,
+  "r_squared": 0.9999735283658976,
+  "mae_mm": 10.905223920543298,
+  "rmse_mm": 11.88448040092611,
+  "input_log_file": "/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/oak-wheelchair-depth-test/runtime-data/capture_log.json",
+  "generated_at": "2026-04-20T14:57:00",
+  "notes": "Existing linear correction retained, with additional -500mm offset applied to the final corrected depth."
+}

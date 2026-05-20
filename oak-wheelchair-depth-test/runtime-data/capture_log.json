@@ -1,0 +1,252 @@
+[
+  {
+    "actual_distance_mm": 4500,
+    "calibration_applied": false,
+    "calibration_intercept": null,
+    "calibration_slope": null,
+    "capture_path": "/tmp/oak-wheelchair-depth-test/capture-20260420-142724.png",
+    "corrected_depth_mm": null,
+    "depth_mm": 5502,
+    "depth_status": "ok",
+    "image_height": 720,
+    "image_width": 1280,
+    "notes": "실제 휠체어의 위치 4.5m",
+    "pixel_coord_bottom_left": [
+      489,
+      261
+    ],
+    "pixel_coord_top_left": [
+      489,
+      459
+    ],
+    "prompt": "이 이미지에서 휠체어가 어딨는지 중심을 좌표로 나타내봐",
+    "raw_depth_mm": 5502,
+    "raw_response": "이 이미지에서 휠체어의 중심 좌표는 [489, 261]입니다.\n",
+    "timestamp": "20260420-142725"
+  },
+  {
+    "actual_distance_mm": 6100,
+    "calibration_applied": false,
+    "calibration_intercept": null,
+    "calibration_slope": null,
+    "capture_path": "/tmp/oak-wheelchair-depth-test/capture-20260420-143319.png",
+    "corrected_depth_mm": null,
+    "depth_mm": 8120,
+    "depth_status": "ok",
+    "image_height": 720,
+    "image_width": 1280,
+    "notes": "실제 휠체어의 위치 6.1m",
+    "pixel_coord_bottom_left": [
+      485,
+      330
+    ],
+    "pixel_coord_top_left": [
+      485,
+      390
+    ],
+    "prompt": "이 이미지에서 휠체어가 어딨는지 중심을 좌표로 나타내봐",
+    "raw_depth_mm": 8120,
+    "raw_response": "이 이미지에서 휠체어의 중심 좌표는 [485, 330]입니다.\n",
+    "timestamp": "20260420-143320"
+  },
+  {
+    "actual_distance_mm": 10000,
+    "calibration_applied": false,
+    "calibration_intercept": null,
+    "calibration_slope": null,
+    "capture_path": "/tmp/oak-wheelchair-depth-test/capture-20260420-143459.png",
+    "corrected_depth_mm": null,
+    "depth_mm": 14358,
+    "depth_status": "ok",
+    "image_height": 720,
+    "image_width": 1280,
+    "notes": "실제 위치 10m",
+    "pixel_coord_bottom_left": [
+      596,
+      390
+    ],
+    "pixel_coord_top_left": [
+      596,
+      330
+    ],
+    "prompt": "이 이미지에서 휠체어가 어딨는지 중심을 좌표로 나타내봐",
+    "raw_depth_mm": 14358,
+    "raw_response": "```json\n[\n  {\"point\": [596, 390], \"label\": \"휠체어\"}\n]\n```\n",
+    "timestamp": "20260420-143500"
+  },
+  {
+    "actual_distance_mm": null,
+    "calibration_applied": true,
+    "calibration_intercept": 1067.3183005373548,
+    "calibration_slope": 0.621802898441313,
+    "capture_path": "/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/oak-wheelchair-depth-test/runtime-data/capture-20260420-153656.png",
+    "corrected_depth_mm": 4545,
+    "depth_mm": 4545,
+    "depth_status": "ok",
+    "image_height": 720,
+    "image_width": 1280,
+    "notes": "",
+    "pixel_coord_bottom_left": [
+      449,
+      330
+    ],
+    "pixel_coord_top_left": [
+      449,
+      390
+    ],
+    "prompt": "이 이미지에서 휠체어가 어딨는지 중심을 좌표로 나타내봐",
+    "raw_depth_mm": 5593,
+    "raw_response": "```json\n[\n  {\"point\": [449, 330], \"label\": \"휠체어\"}\n]\n```\n",
+    "timestamp": "20260420-153657"
+  },
+  {
+    "actual_distance_mm": null,
+    "calibration_applied": true,
+    "calibration_intercept": 1067.3183005373548,
+    "calibration_slope": 0.621802898441313,
+    "capture_path": "/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/oak-wheelchair-depth-test/runtime-data/capture-20260420-153743.png",
+    "corrected_depth_mm": 5451,
+    "depth_mm": 5451,
+    "depth_status": "ok",
+    "image_height": 720,
+    "image_width": 1280,
+    "notes": "",
+    "pixel_coord_bottom_left": [
+      630,
+      407
+    ],
+    "pixel_coord_top_left": [
+      630,
+      313
+    ],
+    "prompt": "이 이미지에서 휠체어가 어딨는지 중심을 좌표로 나타내봐",
+    "raw_depth_mm": 7050,
+    "raw_response": "이 이미지에서 휠체어의 중심 좌표는 [630, 407]입니다.\n",
+    "timestamp": "20260420-153744"
+  },
+  {
+    "actual_distance_mm": null,
+    "calibration_applied": true,
+    "calibration_intercept": 1067.3183005373548,
+    "calibration_slope": 0.621802898441313,
+    "capture_path": "/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/oak-wheelchair-depth-test/runtime-data/capture-20260420-153830.png",
+    "corrected_depth_mm": 6572,
+    "depth_mm": 6572,
+    "depth_status": "ok",
+    "image_height": 720,
+    "image_width": 1280,
+    "notes": "",
+    "pixel_coord_bottom_left": [
+      612,
+      402
+    ],
+    "pixel_coord_top_left": [
+      612,
+      318
+    ],
+    "prompt": "이 이미지에서 휠체어가 어딨는지 중심을 좌표로 나타내봐",
+    "raw_depth_mm": 8852,
+    "raw_response": "```json\n[\n  {\"point\": [612, 402], \"label\": \"휠체어\"}\n]\n```\n",
+    "timestamp": "20260420-153831"
+  },
+  {
+    "actual_distance_mm": null,
+    "calibration_applied": true,
+    "calibration_intercept": 1067.3183005373548,
+    "calibration_slope": 0.621802898441313,
+    "capture_path": "/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/oak-wheelchair-depth-test/runtime-data/capture-20260420-153900.png",
+    "corrected_depth_mm": 7325,
+    "depth_mm": 7325,
+    "depth_status": "ok",
+    "image_height": 720,
+    "image_width": 1280,
+    "notes": "",
+    "pixel_coord_bottom_left": [
+      608,
+      414
+    ],
+    "pixel_coord_top_left": [
+      608,
+      306
+    ],
+    "prompt": "이 이미지에서 휠체어가 어딨는지 중심을 좌표로 나타내봐",
+    "raw_depth_mm": 10063,
+    "raw_response": "이 이미지에서 휠체어의 중심 좌표는 [608, 414]입니다.\n",
+    "timestamp": "20260420-153901"
+  },
+  {
+    "actual_distance_mm": null,
+    "calibration_applied": true,
+    "calibration_intercept": -500.0,
+    "calibration_slope": 1.0,
+    "capture_path": "/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/oak-wheelchair-depth-test/runtime-data/capture-20260420-162330.png",
+    "corrected_depth_mm": 9150,
+    "depth_mm": 9150,
+    "depth_status": "ok",
+    "image_height": 720,
+    "image_width": 1280,
+    "notes": "",
+    "pixel_coord_bottom_left": [
+      489,
+      401
+    ],
+    "pixel_coord_top_left": [
+      489,
+      319
+    ],
+    "prompt": "이 이미지에서 휠체어가 어딨는지 중심을 좌표로 나타내봐",
+    "raw_depth_mm": 9650,
+    "raw_response": "```json\n[\n  {\"point\": [489, 401], \"label\": \"휠체어\"}\n]\n```\n",
+    "timestamp": "20260420-162331"
+  },
+  {
+    "actual_distance_mm": null,
+    "calibration_applied": true,
+    "calibration_intercept": 567.3183005373548,
+    "calibration_slope": 0.621802898441313,
+    "capture_path": "/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/oak-wheelchair-depth-test/runtime-data/capture-20260420-162544.png",
+    "corrected_depth_mm": 6772,
+    "depth_mm": 6772,
+    "depth_status": "ok",
+    "image_height": 720,
+    "image_width": 1280,
+    "notes": "",
+    "pixel_coord_bottom_left": [
+      471,
+      384
+    ],
+    "pixel_coord_top_left": [
+      471,
+      336
+    ],
+    "prompt": "이 이미지에서 휠체어가 어딨는지 중심을 좌표로 나타내봐",
+    "raw_depth_mm": 9978,
+    "raw_response": "```json\n[\n  {\"point\": [471, 384], \"label\": \"휠체어\"}\n]\n```\n",
+    "timestamp": "20260420-162545"
+  },
+  {
+    "actual_distance_mm": null,
+    "calibration_applied": true,
+    "calibration_intercept": 567.3183005373548,
+    "calibration_slope": 0.621802898441313,
+    "capture_path": "/home/rbiotech-server/LLM_Harnes_Support/GemmaRounter-GemmaRAGPipline/oak-wheelchair-depth-test/runtime-data/capture-20260421-123307.png",
+    "corrected_depth_mm": 4322,
+    "depth_mm": 4322,
+    "depth_status": "ok",
+    "image_height": 720,
+    "image_width": 1280,
+    "notes": "",
+    "pixel_coord_bottom_left": [
+      564,
+      258
+    ],
+    "pixel_coord_top_left": [
+      564,
+      462
+    ],
+    "prompt": "이 이미지에서 휠체어가 어딨는지 중심을 좌표로 나타내봐",
+    "raw_depth_mm": 6038,
+    "raw_response": "이 이미지에서 휠체어의 중심 좌표는 [564, 258]입니다.\n",
+    "timestamp": "20260421-123308"
+  }
+]
